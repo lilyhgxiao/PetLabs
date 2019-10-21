@@ -9,7 +9,6 @@ import items from '../Images/items.png';
 
 function AdminDashboard(props) {
     const { username } = props;
-    console.log(items);
     return(
         <div className='mainForm'>
             <h1>Welcome, {username}</h1>
@@ -18,13 +17,13 @@ function AdminDashboard(props) {
             <br />
             <ul className='container'>
                 <li>
-                    <ImageComponent imgURL={users} altText={'Users'} subtitle={'Users'} />
+                    <ImageComponent imgURL={users} altText={'Users'} subtitle={'Users'} link={'./AdminUserListPage'} />
                 </li>
                 <li>
-                    <ImageComponent imgURL={pets} altText={'Pets'} subtitle={'Pets'} />
+                    <ImageComponent imgURL={pets} altText={'Pets'} subtitle={'Pets'} link={'./AdminPetListPage'} />
                 </li>
                 <li>
-                    <ImageComponent imgURL={items} altText={'Items'} subtitle={'Items'} />
+                    <ImageComponent imgURL={items} altText={'Items'} subtitle={'Items'} link={'./AdminItemListPage'} />
                 </li>
             </ul>
         </div>

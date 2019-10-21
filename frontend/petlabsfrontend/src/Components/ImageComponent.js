@@ -1,14 +1,19 @@
 import React from 'react';
 import '../CSS/ImageLinkStyle.css';
 
+import { Link } from 'react-router-dom';
+
 function ImageComponent(props) {
-    const { imgURL, altText, subtitle } = props;
+    const { imgURL, altText, subtitle, link } = props;
     return(
         <div className='item'>
-            <img 
-                src={imgURL}
-                alt={altText} 
-            />
+            <Link to={link}>
+                <input
+                    type='image'
+                    src={imgURL}
+                    alt={altText} 
+                />
+            </Link>
             <span id='subtitle'>{(subtitle) ? subtitle : ''}</span>
         </div>
     );
