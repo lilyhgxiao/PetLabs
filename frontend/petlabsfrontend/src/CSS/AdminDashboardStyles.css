@@ -1,0 +1,29 @@
+h1 {
+    text-align: center;
+}
+
+ul, li {
+    display:inline
+}
+
+ul {
+    width: 70%;
+    margin: auto;
+}
+
+li {
+    margin-right: 64px;
+    font-weight: bold;
+    font-size: 16pt;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.description {
+    font-size: 16pt;
+    font-weight: bold;
+    margin-left: 30%;
+}
