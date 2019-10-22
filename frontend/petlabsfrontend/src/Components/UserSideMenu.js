@@ -8,10 +8,16 @@ class UserSideMenu extends React.Component {
     render() {
         return(
             <div class="sidemenu">
-                <ImageComponent className='logo' imgURL={logo} altText={'Home'} subtitle={''} link={'./UserDashboardPage'} />
-                <a href="#">Store</a>
-                <a href="#">Settings</a>
-                <a href="#">Help</a>
+                <Link to={'./'}>
+                    <input
+                        type='image'
+                        src={logo}
+                        alt={'Home'} 
+                    />
+                </Link>
+                <Link to={'./AdminUserListPage'}>Store</Link>
+                <Link to={'./AdminPetListPage'}>Settings</Link>
+                <Link to={'./AdminItemListPage'}>Help</Link>
             </div>
         );
     }
