@@ -6,6 +6,7 @@ import AdminDashboardPage from './Components/AdminDashboardPage';
 import AdminUserListPage from './Components/AdminUserListPage';
 import AdminPetListPage from './Components/AdminPetListPage';
 import AdminItemListPage from './Components/AdminItemListPage';
+import AdminUserPage from './Components/AdminUserPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/AdminUserListPage" component={AdminUserListPage} />
         <Route path="/AdminPetListPage" component={AdminPetListPage} />
         <Route path="/AdminItemListPage" component={AdminItemListPage} />
+        <Route path="/AdminUserPage" component={AdminUserPage} />
       </Switch>
     </Router>
   );
