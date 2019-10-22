@@ -128,7 +128,6 @@ class UserPetCarePage extends React.Component {
             </div>
         );  
       }
-
 }
 
 export default UserPetCarePage;
