@@ -6,7 +6,7 @@ import logo from '../Images/logo_placeholder.png';
 
 function AdminSideMenu(props) {
     return (
-        <div class="sidemenu">
+        <div className="sidemenu">
             <Link to={'./'}>
                 <input
                     type='image'
