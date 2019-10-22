@@ -8,6 +8,7 @@ import AdminPetListPage from './Components/AdminPetListPage';
 import AdminItemListPage from './Components/AdminItemListPage';
 import UserDashboardPage from './Components/UserDashboardPage';
 import LogInPage from './Components/LogInPage';
+import AdminUserPage from './Components/AdminUserPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/AdminUserListPage" component={AdminUserListPage} />
         <Route path="/AdminPetListPage" component={AdminPetListPage} />
         <Route path="/AdminItemListPage" component={AdminItemListPage} />
+        <Route path="/AdminUserPage" component={AdminUserPage} />
 
         <Route path="/UserDashboardPage" exact component={UserDashboardPage} />
       </Switch>
