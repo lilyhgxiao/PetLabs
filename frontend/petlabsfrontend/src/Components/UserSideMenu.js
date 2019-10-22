@@ -1,6 +1,6 @@
 import React from 'react';
 import '../CSS/SideMenuStyle.css';
-import ImageComponent from './ImageComponent';
+import { Link } from 'react-router-dom';
 
 import logo from '../Images/logo_placeholder.png';
 
