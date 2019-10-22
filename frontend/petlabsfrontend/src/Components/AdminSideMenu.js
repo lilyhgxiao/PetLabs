@@ -4,23 +4,21 @@ import { Link } from 'react-router-dom';
 
 import logo from '../Images/logo_placeholder.png';
 
-class AdminSideMenu extends React.Component {
-    render() {
-        return(
-            <div class="sidemenu">
-                <Link to={'./'}>
-                    <input
-                        type='image'
-                        src={logo}
-                        alt={'Home'} 
-                    />
-                </Link>
-                <Link to={'./AdminUserListPage'}>Users</Link>
-                <Link to={'./AdminPetListPage'}>Pets</Link>
-                <Link to={'./AdminItemListPage'}>Items</Link>
-            </div>
-        );
-    }
+function AdminSideMenu(props) {
+    return (
+        <div class="sidemenu">
+            <Link to={'./'}>
+                <input
+                    type='image'
+                    src={logo}
+                    alt={'Home'}
+                />
+            </Link>
+            <Link to={'./AdminUserListPage'}>Users</Link>
+            <Link to={'./AdminPetListPage'}>Pets</Link>
+            <Link to={'./AdminItemListPage'}>Items</Link>
+        </div>
+    );
 }
 
 export default AdminSideMenu;
