@@ -7,7 +7,7 @@ import logo from '../Images/logo_placeholder.png';
 function UserSideMenu(props) {
     return(
         <div className="sidemenu">
-            <Link to={'./'}>
+            <Link to={'./UserDashboardPage'}>
                 <input
                     type='image'
                     src={logo}
