@@ -2,20 +2,32 @@ import React from 'react';
 import '../CSS/ListView.css';
 import AdminSideMenu from './AdminSideMenu';
 import Lists from '../TempClasses/List';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 class AdminUserListPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             users: Lists.userList,
-            textFieldValue: ''
+            textFieldValue: '',
+            validUser: false,
         };
         this.handleTextboxChange = this.handleTextboxChange.bind(this);
+        this.handleGoButtonClick = this.handleGoButtonClick.bind(this);
     }
 
     handleTextboxChange(event) {
         this.setState({ textFieldValue: event.target.value });
+    }
+
+    handleGoButtonClick() {
+        for (let i = 0; i < this.state.users.length; i++) {
+            if (this.state.users[i].username === this.state.textFieldValue) {
+                this.setState({ validUser: true });
+                return;
+            }
+        }
+        alert("Invalid username selected :)");
     }
 
     getTableRows() {
@@ -41,6 +53,12 @@ class AdminUserListPage extends React.Component {
     }
 
     render() {
+        if (this.state.validUser) {
+            return <Redirect to={{
+                pathname: './AdminUserPage',
+                username: this.state.textFieldValue
+            }} />
+        }
         return(
             <div>
                 <AdminSideMenu />
@@ -48,12 +66,12 @@ class AdminUserListPage extends React.Component {
                     <h1>Users</h1>
                     <div id={'inner-container'} className={'list-view'}>
                         <input className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue}></input>
-                        <Link to={{
+                        {/* <Link to={{
                             pathname: './AdminUserPage',
                             username: this.state.textFieldValue
-                        }}>
-                            <button className={'list-view'}>Go!</button>
-                        </Link>
+                        }}> */}
+                            <button className={'list-view'} onClick={this.handleGoButtonClick}>Go!</button>
+                        {/* </Link> */}
                         <br /> <br />
                         <table className={'list-view'}>
                             <tbody>
