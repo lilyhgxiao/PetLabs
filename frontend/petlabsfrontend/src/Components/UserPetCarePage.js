@@ -2,6 +2,9 @@ import React from 'react';
 // import '../CSS/__.css';
 import PetCareAction from './PetCareAction.js';
 import PetModel from './PetModel.js';
+import PetStatus from './PetStatus.js';
+
+import Pet from '../TempClasses/Pet';
 
 // Images
 import petHappy from '../Images/pet_happy_placeholder.png';
@@ -113,6 +116,15 @@ class UserPetCarePage extends React.Component {
     render() {
         return (
             <div>
+                { /* Shows status of the pet */ }  
+                <PetStatus
+                    numHunger = {this.state.hunger}
+                    numHappiness = {this.state.happiness}
+                    numIntelligence = {this.state.intelligence}
+                    numStrength = {this.state.strength}
+                    numSpeed = {this.state.speed}
+                />
+                
                 { /* Shows model of the pet with name */ }  
                 <PetModel
                     imgSource = {this.state.petImg}

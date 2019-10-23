@@ -6,10 +6,10 @@ function PetStatus(props)  {
     return (
         <ul>
             <li> Hunger: {numHunger} </li>
-            <li> Hunger: {numHappiness} </li>
-            <li> Hunger: {numIntelligence} </li>
-            <li> Hunger: {numStrength} </li>
-            <li> Hunger: {numSpeed} </li>
+            <li> Happiness: {numHappiness} </li>
+            <li> Intelligence: {numIntelligence} </li>
+            <li> Strength: {numStrength} </li>
+            <li> Speed: {numSpeed} </li>
         </ul>
     );
 }
