@@ -22,7 +22,7 @@ class UserDashboardPage extends React.Component {
     };
 
     componentDidMount() { // When the component enters the DOM
-        const currUser = this.props.location.state.user;
+        const currUser = Lists.currUser;
         console.log("componentDidMount(): " + currUser.username)
         this.setState({
             user: currUser,

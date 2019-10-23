@@ -3,6 +3,7 @@ import React from 'react';
 import PetCareAction from './PetCareAction.js';
 import PetModel from './PetModel.js';
 import PetStatus from './PetStatus.js';
+import UserSideMenu from './UserSideMenu';
 
 import Pet from '../TempClasses/Pet';
 
@@ -131,28 +132,30 @@ class UserPetCarePage extends React.Component {
     render() {
         return (
             <div>
-        
-                { /* Shows status of the pet */ }  
-                <PetStatus
-                    numHunger = {this.state.hunger}
-                    numHappiness = {this.state.happiness}
-                    numIntelligence = {this.state.intelligence}
-                    numStrength = {this.state.strength}
-                    numSpeed = {this.state.speed}
-                />
-                
-                { /* Shows model of the pet with name */ }  
-                <PetModel
-                    imgSource = {this.state.petImg}
-                    petName = {this.state.petName}
-                />
+                <UserSideMenu/>
+                <div className='main'>
+                    { /* Shows status of the pet */ }  
+                    <PetStatus
+                        numHunger = {this.state.hunger}
+                        numHappiness = {this.state.happiness}
+                        numIntelligence = {this.state.intelligence}
+                        numStrength = {this.state.strength}
+                        numSpeed = {this.state.speed}
+                    />
+                    
+                    { /* Shows model of the pet with name */ }  
+                    <PetModel
+                        imgSource = {this.state.petImg}
+                        petName = {this.state.petName}
+                    />
 
-                { /* A table that contains three buttons */ }  
-                <PetCareAction
-                    feedAction = {this.feedPet}
-                    playAction = {this.playWithPet}
-                    trainAction = {this.trainPet}
-                />
+                    { /* A table that contains three buttons */ }  
+                    <PetCareAction
+                        feedAction = {this.feedPet}
+                        playAction = {this.playWithPet}
+                        trainAction = {this.trainPet}
+                    />
+                </div>
             </div>
         );  
       }

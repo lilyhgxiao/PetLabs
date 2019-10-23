@@ -50,6 +50,7 @@ class LogInPage extends React.Component {
         }
         //if login was a success, determine which dashboard to show.
         else {
+            Lists.currUser = userToLogin;
             this.setState({
                 isAdmin: userToLogin.isAdmin,
                 user: userToLogin,
