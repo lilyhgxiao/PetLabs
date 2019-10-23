@@ -2,6 +2,8 @@ import User from "./User";
 import Pet from "./Pet";
 
 const Lists = {
+    currUser: null,
+
     userList: [
         new User('user', 'user', false),
         new User('user0', 'user', false),
