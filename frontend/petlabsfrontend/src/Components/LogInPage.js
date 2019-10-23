@@ -1,6 +1,7 @@
 import React from 'react';
 import '../CSS/LogInStyles.css';
 import { Redirect } from 'react-router';
+import Lists from '../TempClasses/List'
 
 import logo from '../Images/logo_placeholder.png';
 
@@ -8,25 +9,20 @@ class LogInPage extends React.Component {
     state = {
         username: "",
         password: "",
-        redirect: ""
+        isAdmin: false,
+        loginSuccessful: false,
+        user: -1
     };
 
-    constructor(props) {
-        super(props);
-    }
-
     handleInputChange = (event) => {
-        const target = event.target
-        const value = target.value
-        const name = target.name
-        
-        // log(name)
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
     
         // 'this' is bound to the component in this arrow function.
         this.setState({
           [name]: value  // [name] sets the object property name to the value of the 'name' variable.
-        })
-    
+        });
     }
 
     signup() {
@@ -35,41 +31,57 @@ class LogInPage extends React.Component {
 
     login = () => {
         //authenticate
-        console.log("login(): " + this.state.username)
+
         //temp
-        if (!(this.state.username === 'user' || this.state.username === 'admin')) {
-            alert('Wrong username/password combination. Please try again.');
+        let success = false;
+        let userToLogin = -1;
+        const userList = Lists.userList;
+
+        for (let i = 0; i < userList.length; i ++) {
+            if (this.state.username === userList[i].username && this.state.password === userList[i].password) {
+                success = true;
+                userToLogin = userList[i];
+                break;
+            }
         }
+        //if login wasn't successful, show warning.
+        if (!success) {
+            alert('Invalid username/password combination. Please try again.');
+        }
+        //if login was a success, determine which dashboard to show.
         else {
             this.setState({
-                redirect: this.state.username
+                isAdmin: userToLogin.isAdmin,
+                user: userToLogin,
+                loginSuccessful: true
             })
         }
     }
 
     render() {
 
-        if (this.state.redirect === 'user') {
-            return(
-                <Redirect push to={{
-                    pathname: "/UserDashboardPage",
-                    state: { username: this.state.username }
-                }} />
-            );
+        if (this.state.loginSuccessful) {
+            if (this.state.isAdmin) {
+                return(
+                    <Redirect push to={{
+                        pathname: "/AdminDashboardPage",
+                        state: { user: this.state.user }
+                    }} />
+                );
+            } else {
+                return(
+                    <Redirect push to={{
+                        pathname: "/UserDashboardPage",
+                        state: { user: this.state.user }
+                    }} />
+                );
+            }
+            
         }
-        if (this.state.redirect === 'admin') {
-            return(
-                <Redirect push to={{
-                    pathname: "/AdminDashboardPage",
-                    state: { username: this.state.username }
-                }} />
-            );
-        }
-        
 
         return(
             <div className='center'>
-                <img src={logo}/>
+                <img src={logo} alt='logo'/>
 
                 <div className='loginForm'>
                     Login:
