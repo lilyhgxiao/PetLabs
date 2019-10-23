@@ -14,3 +14,16 @@ input {
     display: block;
     font-size: 64pt;
 }
+
+.statusName {
+    font-weight: bold;
+    float: left;
+}
+
+.statusValue {
+    float: right;
+}
+
+.pet {
+    padding: 30px;
+}

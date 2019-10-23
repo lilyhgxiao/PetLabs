@@ -2,13 +2,19 @@ import React from 'react';
 
 import { uid } from 'react-uid';
 import Lists from '../TempClasses/List'
+import User from "../TempClasses/User";
+
+import '../CSS/UserDashboardStyles.css';
 
 import UserSideMenu from './UserSideMenu';
 import PetComponent from './PetComponent';
+import ImageComponent from './ImageComponent';
+
+import addNew from '../Images/add_new.png';
 
 class UserDashboardPage extends React.Component {
     state = {
-        user: -1
+        user: new User('', '', false)
     };
 
     componentDidMount() { // When the component enters the DOM
@@ -52,12 +58,15 @@ class UserDashboardPage extends React.Component {
                         <ul className='container'>
                         { this.state.user.petList.map((pet) => {
                             return(
-                                <PetComponent key={ uid(pet) /*unique id required to help React render more efficiently when we delete pets.*/ } 
+                                <PetComponent className='pets' key={ uid(pet) /*unique id required to help React render more efficiently when we delete pets.*/ } 
                                 pet={pet}
                                 petPage='#'  />
                                 )
                             })
                         }
+                        <div className='addNew'>
+                            <ImageComponent imgURL={addNew} altText={'Add New Pet'} subtitle={"Add New"} link={'#'} />
+                        </div>
                         </ul>
                     </div>
                 </div>

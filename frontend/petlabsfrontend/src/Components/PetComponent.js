@@ -1,4 +1,5 @@
 import React from 'react';
+import '../CSS/ImageLinkStyle.css';
 
 import ImageComponent from './ImageComponent';
 
@@ -17,8 +18,14 @@ function PetComponent(props) {
     return(
         <div className='pet'>
             <ImageComponent imgURL={imgURL} altText={pet.petName} subtitle={pet.petName} link={petPage} />
-            <span id='happiness'>Happiness: { pet.happiness }%</span>
-            <span id='hunger'>Hunger: {pet.hunger}%</span>
+            <br/>
+            <span id='happiness'>
+                <span className='statusName'>Happiness: </span><span className='statusValue'>{ pet.happiness }%</span>
+            </span>
+            <br/>
+            <span id='hunger'>
+                <span className='statusName'>Hunger: </span><span className='statusValue'>{pet.hunger}%</span>
+            </span>
         </div>
     );
 }
