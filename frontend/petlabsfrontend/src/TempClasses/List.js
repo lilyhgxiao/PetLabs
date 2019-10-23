@@ -1,4 +1,5 @@
 import User from "./User";
+import Pet from "./Pet";
 
 const Lists = {
     userList: [
@@ -10,7 +11,10 @@ const Lists = {
     ],
     
     petList: [
-    
+        new Pet(0, 'Alex', 'user'),
+        new Pet(1, 'Luke', 'user'),
+        new Pet(2, 'Lily', 'user'),
+        new Pet(0, 'Help', 'user0'),
     ],
     
     itemList: [
