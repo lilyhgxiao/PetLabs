@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { uid } from 'react-uid';
+import { Redirect } from 'react-router';
+
 import Lists from '../TempClasses/List'
 import User from "../TempClasses/User";
 
@@ -14,14 +16,18 @@ import addNew from '../Images/add_new.png';
 
 class UserDashboardPage extends React.Component {
     state = {
-        user: new User('', '', false)
+        user: new User('', '', false),
+        toPetPage: false,
+        targetPet: null
     };
 
     componentDidMount() { // When the component enters the DOM
         const currUser = this.props.location.state.user;
         console.log("componentDidMount(): " + currUser.username)
         this.setState({
-            user: currUser
+            user: currUser,
+            toPetPage: false,
+            targetPet: null
         }, this.fetchPets)
     }
 
@@ -44,7 +50,23 @@ class UserDashboardPage extends React.Component {
         })
     }
 
+    goToPetPage = (pet) => {
+        this.setState({
+            targetPet: pet,
+            toPetPage: true
+        })
+    }
+
     render() {
+        if (this.state.toPetPage) {
+            return(
+                <Redirect push to={{
+                    pathname: "/UserPetCarePage",
+                    state: { pet: this.state.targetPet }
+                }} />
+            );
+        }
+
         return(
             <div>
                 <UserSideMenu/>
@@ -60,7 +82,7 @@ class UserDashboardPage extends React.Component {
                             return(
                                 <PetComponent className='pets' key={ uid(pet) /*unique id required to help React render more efficiently when we delete pets.*/ } 
                                 pet={pet}
-                                petPage='#'  />
+                                goToPetPage={this.goToPetPage}  />
                                 )
                             })
                         }

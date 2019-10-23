@@ -11,6 +11,8 @@ import petHappy from '../Images/pet_happy_placeholder.png';
 import petNeutral from '../Images/pet_neutral_placeholder.png';
 import petSad from '../Images/pet_sad_placeholder.png';
 
+const log = console.log
+
 class UserPetCarePage extends React.Component {
 
     state = {
@@ -25,6 +27,19 @@ class UserPetCarePage extends React.Component {
     }
 
     componentDidMount() {
+        const pet = this.props.location.state.pet;
+
+        this.setState({
+            petName: pet.petName,
+            petImg: petNeutral,
+            hunger: pet.hunger,
+            happiness: pet.happiness,
+            intelligence: pet.intelligence,
+            strength: pet.strength,
+            speed: pet.speed,
+            alive: pet.alive
+        })
+
         this.dTimer = setInterval(
             () => this.starve(),
         1000
@@ -45,7 +60,7 @@ class UserPetCarePage extends React.Component {
     }
 
     fatigue() {
-        if (this.state.hunger > 90) {
+        if (this.state.hunger > 90 && this.state.hunger < 160) {
             this.setState({
                 happiness: this.state.happiness - 2
             })
@@ -54,7 +69,7 @@ class UserPetCarePage extends React.Component {
                     petImg: petSad
                 })
             }
-        } else if (this.state.hunger > 160) {
+        } if (this.state.hunger > 160) {
             this.setState({
                 alive: false
             })
@@ -76,7 +91,7 @@ class UserPetCarePage extends React.Component {
         log('playing with pet: +2 happiness');
         if (this.state.alive) {
 
-            incValue = 2;
+            let incValue = 2;
             if (this.state.hunger > 90) {
                 incValue = 1;
             } else if (this.state.hunger > 120) {
@@ -116,6 +131,7 @@ class UserPetCarePage extends React.Component {
     render() {
         return (
             <div>
+        
                 { /* Shows status of the pet */ }  
                 <PetStatus
                     numHunger = {this.state.hunger}
