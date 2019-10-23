@@ -1,6 +1,10 @@
 import React from 'react';
 
+import { uid } from 'react-uid';
+import Lists from '../TempClasses/List'
+
 import UserSideMenu from './UserSideMenu';
+import PetComponent from './PetComponent';
 
 class UserDashboardPage extends React.Component {
     state = {
@@ -20,6 +24,18 @@ class UserDashboardPage extends React.Component {
         console.log("fetchPets(): " + currUser.username)
 
         //fetch data from database depending on user
+        const totalPetList = Lists.petList;
+        const userPetList = [];
+
+        for (let i = 0; i < totalPetList.length; i ++) {
+            if (currUser.username === totalPetList[i].owner) {
+                userPetList.push(totalPetList[i]);
+            }
+        }
+        currUser.petList = userPetList;
+        this.setState({
+            user: currUser
+        })
     }
 
     render() {
@@ -34,7 +50,14 @@ class UserDashboardPage extends React.Component {
                         <br />
                         <br />
                         <ul className='container'>
-                            
+                        { this.state.user.petList.map((pet) => {
+                            return(
+                                <PetComponent key={ uid(pet) /*unique id required to help React render more efficiently when we delete pets.*/ } 
+                                pet={pet}
+                                petPage='#'  />
+                                )
+                            })
+                        }
                         </ul>
                     </div>
                 </div>
@@ -42,14 +65,5 @@ class UserDashboardPage extends React.Component {
         );
     }
 }
-
-/*
-{ this.state.pets.map((pet) => {
-                            return(
-                                <Pet key={ uid(pet) unique id required to help React render more efficiently when we delete students. } 
-                                pet={ pet }  />
-                                )
-                                }) }
-*/
 
 export default UserDashboardPage;
