@@ -1,5 +1,6 @@
 import React from 'react';
 // import '../CSS/__.css';
+import '../CSS/UserPetCareStyles.css';
 
 function PetCareAction(props)  {
     const { feedAction, playAction, trainAction } = props;

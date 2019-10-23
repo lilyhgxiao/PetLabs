@@ -1,5 +1,6 @@
 import React from 'react';
 // import '../CSS/__.css';
+import '../CSS/UserPetCareStyles.css';
 import PetCareAction from './PetCareAction.js';
 import PetModel from './PetModel.js';
 import PetStatus from './PetStatus.js';
@@ -17,9 +18,9 @@ const log = console.log
 class UserPetCarePage extends React.Component {
 
     state = {
-        petName: "pet A",
+        petName: "",
         petImg: petNeutral,
-        hunger: 50,
+        fullness: 50,
         happiness: 50,
         intelligence: 0,
         strength: 0,
@@ -33,7 +34,7 @@ class UserPetCarePage extends React.Component {
         this.setState({
             petName: pet.petName,
             petImg: petNeutral,
-            hunger: pet.hunger,
+            fullness: pet.hunger,
             happiness: pet.happiness,
             intelligence: pet.intelligence,
             strength: pet.strength,
@@ -54,23 +55,23 @@ class UserPetCarePage extends React.Component {
     starve() {
         if (this.state.alive) {
             this.setState({
-                hunger: this.state.hunger + 2
+                fullness: this.state.fullness - 2
             })
             this.fatigue()
         }
     }
 
     fatigue() {
-        if (this.state.hunger > 90 && this.state.hunger < 160) {
+        if (this.state.fullness < 20 && this.state.fullness >= -20) {
             this.setState({
-                happiness: this.state.happiness - 2
+                happiness: this.state.happiness - 20
             })
             if (this.state.happiness < 20) {
                 this.setState({
                     petImg: petSad
                 })
             }
-        } if (this.state.hunger > 160) {
+        } if (this.state.fullness < -20) {
             this.setState({
                 alive: false
             })
@@ -82,7 +83,7 @@ class UserPetCarePage extends React.Component {
         log('feeding: -10 hunger');
         if (this.state.alive) {
             this.setState({
-                hunger: this.state.hunger - 10
+                fullness: this.state.fullness + 10
             })
         }
     }
@@ -93,9 +94,9 @@ class UserPetCarePage extends React.Component {
         if (this.state.alive) {
 
             let incValue = 2;
-            if (this.state.hunger > 90) {
+            if (this.state.fullness < 20 && this.state.fullness >= -20) {
                 incValue = 1;
-            } else if (this.state.hunger > 120) {
+            } else if (this.state.fullness < -20) {
                 incValue = 0;
             }
 
@@ -103,7 +104,7 @@ class UserPetCarePage extends React.Component {
                 happiness: this.state.happiness + incValue
             })
             
-            if (this.state.happiness > 60) {
+            if (this.state.happiness > 60 && this.state.happiness <= 90) {
                 this.setState({
                     petImg: petNeutral
                 })
@@ -120,7 +121,7 @@ class UserPetCarePage extends React.Component {
         if (this.state.alive) {
             log('training pet: +1 all stats');
             this.setState({
-                hunger: this.state.hunger + 6,
+                fullness: this.state.fullness - 6,
                 intelligence: this.state.intelligence + 1,
                 strength: this.state.strength + 1,
                 speed: this.state.speed + 1
@@ -136,7 +137,7 @@ class UserPetCarePage extends React.Component {
                 <div className='main'>
                     { /* Shows status of the pet */ }  
                     <PetStatus
-                        numHunger = {this.state.hunger}
+                        numFullness = {this.state.fullness}
                         numHappiness = {this.state.happiness}
                         numIntelligence = {this.state.intelligence}
                         numStrength = {this.state.strength}

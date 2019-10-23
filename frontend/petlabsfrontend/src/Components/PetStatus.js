@@ -1,11 +1,12 @@
 import React from 'react';
 // import '../CSS/__.css';
+import '../CSS/UserPetCareStyles.css';
 
 function PetStatus(props)  {
-    const { numHunger, numHappiness, numIntelligence, numStrength, numSpeed } = props;
+    const { numFullness, numHappiness, numIntelligence, numStrength, numSpeed } = props;
     return (
         <ul>
-            <li> Hunger: {numHunger} </li>
+            <li> Fullness: {numFullness} </li>
             <li> Happiness: {numHappiness} </li>
             <li> Intelligence: {numIntelligence} </li>
             <li> Strength: {numStrength} </li>
