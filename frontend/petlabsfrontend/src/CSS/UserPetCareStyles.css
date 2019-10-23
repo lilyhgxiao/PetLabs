@@ -1,0 +1,53 @@
+h1 {
+    text-align: center;
+}
+
+ul, li {
+    display:inline
+}
+
+ul {
+    width: 70%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+li {
+    margin-right: 64px;
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+table, td, th {
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td, th {
+    min-width: 200px;
+    text-align: center;
+}
+
+button {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.petImg {
+    max-width: 260px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#petName {
+    display: block;
+    font-size: 32pt;
+    text-align: center;
+}
+
+.addNew {
+    padding: 30px;
+}
