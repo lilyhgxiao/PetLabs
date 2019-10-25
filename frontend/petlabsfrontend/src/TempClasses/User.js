@@ -5,6 +5,7 @@ class User {
         this.isAdmin = isAdmin;
         this.petList = [];
         this.itemList = [];
+        this.gold = 100;
     }
 }
 

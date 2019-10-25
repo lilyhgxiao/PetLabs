@@ -11,12 +11,13 @@ ul {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
 }
 
 li {
-    margin-right: 64px;
     font-weight: bold;
     font-size: 12pt;
+    text-align: center;
 }
 
 table, td, th {
