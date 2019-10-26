@@ -11,7 +11,7 @@ function PetComponent(props) {
     const { pet, goToPetPage } = props;
     let imgURL = '';
 
-    if (pet.type === 0) {
+    if (pet.type.name === 'Blob') {
         imgURL = type0
     } else {
         imgURL = type0
