@@ -1,14 +1,14 @@
 import React from 'react';
 import '../CSS/ListView.css';
 import AdminSideMenu from './AdminSideMenu';
-import Lists from '../TempClasses/List';
-import { Link, Redirect } from 'react-router-dom';
+import Database from '../TempClasses/Database';
+import { Redirect } from 'react-router-dom';
 
 class AdminUserListPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: Lists.userList,
+            users: Database.userList,
             textFieldValue: '',
             validUser: false,
         };
@@ -66,12 +66,7 @@ class AdminUserListPage extends React.Component {
                     <h1>Users</h1>
                     <div id={'inner-container'} className={'list-view'}>
                         <input className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue}></input>
-                        {/* <Link to={{
-                            pathname: './AdminUserPage',
-                            username: this.state.textFieldValue
-                        }}> */}
-                            <button className={'list-view'} onClick={this.handleGoButtonClick}>Go!</button>
-                        {/* </Link> */}
+                        <button className={'list-view'} onClick={this.handleGoButtonClick}>Go!</button>
                         <br /> <br />
                         <table className={'list-view'}>
                             <tbody>

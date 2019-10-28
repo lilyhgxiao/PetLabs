@@ -3,7 +3,7 @@ import React from 'react';
 import { uid } from 'react-uid';
 import { Redirect } from 'react-router';
 
-import Lists from '../TempClasses/List'
+import Database from '../TempClasses/Database'
 import User from "../TempClasses/User";
 
 import '../CSS/UserDashboardStyles.css';
@@ -22,7 +22,7 @@ class UserDashboardPage extends React.Component {
     };
 
     componentDidMount() { // When the component enters the DOM
-        const currUser = Lists.currUser;
+        const currUser = Database.currUser;
         console.log("componentDidMount(): " + currUser.username)
         this.setState({
             user: currUser,
@@ -36,11 +36,11 @@ class UserDashboardPage extends React.Component {
         console.log("fetchPets(): " + currUser.username)
 
         //fetch data from database depending on user
-        const totalPetList = Lists.petList;
+        const totalPetList = Database.petList;
         const userPetList = [];
 
         for (let i = 0; i < totalPetList.length; i ++) {
-            if (currUser.username === totalPetList[i].owner) {
+            if (currUser.username === totalPetList[i].ownerName) {
                 userPetList.push(totalPetList[i]);
             }
         }

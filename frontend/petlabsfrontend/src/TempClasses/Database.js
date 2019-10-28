@@ -6,7 +6,7 @@ import petHappy from '../Images/pet_happy_placeholder.png';
 import petNeutral from '../Images/pet_neutral_placeholder.png';
 import petSad from '../Images/pet_sad_placeholder.png';
 
-const Lists = {
+const Database = {
     currUser: null,
 
     userList: [
@@ -18,10 +18,10 @@ const Lists = {
     ],
     
     petList: [
-        new Pet(0, 'Alex', 'user'),
-        new Pet(1, 'Luke', 'user'),
-        new Pet(2, 'Lily', 'user'),
-        new Pet(0, 'Help', 'user0'),
+        new Pet(0, 'Alex', 'user', 'Blob'),
+        new Pet(1, 'Luke', 'user', 'Flower'),
+        new Pet(2, 'Lily', 'user', 'Fireball'),
+        new Pet(0, 'Help', 'user0', 'Pet Rock'),
     ],
     
     itemList: [
@@ -29,11 +29,11 @@ const Lists = {
     ],
 
     petTypes: [
-        new PetType('Blob', petNeutral, petHappy, petSad, 1, 'Anything'),
-        new PetType('Flower', petNeutral, petHappy, petSad, 1, 'Water Cube'),
-        new PetType('Fireball', petNeutral, petHappy, petSad, 1, 'Wood'),
-        new PetType('Pet Rock', petNeutral, petHappy, petSad, 1, 'Nothing'),
+        new PetType('Blob', petNeutral, petHappy, petSad, 1, 1, 1, 1, 1, 1, 1),
+        new PetType('Flower', petNeutral, petHappy, petSad, 1, 1, 1, 1, 1, 1, 1),
+        new PetType('Fireball', petNeutral, petHappy, petSad, 1, 1, 1, 1, 1, 1, 1),
+        new PetType('Pet Rock', petNeutral, petHappy, petSad, 1, 1, 1, 1, 1, 1, 1),
     ],
 };
 
-export default Lists;
+export default Database;

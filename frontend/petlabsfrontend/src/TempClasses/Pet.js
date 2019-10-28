@@ -1,10 +1,10 @@
 class Pet {
-    constructor(petId, petName, owner) {
+    constructor(petId, petName, ownerName, type) {
         this.petId = petId;
-        this.owner = owner;
+        this.ownerName = ownerName;
         this.petName = petName;
+        this.type = type;
         // Default values for status:
-        this.type = 0;
         this.hunger = 50;
         this.happiness = 50;
         this.intelligence = 0;

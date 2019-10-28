@@ -7,7 +7,7 @@ function PetModel(props)  {
     return (
         <div className='pet'>
             <span id='petName'>{(petName) ? petName : '--'}</span>
-            <img class="petImg" src={imgSource} />
+            <img className="petImg" src={imgSource} />
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../CSS/LogInStyles.css';
 import { Redirect } from 'react-router';
-import Lists from '../TempClasses/List'
+import Database from '../TempClasses/Database'
 
 import logo from '../Images/logo_placeholder.png';
 
@@ -35,7 +35,7 @@ class LogInPage extends React.Component {
         //temp
         let success = false;
         let userToLogin = -1;
-        const userList = Lists.userList;
+        const userList = Database.userList;
 
         for (let i = 0; i < userList.length; i ++) {
             if (this.state.username === userList[i].username && this.state.password === userList[i].password) {
@@ -50,7 +50,7 @@ class LogInPage extends React.Component {
         }
         //if login was a success, determine which dashboard to show.
         else {
-            Lists.currUser = userToLogin;
+            Database.currUser = userToLogin;
             this.setState({
                 isAdmin: userToLogin.isAdmin,
                 user: userToLogin,
