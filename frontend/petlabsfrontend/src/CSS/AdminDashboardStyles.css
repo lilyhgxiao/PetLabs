@@ -22,7 +22,8 @@ li {
     justify-content: center;
 }
 
-.description {
+p.description {
     font-size: 16pt;
     font-weight: bold;
+    margin-left: 25%;
 }

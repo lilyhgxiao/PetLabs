@@ -5,7 +5,7 @@ import Database from '../TempClasses/Database';
 import { Redirect, Link } from 'react-router-dom';
 import AddIcon from '../Images/add_new.png';
 
-class AdminUserListPage extends React.Component {
+class AdminPetListPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -95,4 +95,4 @@ class AdminUserListPage extends React.Component {
     }
 }
 
-export default AdminUserListPage;
+export default AdminPetListPage;

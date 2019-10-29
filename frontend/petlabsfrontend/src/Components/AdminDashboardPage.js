@@ -17,9 +17,7 @@ function AdminDashboard(props) {
             <div className='main'>
                 <div className='mainForm'>
                     <h1>Welcome, {username}</h1>
-                    <span className='description'>View Data For:</span>
-                    <br />
-                    <br />
+                    <p className='description'>View Data For:</p>
                     <ul className='container'>
                         <li>
                             <ImageComponent imgURL={users} altText={'Users'} subtitle={'Users'} link={'./AdminUserListPage'} />

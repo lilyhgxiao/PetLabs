@@ -1,6 +1,7 @@
 import User from "./User";
 import Pet from "./Pet";
 import PetType from "./PetType";
+import Item from "./Item";
 
 import petHappy from '../Images/pet_happy_placeholder.png';
 import petNeutral from '../Images/pet_neutral_placeholder.png';
@@ -25,7 +26,9 @@ const Database = {
     ],
     
     itemList: [
-    
+        new Item('Strength', 'Dumbell', 5, 1, 0, 3, -3),
+        new Item('Intelligence', 'Astronomy Book', 0, 0, 5, 2, 0),
+        new Item('Speed', 'Treadmill', 2, 5, 0, 4, -3)
     ],
 
     petTypes: [
@@ -34,6 +37,12 @@ const Database = {
         new PetType('Fireball', petNeutral, petHappy, petSad, 1, 1, 1, 1, 1, 1, 1),
         new PetType('Pet Rock', petNeutral, petHappy, petSad, 1, 1, 1, 1, 1, 1, 1),
     ],
+
+    // nextItemId: 0,
+
+    // getNextItemId: function() {
+    //     return this.nextItemId++;
+    // }
 };
 
 export default Database;
