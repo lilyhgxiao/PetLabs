@@ -7,16 +7,15 @@ div.list-view {
 
 input.list-view {
     height: 15px;
-    /* margin-right: 2px; */
-    width: 45%;
+    width: 60%;
 }
 
 button.list-view {
-    width: 5%;
+    width: 10%;
 }
 
 table.list-view, tr.list-view {
-    width: 50%;
+    width: 70%;
     margin-left: auto;
     margin-right: auto;
     border: 1px solid black;
@@ -29,4 +28,12 @@ th.list-view, td.list-view {
 
 th.action {
     width: 15%;
+}
+
+img.addIcon {
+    width: 70px;
+    height: 70px;
+    margin-left: 93%;
+    margin-top: 0%;
+    position: fixed;
 }

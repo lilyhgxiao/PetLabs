@@ -8,7 +8,6 @@ class AdminUserListPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: Database.userList,
             textFieldValue: '',
             validUser: false,
         };
@@ -21,8 +20,8 @@ class AdminUserListPage extends React.Component {
     }
 
     handleGoButtonClick() {
-        for (let i = 0; i < this.state.users.length; i++) {
-            if (this.state.users[i].username === this.state.textFieldValue) {
+        for (let i = 0; i < Database.userList.length; i++) {
+            if (this.getUser()) {
                 this.setState({ validUser: true });
                 return;
             }
@@ -34,16 +33,16 @@ class AdminUserListPage extends React.Component {
         const rowList = [];
 
         rowList.push(
-            <tr key={this.state.users.length}>
+            <tr key={Database.userList.length}>
                 <th className={'list-view'}>Usernames</th>
             </tr>
         );
 
-        for (let i = 0; i < this.state.users.length; i++) {
-            if (!this.state.users[i].isAdmin && this.state.users[i].username.includes(this.state.textFieldValue)) {
+        for (let i = 0; i < Database.userList.length; i++) {
+            if (!Database.userList[i].isAdmin && Database.userList[i].username.toUpperCase().includes(this.state.textFieldValue.toUpperCase())) {
                 rowList.push(
                     <tr key={i}>
-                        <td className={'list-view'}>{this.state.users[i].username}</td>
+                        <td className={'list-view'}>{Database.userList[i].username}</td>
                     </tr>
                 );
             }
@@ -52,27 +51,40 @@ class AdminUserListPage extends React.Component {
         return rowList;
     }
 
+    getUser() {
+        for (let i = 0; i < Database.userList.length; i++) {
+            if (Database.userList[i].username.toUpperCase() === this.state.textFieldValue.toUpperCase()) {
+                return Database.userList[i].username;
+            }
+        }
+        return null;
+    }
+
     render() {
         if (this.state.validUser) {
             return <Redirect to={{
                 pathname: './AdminUserPage',
-                username: this.state.textFieldValue
+                username: this.getUser()
             }} />
         }
         return(
             <div>
                 <AdminSideMenu />
-                <div className={'list-view'}>
-                    <h1>Users</h1>
-                    <div id={'inner-container'} className={'list-view'}>
-                        <input className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue}></input>
-                        <button className={'list-view'} onClick={this.handleGoButtonClick}>Go!</button>
-                        <br /> <br />
-                        <table className={'list-view'}>
-                            <tbody>
-                                {this.getTableRows()}
-                            </tbody>
-                        </table>
+                <div className='main'>
+                    <div className='mainForm'>
+                        <div className={'list-view'}>
+                            <h1>Users</h1>
+                            <div id={'inner-container'} className={'list-view'}>
+                                <input className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue}></input>
+                                <button className={'list-view'} onClick={this.handleGoButtonClick}>Go!</button>
+                                <br /> <br />
+                                <table className={'list-view'}>
+                                    <tbody>
+                                        {this.getTableRows()}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
