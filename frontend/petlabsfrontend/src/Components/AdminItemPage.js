@@ -20,7 +20,7 @@ class AdminItemPage extends React.Component {
     }
     getItemReference() {
         for (let i = 0; i < Database.itemList.length; i++) {
-            if (Database.itemList[i].name === this.props.location.itemName) {
+            if (Database.itemList[i].id === this.props.location.itemId) {
                 return Database.itemList[i];
             }
         }

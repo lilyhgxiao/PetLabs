@@ -3,7 +3,7 @@ import Database from './Database';
 class Item {
     constructor(name, strength, speed, intelligence, happiness, fullness, imgURL) {
         if (typeof(Item.nextId) === 'undefined') {
-            Item.nextId = 0;
+            Item.nextId = 1;
         } else {
             Item.nextId++;
         }

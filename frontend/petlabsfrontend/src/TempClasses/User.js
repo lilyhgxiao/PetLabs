@@ -3,8 +3,10 @@ class User {
         this.username = username;
         this.password = password;
         this.isAdmin = isAdmin;
-        this.petList = [];
-        this.itemList = [];
+        this.petList = []; // Should be removed
+        this.itemList = []; // Should be removed
+        this.petIdList = [];
+        this.itemIdList = [];
         this.gold = 100;
     }
 }

@@ -2,6 +2,14 @@ class PetType {
     constructor(name, neutralImage, happyImage, sadImage, 
         hungerSpeed, fullnessSpeed, happinessSpeed, sadnessSpeed, 
         intelligenceSpeed, strengthSpeed, speedSpeed) {
+        
+        if (typeof(PetType.nextId) === 'undefined') {
+            PetType.nextId = 1;
+        } else {
+            PetType.nextId++;
+        }
+        this.id = PetType.nextId;
+
         this.name = name;
         this.neutralImage = neutralImage;
         this.happyImage = happyImage;

@@ -21,11 +21,9 @@ class AdminPetListPage extends React.Component {
     }
 
     handleGoButtonClick() {
-        for (let i = 0; i < Database.petTypes.length; i++) {
-            if (this.getPetType()) {
-                this.setState({ validPet: true });
-                return;
-            }
+        if (this.getPetTypeId()) {
+            this.setState({ validPet: true });
+            return;
         }
         alert("Invalid pet type selected :)");
     }
@@ -51,10 +49,10 @@ class AdminPetListPage extends React.Component {
         return rowList;
     }
 
-    getPetType() {
+    getPetTypeId() {
         for (let i = 0; i < Database.petTypes.length; i++) {
             if (Database.petTypes[i].name.toUpperCase() === this.state.textFieldValue.toUpperCase()) {
-                return Database.petTypes[i].name;
+                return Database.petTypes[i].id;
             }
         }
         return null;
@@ -64,7 +62,7 @@ class AdminPetListPage extends React.Component {
         if (this.state.validPet) {
             return <Redirect to={{
                 pathname: './AdminPetPage',
-                petType: this.getPetType()
+                petTypeId: this.getPetTypeId()
             }} />
         }
         return(

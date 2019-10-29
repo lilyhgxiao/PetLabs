@@ -1,11 +1,11 @@
 class Pet {
     constructor(petName, ownerName, type) {
         if (typeof(Pet.nextId) === 'undefined') {
-            Pet.nextId = 0;
+            Pet.nextId = 1;
         } else {
             Pet.nextId++;
         }
-        this.petId = Pet.nextId;
+        this.id = Pet.nextId;
         this.ownerName = ownerName;
         this.petName = petName;
         this.type = type;

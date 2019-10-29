@@ -10,7 +10,7 @@ class AdminItemListPage extends React.Component {
         super(props);
         this.state = {
             textFieldValue: '',
-            validPet: false,
+            validItem: false,
         };
         this.handleTextboxChange = this.handleTextboxChange.bind(this);
         this.handleGoButtonClick = this.handleGoButtonClick.bind(this);
@@ -21,13 +21,12 @@ class AdminItemListPage extends React.Component {
     }
 
     handleGoButtonClick() {
-        for (let i = 0; i < Database.itemList.length; i++) {
-            if (this.getItemName()) {
-                this.setState({ validPet: true });
-                return;
-            }
+        console.log(Database.itemList);
+        if (this.getItemId()) {
+            this.setState({ validItem: true });
+            return;
         }
-        alert("Invalid pet type selected :)");
+        alert("Invalid item selected :)");
     }
 
     getTableRows() {
@@ -51,20 +50,21 @@ class AdminItemListPage extends React.Component {
         return rowList;
     }
 
-    getItemName() {
+    getItemId() {
         for (let i = 0; i < Database.itemList.length; i++) {
             if (Database.itemList[i].name.toUpperCase() === this.state.textFieldValue.toUpperCase()) {
-                return Database.itemList[i].name;
+                console.log(Database.itemList[i].id);
+                return Database.itemList[i].id;
             }
         }
         return null;
     }
 
     render() {
-        if (this.state.validPet) {
+        if (this.state.validItem) {
             return <Redirect to={{
                 pathname: './AdminItemPage',
-                itemName: this.getItemName()
+                itemId: this.getItemId()
             }} />
         }
         return(
