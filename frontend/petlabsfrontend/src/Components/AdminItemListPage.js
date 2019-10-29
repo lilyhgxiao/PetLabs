@@ -69,7 +69,7 @@ class AdminItemListPage extends React.Component {
         }
         return(
             <div>
-                <Link to={'./AdminItemPage'}>
+                <Link to={'./AdminNewItemPage'}>
                     <img className={'addIcon'} src={AddIcon} alt={'Add Icon'}></img>
                 </Link>
                 <AdminSideMenu />
