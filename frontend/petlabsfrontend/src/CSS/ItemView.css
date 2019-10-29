@@ -23,6 +23,7 @@ p.addItemLink {
     text-align: left;
     margin-left: 1.4%;
     width: 30%;
+    font-weight: bold;
 }
 
 img.addItemLink {
