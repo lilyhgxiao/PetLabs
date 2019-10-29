@@ -35,7 +35,7 @@ class AdminItemListPage extends React.Component {
 
         rowList.push(
             <tr key={Database.itemList.length}>
-                <th className={'list-view'}>Pets</th>
+                <th className={'list-view'}>Item Type</th>
             </tr>
         );
 
@@ -69,14 +69,14 @@ class AdminItemListPage extends React.Component {
         }
         return(
             <div>
-                <Link to={'./AdminPetPage'}>
+                <Link to={'./AdminItemPage'}>
                     <img className={'addIcon'} src={AddIcon} alt={'Add Icon'}></img>
                 </Link>
                 <AdminSideMenu />
                 <div className='main'>
                     <div className='mainForm'>
                         <div className={'list-view'}>
-                            <h1>Pets</h1>
+                            <h1>Item Types</h1>
                             <div id={'inner-container'} className={'list-view'}>
                                 <input className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue}></input>
                                 <button className={'list-view'} onClick={this.handleGoButtonClick}>Go!</button>

@@ -7,6 +7,10 @@ import petHappy from '../Images/pet_happy_placeholder.png';
 import petNeutral from '../Images/pet_neutral_placeholder.png';
 import petSad from '../Images/pet_sad_placeholder.png';
 
+import DumbellImage from '../Images/Dumbell.png';
+import BookImage from '../Images/Book.png';
+import TreadmillImage from '../Images/Treadmill.png';
+
 const Database = {
     currUser: null,
 
@@ -26,9 +30,9 @@ const Database = {
     ],
     
     itemList: [
-        new Item('Strength', 'Dumbell', 5, 1, 0, 3, -3),
-        new Item('Intelligence', 'Astronomy Book', 0, 0, 5, 2, 0),
-        new Item('Speed', 'Treadmill', 2, 5, 0, 4, -3)
+        new Item('Dumbell', 5, 1, 0, 3, -3, DumbellImage),
+        new Item('Book', 0, 0, 5, 2, 0, BookImage),
+        new Item('Treadmill', 2, 5, 0, 4, -3, TreadmillImage)
     ],
 
     petTypes: [

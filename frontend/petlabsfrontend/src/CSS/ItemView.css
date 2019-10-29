@@ -1,0 +1,52 @@
+.centerView {
+    text-align: center;
+    /* border: 3px solid green; */
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input.addItemLink {
+    height: 5%;
+    width: 90%;
+}
+
+input.row {
+    width: 99%;
+}
+
+p.addItemLink {
+    font-weight: bold;
+}
+
+.centerLeft {
+    text-align: left;
+    margin-left: 1.4%;
+    width: 30%;
+}
+
+img.addItemLink {
+    width: 128px;
+    height: 128px;
+    float: left;
+}
+
+input.row {
+    height: 5%;
+}
+
+table.item-view, tr.item-view {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th.item-view, td.item-view {
+    border: 1px solid black;
+}
+
+button.addItemLink {
+    width: 93%;
+}
