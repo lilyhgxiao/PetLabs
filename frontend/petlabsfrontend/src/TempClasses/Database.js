@@ -23,10 +23,10 @@ const Database = {
     ],
     
     petList: [
-        new Pet(0, 'Alex', 'user', 'Blob'),
-        new Pet(1, 'Luke', 'user', 'Flower'),
-        new Pet(2, 'Lily', 'user', 'Fireball'),
-        new Pet(0, 'Help', 'user0', 'Pet Rock'),
+        new Pet('Alex', 'user', 'Blob'),
+        new Pet('Luke', 'user', 'Flower'),
+        new Pet('Lily', 'user', 'Fireball'),
+        new Pet('Help', 'user0', 'Pet Rock'),
     ],
     
     itemList: [
