@@ -3,6 +3,8 @@ import Database from '../TempClasses/Database';
 import AdminSideMenu from '../Components/AdminSideMenu';
 import '../CSS/ItemView.css';
 // import AddNew from '../Images/add_new.png';
+import { Link } from 'react-router-dom';
+import saveIcon from '../Images/Save_Icon.png';
 
 class AdminItemPage extends React.Component {
     constructor(props) {
@@ -92,6 +94,9 @@ class AdminItemPage extends React.Component {
     render() {
         return (
         <div>
+            <Link to={'./AdminDashboardPage'}>
+                <img className={'saveIcon'} src={saveIcon} alt={'Save Icon'}></img>
+            </Link>
             <AdminSideMenu />
                 <div className='main'>
                     <div className='mainForm'>
@@ -107,10 +112,10 @@ class AdminItemPage extends React.Component {
                                 {this.getTableRows()}
                             </tbody>
                         </table>
-                        <br />
+                        {/* <br />
                         <div className={'centerView'}>
                             <button className={'addItemLink'}>Save</button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
         </div>
