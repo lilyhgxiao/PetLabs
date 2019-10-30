@@ -67,7 +67,7 @@ class AdminPetListPage extends React.Component {
         }
         return(
             <div>
-                <Link to={'./AdminPetPage'}>
+                <Link to={'./AdminNewPetPage'}>
                     <img className={'addIcon'} src={AddIcon} alt={'Add Icon'}></img>
                 </Link>
                 <AdminSideMenu />

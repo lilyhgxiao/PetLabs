@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import saveIcon from '../Images/Save_Icon.png';
 import Item from '../TempClasses/Item';
 import AddIcon from '../Images/add_new.png';
-import SpriteComponent from '../Components/SpriteComponent'
 
 class AdminNewItemPage extends React.Component {
     constructor(props) {
@@ -45,31 +44,31 @@ class AdminNewItemPage extends React.Component {
         );
         const strength = (
             <tr key={key++} className={'item-view'}>
-                <td className={'item-view'}>Strength Rate</td>
+                <td className={'item-view'}>Strength</td>
                 <td className={'item-view'}><input className={'row'} type='Text' value={this.state.strength} onChange={this.handleStrengthChange} /></td>
             </tr>
         );
         const speed = (
             <tr key={key++} className={'item-view'}>
-                <td className={'item-view'}>Speed Rate</td>
+                <td className={'item-view'}>Speed</td>
                 <td className={'item-view'}><input className={'row'} type='Text' value={this.state.speed} onChange={this.handleSpeedChange} /></td>
             </tr>
         );
         const intelligence = (
             <tr key={key++} className={'item-view'}>
-                <td className={'item-view'}>Intelligence Rate</td>
+                <td className={'item-view'}>Intelligence</td>
                 <td className={'item-view'}><input className={'row'} type='Text' value={this.state.intelligence} onChange={this.handleIntelligenceChange} /></td>
             </tr>
         );
         const happiness = (
             <tr key={key++} className={'item-view'}>
-                <td className={'item-view'}>Happiness Rate</td>
+                <td className={'item-view'}>Happiness</td>
                 <td className={'item-view'}><input className={'row'} type='Text' value={this.state.happiness} onChange={this.handleHappinessChange} /></td>
             </tr>
         );
         const fullness = (
             <tr key={key++} className={'item-view'}>
-                <td className={'item-view'}>Fullness Rate</td>
+                <td className={'item-view'}>Fullness</td>
                 <td className={'item-view'}><input className={'row'} type='Text' value={this.state.fullness} onChange={this.handleFullnessChange} /></td>
             </tr>
         );
