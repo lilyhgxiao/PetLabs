@@ -13,6 +13,7 @@ import UserPetCarePage from './Components/UserPetCarePage';
 import AdminPetPage from './Components/AdminPetPage'
 import AdminItemPage from './Components/AdminItemPage';
 import AdminNewItemPage from './Components/AdminNewItemPage';
+import AdminNewPetPage from './Components/AdminNewPetPage';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/AdminPetPage" component={AdminPetPage} />
         <Route path="/AdminItemPage" component={AdminItemPage} />
         <Route path="/AdminNewItemPage" component={AdminNewItemPage} />
+        <Route path="/AdminNewPetPage" component={AdminNewPetPage} />
 
         <Route path="/UserDashboardPage" exact component={UserDashboardPage} />
         <Route path="/UserPetCarePage" exact component={UserPetCarePage} />
