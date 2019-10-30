@@ -8,7 +8,7 @@ import PetType from '../TempClasses/PetType';
 import AddIcon from '../Images/add_new.png';
 import SpriteComponent from '../Components/SpriteComponent';
 
-class AdminNewItemPage extends React.Component {
+class AdminNewPetPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -155,4 +155,4 @@ class AdminNewItemPage extends React.Component {
     }
 }
 
-export default AdminNewItemPage;
+export default AdminNewPetPage;
