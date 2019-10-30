@@ -36,10 +36,10 @@ const Database = {
     ],
 
     petTypes: [
-        new PetType('Blob', petNeutral, petHappy, petSad, 1, 1, 1, 1, 1, 1, 1),
-        new PetType('Flower', petNeutral, petHappy, petSad, 1, 1, 1, 1, 1, 1, 1),
-        new PetType('Fireball', petNeutral, petHappy, petSad, 1, 1, 1, 1, 1, 1, 1),
-        new PetType('Pet Rock', petNeutral, petHappy, petSad, 1, 1, 1, 1, 1, 1, 1),
+        new PetType('Blob', petNeutral, petHappy, petSad, 1, 1, 1, 1, 1),
+        new PetType('Flower', petNeutral, petHappy, petSad, 2, 2, 2, 2, 2),
+        new PetType('Fireball', petNeutral, petHappy, petSad, 3, 3, 3, 3, 3),
+        new PetType('Pet Rock', petNeutral, petHappy, petSad, 4, 4, 4, 4, 4),
     ],
 
     // nextItemId: 0,

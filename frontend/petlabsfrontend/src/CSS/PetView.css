@@ -1,0 +1,7 @@
+.centerView {
+    text-align: center;
+    border: 3px solid green;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}

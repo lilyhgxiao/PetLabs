@@ -59,3 +59,8 @@ img.saveIcon {
     margin-top: 0%;
     position: fixed;
 }
+
+.container {
+    display: flex;
+    justify-content: center;
+}
