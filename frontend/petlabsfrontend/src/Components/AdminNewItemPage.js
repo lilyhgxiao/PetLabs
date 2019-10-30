@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import saveIcon from '../Images/Save_Icon.png';
 import Item from '../TempClasses/Item';
 import AddIcon from '../Images/add_new.png';
+import SpriteComponent from '../Components/SpriteComponent'
 
 class AdminNewItemPage extends React.Component {
     constructor(props) {
@@ -103,6 +104,10 @@ class AdminNewItemPage extends React.Component {
     handleSaveClick = () => {
         this.addItem();
     }
+
+    placeHolderHandle = () => {
+        alert("Prompt for image to upload");
+    }
     
     render() {
         return(
@@ -117,7 +122,8 @@ class AdminNewItemPage extends React.Component {
                         <div className={'centerView'}>
                             <p className={'addItemLink'}>Name: <input className={'addItemLink'} type='Text' value={this.state.name} onChange={this.handleNameChange}/> </p> 
                             <p className={'centerLeft'}>Sprite:</p>
-                            <img className={'addItemLink'} src={AddIcon} alt={'Add new Image'} />
+                            {/* <img className={'addItemLink'} src={AddIcon} alt={'Add new Image'} onClick={this.placeHolderHandle} /> */}
+                            <input className={'imgAddItemLink'} type={'image'} src={AddIcon} alt={'Add new Image'} onClick={this.placeHolderHandle} />
                         </div>
                         <br /><br /><br /><br /><br /><br /><br />
                         <table className={'item-view'}>

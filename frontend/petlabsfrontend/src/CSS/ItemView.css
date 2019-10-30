@@ -32,6 +32,12 @@ img.addItemLink {
     float: left;
 }
 
+input.imgAddItemLink {
+    width: 128px;
+    height: 128px;
+    float: left;
+}
+
 input.row {
     height: 5%;
 }

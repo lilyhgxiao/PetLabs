@@ -36,31 +36,31 @@ class AdminItemPage extends React.Component {
         );
         const strength = (
             <tr key={key++} className={'item-view'}>
-                <td className={'item-view'}>Strength Rate</td>
+                <td className={'item-view'}>Strength</td>
                 <td className={'item-view'}><input className={'row'} type='Text' value={this.state.strength} onChange={this.handleStrengthChange} /></td>
             </tr>
         );
         const speed = (
             <tr key={key++} className={'item-view'}>
-                <td className={'item-view'}>Speed Rate</td>
+                <td className={'item-view'}>Speed</td>
                 <td className={'item-view'}><input className={'row'} type='Text' value={this.state.speed} onChange={this.handleSpeedChange} /></td>
             </tr>
         );
         const intelligence = (
             <tr key={key++} className={'item-view'}>
-                <td className={'item-view'}>Intelligence Rate</td>
+                <td className={'item-view'}>Intelligence</td>
                 <td className={'item-view'}><input className={'row'} type='Text' value={this.state.intelligence} onChange={this.handleIntelligenceChange} /></td>
             </tr>
         );
         const happiness = (
             <tr key={key++} className={'item-view'}>
-                <td className={'item-view'}>Happiness Rate</td>
+                <td className={'item-view'}>Happiness</td>
                 <td className={'item-view'}><input className={'row'} type='Text' value={this.state.happiness} onChange={this.handleHappinessChange} /></td>
             </tr>
         );
         const fullness = (
             <tr key={key++} className={'item-view'}>
-                <td className={'item-view'}>Fullness Rate</td>
+                <td className={'item-view'}>Fullness</td>
                 <td className={'item-view'}><input className={'row'} type='Text' value={this.state.fullness} onChange={this.handleFullnessChange} /></td>
             </tr>
         );
@@ -91,6 +91,10 @@ class AdminItemPage extends React.Component {
         this.setState({fullness: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
     }
 
+    placeHolderHandle = () => {
+        alert("Prompt for image to upload");
+    }
+
     /**
      * Update the properties of the reference
      */
@@ -117,7 +121,8 @@ class AdminItemPage extends React.Component {
                         <div className={'centerView'}>
                             <p className={'addItemLink'}>Name: <input className={'addItemLink'} type='Text' value={this.state.name} onChange={this.handleNameChange}/> </p> 
                             <p className={'centerLeft'}>Sprite:</p>
-                            <img className={'addItemLink'} src={this.getItemReference().imgURL} alt={'Add new Image'} />
+                            {/* <img className={'addItemLink'} src={this.item.imgURL} alt={'Add new Image'} /> */}
+                            <input className={'imgAddItemLink'} type={'image'} src={this.item.imgURL} alt={'Add new Image'} onClick={this.placeHolderHandle} />
                         </div>
                         <br /><br /><br /><br /><br /><br /><br />
                         <table className={'item-view'}>
