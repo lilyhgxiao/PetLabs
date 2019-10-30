@@ -17,6 +17,7 @@ class AdminNewItemPage extends React.Component {
             intelligence: 0,
             happiness: 0,
             fullness: 0,
+            imgURL: AddIcon,
         };
     }
 
@@ -29,6 +30,7 @@ class AdminNewItemPage extends React.Component {
             this.state.intelligence,
             this.state.happiness,
             this.state.fullness,
+            this.state.imgURL,
         ));
         console.log(Database.itemList);
     }
