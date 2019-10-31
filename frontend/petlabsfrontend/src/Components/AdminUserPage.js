@@ -21,7 +21,7 @@ class AdminUserPage extends React.Component {
 
 	componentDidMount() {
         this.findUserInfo();
-        this.populatePets();
+        // this.populatePets();
     }
 
 	findUserInfo() {
