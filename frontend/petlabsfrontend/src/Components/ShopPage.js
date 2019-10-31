@@ -125,17 +125,21 @@ class ShopPage extends React.Component {
         	let iList = mockDB.itemList;
 	    	let i = 0;
 	    	while (i < iList.length) {
-	    		if (iList[i].id == entryId) {
-	    			if (curUser.gold >= iList[i].price) {
-	    				curUser.gold -= iList[i].price;
-	    				curUser.itemIdList.push(entryId);
-	    				this.setState({
-							userGold: mockDB.currUser.gold
-						})
-	    				alert("Purchased " + iList[i].name + "!");
-	    			} else {
-	    				alert("Not enough Gold!");
-	    			}
+    			if (iList[i].id == entryId) {
+	    			if (!this.contains(entryId, curUser.itemIdList)){
+		    			if (curUser.gold >= iList[i].price) {
+		    				curUser.gold -= iList[i].price;
+		    				curUser.itemIdList.push(entryId);
+		    				this.setState({
+								userGold: mockDB.currUser.gold
+							})
+		    				alert("Purchased " + iList[i].name + "!");
+		    			} else {
+		    				alert("Not enough Gold!");
+		    			}
+		    		} else {
+		    			alert("Already have that item!");
+		    		}
 	    			i += iList.length;
 	    		}
 	    		i++;
@@ -147,19 +151,35 @@ class ShopPage extends React.Component {
         	let pList = mockDB.petTypes;
 	    	let i = 0;
 	    	while (i < pList.length) {
-	    		if (pList[i].id == entryId) {
-	    			if (curUser.gold >= pList[i].price) {
-	    				curUser.gold -= pList[i].price;
-	    				curUser.petIdList.push(entryId);
-	    				alert("Purchased " + pList[i].name + "!");
-	    			} else {
-	    				alert("Not enough Gold!");
-	    			}
-	    			i += pList.length;
-	    		}
+    			if (pList[i].id == entryId) {
+    				if (!this.contains(entryId, curUser.itemIdList)){
+		    			if (curUser.gold >= pList[i].price) {
+		    				curUser.gold -= pList[i].price;
+		    				curUser.petIdList.push(entryId);
+		    				this.setState({
+								userGold: mockDB.currUser.gold
+							})
+		    				alert("Purchased " + pList[i].name + "!");
+		    			} else {
+		    				alert("Not enough Gold!");
+		    			}
+		    		} else {
+		    			alert("Already have that pet!");
+		    		}
+		    		i += pList.length;
+	    		} 
 	    		i++;
 	    	}
 		}
+    }
+
+    contains(targetId, searchArray) {
+    	for (let i = 0; i < searchArray.length; i++) {
+    		if (searchArray[i] === targetId) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 
 	render() {
