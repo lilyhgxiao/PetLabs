@@ -1,7 +1,7 @@
 import React from 'react';
 import '../CSS/LogInStyles.css';
 import { Redirect } from 'react-router';
-import Database from '../TempClasses/Database'
+import Database from '../TempClasses/Database';
 
 import logo from '../Images/logo_placeholder.png';
 

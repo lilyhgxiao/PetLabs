@@ -15,6 +15,7 @@ import AdminPetPage from './Components/AdminPetPage'
 import AdminItemPage from './Components/AdminItemPage';
 import AdminNewItemPage from './Components/AdminNewItemPage';
 import AdminNewPetPage from './Components/AdminNewPetPage';
+import UserSettingsPage from './Components/UserSettingsPage';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/AdminNewPetPage" component={AdminNewPetPage} />
 
         <Route path="/UserDashboardPage" exact component={UserDashboardPage} />
+        <Route path="/UserSettingsPage" exact component={UserSettingsPage} />
         <Route path="/UserPetCarePage" exact component={UserPetCarePage} />
       </Switch>
     </Router>
