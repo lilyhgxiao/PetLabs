@@ -1,9 +1,9 @@
 import React from 'react';
 
 import '../CSS/UserPetCareStyles.css';
-import PetCareAction from './PetCareAction.js';
-import PetModel from './PetModel.js';
-import PetStatus from './PetStatus.js';
+import PetCareAction from './PetCareComponents/PetCareAction.js';
+import PetModel from './PetCareComponents/PetModel.js';
+import PetStatus from './PetCareComponents/PetStatus.js';
 import UserSideMenu from './UserSideMenu';
 
 import Pet from '../TempClasses/Pet';
@@ -243,7 +243,7 @@ class UserPetCarePage extends React.Component {
                 </div>
             </div>
         );  
-      }
+    }
 }
 
 export default UserPetCarePage;

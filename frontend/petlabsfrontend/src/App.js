@@ -6,15 +6,17 @@ import AdminDashboardPage from './Components/AdminDashboardPage';
 import AdminUserListPage from './Components/AdminUserListPage';
 import AdminPetListPage from './Components/AdminPetListPage';
 import AdminItemListPage from './Components/AdminItemListPage';
-import UserDashboardPage from './Components/UserDashboardPage';
-import LogInPage from './Components/LogInPage';
-import SignUpPage from './Components/SignUpPage';
-import AdminUserPage from './Components/AdminUserPage';
-import UserPetCarePage from './Components/UserPetCarePage';
 import AdminPetPage from './Components/AdminPetPage'
 import AdminItemPage from './Components/AdminItemPage';
 import AdminNewItemPage from './Components/AdminNewItemPage';
 import AdminNewPetPage from './Components/AdminNewPetPage';
+import AdminUserPage from './Components/AdminUserPage';
+
+import UserDashboardPage from './Components/UserDashboardPage';
+import LogInPage from './Components/LogInPage';
+import SignUpPage from './Components/SignUpPage';
+import UserPetCarePage from './Components/UserPetCarePage';
+import ShopPage from './Components/ShopPage';
 
 function App() {
   return (
@@ -34,6 +36,7 @@ function App() {
 
         <Route path="/UserDashboardPage" exact component={UserDashboardPage} />
         <Route path="/UserPetCarePage" exact component={UserPetCarePage} />
+        <Route path="/ShopPage" exact component={ShopPage} />
       </Switch>
     </Router>
   );

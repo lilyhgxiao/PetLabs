@@ -1,6 +1,6 @@
 import React from 'react';
 // import '../CSS/__.css';
-import '../CSS/UserPetCareStyles.css';
+import '../../CSS/UserPetCareStyles.css';
 
 function PetStatus(props)  {
     const { numFullness, numHappiness, numIntelligence, numStrength, numSpeed } = props;

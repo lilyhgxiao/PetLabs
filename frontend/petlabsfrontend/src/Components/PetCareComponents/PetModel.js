@@ -1,6 +1,6 @@
 import React from 'react';
 // import '../CSS/__.css';
-import '../CSS/UserPetCareStyles.css';
+import '../../CSS/UserPetCareStyles.css';
 
 function PetModel(props)  {
     const { imgSource, petName } = props;
