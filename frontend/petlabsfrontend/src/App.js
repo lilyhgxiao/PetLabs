@@ -17,6 +17,7 @@ import LogInPage from './Components/LogInPage';
 import SignUpPage from './Components/SignUpPage';
 import UserPetCarePage from './Components/UserPetCarePage';
 import ShopPage from './Components/ShopPage';
+import HelpPage from './Components/HelpPage';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="/UserDashboardPage" exact component={UserDashboardPage} />
         <Route path="/UserPetCarePage" exact component={UserPetCarePage} />
         <Route path="/ShopPage" exact component={ShopPage} />
+        <Route path="/HelpPage" exact component={HelpPage} />
       </Switch>
     </Router>
   );
