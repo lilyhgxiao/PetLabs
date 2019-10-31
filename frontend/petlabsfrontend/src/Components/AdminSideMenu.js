@@ -17,6 +17,7 @@ function AdminSideMenu(props) {
             <Link to={'./AdminUserListPage'}>Users</Link>
             <Link to={'./AdminPetListPage'}>Pets</Link>
             <Link to={'./AdminItemListPage'}>Items</Link>
+            <Link to={'./'}>Log out</Link>
         </div>
     );
 }

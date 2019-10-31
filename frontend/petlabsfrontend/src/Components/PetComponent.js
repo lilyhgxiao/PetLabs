@@ -1,26 +1,18 @@
 import React from 'react';
 import '../CSS/ImageLinkStyle.css';
 
-import ImageComponent from './ImageComponent';
 import { Link } from 'react-router-dom';
-
-
-import type0 from '../Images/pets.png';
+import Database from '../TempClasses/Database'
 
 function PetComponent(props) {
     const { pet, goToPetPage } = props;
-    let imgURL = '';
-
-    if (pet.type.name === 'Blob') {
-        imgURL = type0
-    } else {
-        imgURL = type0
-    }
+    
+    let imgURL = retrieveImgURL(pet);
 
     return(
         <div className='pet'>
             <div className='item'>
-                <Link onClick={ goToPetPage.bind(this, pet) }>
+                <Link to={'#'} onClick={ goToPetPage.bind(this, pet) }>
                     <input
                         type='image'
                         src={imgURL}
@@ -42,6 +34,27 @@ function PetComponent(props) {
             </span>
         </div>
     );
+}
+
+function retrieveImgURL(pet) {
+    let petType = '';
+    let type = '';
+
+    for (type of Database.petTypes) {
+        if (type.name === pet.type) {
+            petType = type;
+            break;
+        }
+    }
+
+    if (pet.happiness >= 80) {
+        return petType.happyImage;
+    } else if (pet.happiness < 80 && pet.happiness >= 50) {
+        return petType.neutralImage;
+    } else {
+        return petType.sadImage;
+    }
+
 }
 
 export default PetComponent;
