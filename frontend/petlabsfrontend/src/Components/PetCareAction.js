@@ -3,7 +3,7 @@ import React from 'react';
 import '../CSS/UserPetCareStyles.css';
 
 function PetCareAction(props)  {
-    const { feedAction, playAction, trainAction } = props;
+    const { feedAction, playAction, trainAction, dropdownAction } = props;
     return (
         <table>
             <tr>
@@ -20,7 +20,10 @@ function PetCareAction(props)  {
                 <td>
                     <button onClick={ 
                         trainAction
-                    }>Train</button>
+                    }>Use an Item</button>
+                    <select id="dropdown" onChange={dropdownAction}>
+                        <option value="-99">Select an item</option>
+                    </select>
                 </td>
             </tr>
         </table>

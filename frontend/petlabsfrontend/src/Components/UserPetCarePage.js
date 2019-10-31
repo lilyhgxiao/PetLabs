@@ -1,5 +1,5 @@
 import React from 'react';
-// import '../CSS/__.css';
+
 import '../CSS/UserPetCareStyles.css';
 import PetCareAction from './PetCareAction.js';
 import PetModel from './PetModel.js';
@@ -7,8 +7,8 @@ import PetStatus from './PetStatus.js';
 import UserSideMenu from './UserSideMenu';
 
 import Pet from '../TempClasses/Pet';
+import mockDB from '../TempClasses/Database';
 
-// Images
 import petHappy from '../Images/pet_happy_placeholder.png';
 import petNeutral from '../Images/pet_neutral_placeholder.png';
 import petSad from '../Images/pet_sad_placeholder.png';
@@ -16,6 +16,8 @@ import petSad from '../Images/pet_sad_placeholder.png';
 const log = console.log
 
 class UserPetCarePage extends React.Component {
+
+    petReceived = this.props.location.state.pet;
 
     state = {
         petName: "",
@@ -25,22 +27,16 @@ class UserPetCarePage extends React.Component {
         intelligence: 0,
         strength: 0,
         speed: 0,
-        alive: true
+        alive: true,
+        itemSelected: -99
     }
 
-    componentDidMount() {
-        const pet = this.props.location.state.pet;
+    /* Automatically loaded functions */
 
-        this.setState({
-            petName: pet.petName,
-            petImg: petNeutral,
-            fullness: pet.hunger,
-            happiness: pet.happiness,
-            intelligence: pet.intelligence,
-            strength: pet.strength,
-            speed: pet.speed,
-            alive: pet.alive
-        })
+    componentDidMount() {
+        this.findPet()
+        this.populateItem()
+        this.selectItem = this.selectItem.bind(this)
 
         this.dTimer = setInterval(
             () => this.starve(),
@@ -52,31 +48,61 @@ class UserPetCarePage extends React.Component {
         clearInterval(this.dTimer)
     }
 
+    // Find specific pet from the database:
+    findPet() {
+        this.setState({
+            petName: this.petReceived.petName,
+            petImg: petNeutral,
+            fullness: this.petReceived.hunger,
+            happiness: this.petReceived.happiness,
+            intelligence: this.petReceived.intelligence,
+            strength: this.petReceived.strength,
+            speed: this.petReceived.speed,
+            alive: this.petReceived.alive
+        })
+    }
+
+    // Use DOM to populate items in the drop down menu:
+    populateItem() {
+        let uList = mockDB.userList;
+        let i = 0;
+        while (i < uList.length) {
+            if (uList[i].username == this.petReceived.ownerName) {
+
+                let itemDropDown = document.querySelector("#dropdown");
+                let iList = uList[i].itemIdList;
+
+                for (let j = 0; j < iList.length; j++) {
+                    let iName;
+                    for (let k = 0; k < mockDB.itemList.length; k++) {
+                        if (mockDB.itemList[k].id == iList[j]) {
+                            iName = mockDB.itemList[k].name;
+                        }
+                    }
+                    let entryText = document.createTextNode(iName)
+
+                    let itemEntry = document.createElement('option')
+                    itemEntry.setAttribute("value", iList[j])
+
+                    itemEntry.appendChild(entryText)
+                    itemDropDown.appendChild(itemEntry)
+                }
+            }
+            i++;
+        }
+    }
+
     starve() {
         if (this.state.alive) {
             this.setState({
                 fullness: this.state.fullness - 2
             })
+            this.petReceived.hunger -= 2
             this.fatigue()
         }
     }
 
-    fatigue() {
-        if (this.state.fullness < 20 && this.state.fullness >= -20) {
-            this.setState({
-                happiness: this.state.happiness - 20
-            })
-            if (this.state.happiness < 20) {
-                this.setState({
-                    petImg: petSad
-                })
-            }
-        } if (this.state.fullness < -20) {
-            this.setState({
-                alive: false
-            })
-        }
-    }
+    /* Actual gameplay functions */
 
     // Function related to feeding.
     feedPet = () => {
@@ -85,6 +111,7 @@ class UserPetCarePage extends React.Component {
             this.setState({
                 fullness: this.state.fullness + 10
             })
+            this.petReceived.hunger += 10
         }
     }
 
@@ -103,6 +130,7 @@ class UserPetCarePage extends React.Component {
             this.setState({
                 happiness: this.state.happiness + incValue
             })
+            this.petReceived.happiness += incValue
             
             if (this.state.happiness > 60 && this.state.happiness <= 90) {
                 this.setState({
@@ -113,21 +141,76 @@ class UserPetCarePage extends React.Component {
                     petImg: petHappy
                 })
             }
+
+            this.giveGold();
         }
     }
 
-    // Function related to feeding.
+    // Function related to use of item.
     trainPet = () => {
-        if (this.state.alive) {
-            log('training pet: +1 all stats');
+        if (this.state.alive && this.state.itemSelected > -99) {
+
+            // Find item:
+            let targetItem;
+            for (let k = 0; k < mockDB.itemList.length; k++) {
+                if (mockDB.itemList[k].id == this.state.itemSelected) {
+                    targetItem = mockDB.itemList[k];
+                }
+            }
+
             this.setState({
-                fullness: this.state.fullness - 6,
-                intelligence: this.state.intelligence + 1,
-                strength: this.state.strength + 1,
-                speed: this.state.speed + 1
+                fullness: this.state.fullness + targetItem.fullness,
+                happiness: this.state.happiness + targetItem.happiness,
+                intelligence: this.state.intelligence + targetItem.intelligence,
+                strength: this.state.strength + targetItem.strength,
+                speed: this.state.speed + targetItem.speed
             })
+            this.petReceived.hunger += targetItem.fullness
+            this.petReceived.happiness += targetItem.happiness
+            this.petReceived.intelligence += targetItem.intelligence
+            this.petReceived.strength += targetItem.strength
+            this.petReceived.speed += targetItem.speed
             this.fatigue()
         } 
+    }
+
+    /* Gameplay helper functions */
+
+    fatigue() {
+        if (this.state.fullness < 20 && this.state.fullness >= -20) {
+            this.setState({
+                happiness: this.state.happiness - 20
+            })
+            this.petReceived.happiness -= 20
+            if (this.state.happiness < 20) {
+                this.setState({
+                    petImg: petSad
+                })
+            }
+        } if (this.state.fullness < -20) {
+            this.setState({
+                alive: false
+            })
+            this.petReceived.alive = false
+        }
+    }
+
+    giveGold() {
+        let uList = mockDB.userList;
+        let i = 0;
+        while (i < uList.length) {
+            if (uList[i].username == this.petReceived.ownerName) {
+                uList[i].gold += 20;
+                i += uList.length;
+            }
+            i++;
+        }
+    }
+
+    selectItem(e) {
+        this.setState({
+            itemSelected: e.target.value
+        })
     }
 
     render() {
@@ -155,6 +238,7 @@ class UserPetCarePage extends React.Component {
                         feedAction = {this.feedPet}
                         playAction = {this.playWithPet}
                         trainAction = {this.trainPet}
+                        dropdownAction = {this.selectItem}
                     />
                 </div>
             </div>
