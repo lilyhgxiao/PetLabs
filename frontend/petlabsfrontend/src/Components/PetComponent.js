@@ -1,9 +1,7 @@
 import React from 'react';
 import '../CSS/ImageLinkStyle.css';
 
-import ImageComponent from './ImageComponent';
 import { Link } from 'react-router-dom';
-
 
 import type0 from '../Images/pets.png';
 
@@ -20,7 +18,7 @@ function PetComponent(props) {
     return(
         <div className='pet'>
             <div className='item'>
-                <Link onClick={ goToPetPage.bind(this, pet) }>
+                <Link to={'#'} onClick={ goToPetPage.bind(this, pet) }>
                     <input
                         type='image'
                         src={imgURL}

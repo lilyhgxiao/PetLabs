@@ -11,8 +11,19 @@ class LogInPage extends React.Component {
         password: "",
         isAdmin: false,
         loginSuccessful: false,
-        user: -1
+        user: null
     };
+
+    componentDidMount() {
+        Database.currUser = null;
+        this.setState({
+            username: "",
+            password: "",
+            isAdmin: false,
+            loginSuccessful: false,
+            user: null
+        });
+    }
 
     handleInputChange = (event) => {
         const target = event.target;
