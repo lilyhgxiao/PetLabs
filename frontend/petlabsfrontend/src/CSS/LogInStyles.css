@@ -26,8 +26,8 @@ h1 {
 }
 
 .buttons {
+    float: right;
     margin-top: 5px;
-    margin-left: 160px;
 }
 
 .buttons button {

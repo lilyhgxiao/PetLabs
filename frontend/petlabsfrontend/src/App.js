@@ -8,6 +8,7 @@ import AdminPetListPage from './Components/AdminPetListPage';
 import AdminItemListPage from './Components/AdminItemListPage';
 import UserDashboardPage from './Components/UserDashboardPage';
 import LogInPage from './Components/LogInPage';
+import SignUpPage from './Components/SignUpPage';
 import AdminUserPage from './Components/AdminUserPage';
 import UserPetCarePage from './Components/UserPetCarePage';
 import AdminPetPage from './Components/AdminPetPage'
@@ -20,6 +21,7 @@ function App() {
     <Router>
       <Switch>
         <Route path="/" exact component={LogInPage} />
+        <Route path="/SignUp" exact component={SignUpPage} />
         <Route path="/AdminDashboardPage" exact component={AdminDashboardPage} />
         <Route path="/AdminUserListPage" component={AdminUserListPage} />
         <Route path="/AdminPetListPage" component={AdminPetListPage} />

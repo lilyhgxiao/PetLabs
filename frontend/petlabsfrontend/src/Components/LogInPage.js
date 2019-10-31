@@ -11,7 +11,8 @@ class LogInPage extends React.Component {
         password: "",
         isAdmin: false,
         loginSuccessful: false,
-        user: null
+        user: null,
+        signup: false
     };
 
     componentDidMount() {
@@ -21,7 +22,8 @@ class LogInPage extends React.Component {
             password: "",
             isAdmin: false,
             loginSuccessful: false,
-            user: null
+            user: null,
+            signup: false
         });
     }
 
@@ -36,27 +38,32 @@ class LogInPage extends React.Component {
         });
     }
 
-    signup() {
+    findUser = () => {
+        const userList = Database.userList;
+        for (let i = 0; i < userList.length; i ++) {
+            if (this.state.username === userList[i].username && this.state.password === userList[i].password) {
+                return userList[i];
+            }
+        }
+        return null
+    }
 
+    signup = () => {
+        this.setState({
+            signup: true
+        }); 
     }
 
     login = () => {
         //authenticate
 
         //temp
-        let success = false;
-        let userToLogin = -1;
-        const userList = Database.userList;
+        let userToLogin = null;
 
-        for (let i = 0; i < userList.length; i ++) {
-            if (this.state.username === userList[i].username && this.state.password === userList[i].password) {
-                success = true;
-                userToLogin = userList[i];
-                break;
-            }
-        }
+        userToLogin = this.findUser();
+        
         //if login wasn't successful, show warning.
-        if (!success) {
+        if (userToLogin === null) {
             alert('Invalid username/password combination. Please try again.');
         }
         //if login was a success, determine which dashboard to show.
@@ -91,6 +98,14 @@ class LogInPage extends React.Component {
             
         }
 
+        if (this.state.signup) {
+            return(
+                <Redirect push to={{
+                    pathname: "/SignUp"
+                }} />
+            );
+        }
+
         return(
             <div className='center'>
                 <img src={logo} alt='logo'/>
@@ -110,7 +125,7 @@ class LogInPage extends React.Component {
                         type="password" 
                         placeholder="Password" />
                     <div className='buttons'>
-                    <button onClick={ this.signup }>Sign Up</button>
+                    <button onClick={ this.signup } >Sign Up</button>
                     <button onClick={ this.login }>Log In</button>
                 </div>
                 </div>
