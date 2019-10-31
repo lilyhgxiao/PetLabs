@@ -18,6 +18,7 @@ import SignUpPage from './Components/SignUpPage';
 import UserPetCarePage from './Components/UserPetCarePage';
 import ShopPage from './Components/ShopPage';
 import HelpPage from './Components/HelpPage';
+import UserSettingsPage from './Components/UserSettingsPage';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/AdminNewPetPage" component={AdminNewPetPage} />
 
         <Route path="/UserDashboardPage" exact component={UserDashboardPage} />
+        <Route path="/UserSettingsPage" exact component={UserSettingsPage} />
         <Route path="/UserPetCarePage" exact component={UserPetCarePage} />
         <Route path="/ShopPage" exact component={ShopPage} />
         <Route path="/HelpPage" exact component={HelpPage} />
