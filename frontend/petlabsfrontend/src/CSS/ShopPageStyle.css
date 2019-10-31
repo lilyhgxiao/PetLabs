@@ -47,3 +47,9 @@ img {
     font-size: 32pt;
     text-align: center;
 }
+
+.showGold {
+    display: block;
+    font-size: 20pt;
+    text-align: left;
+}

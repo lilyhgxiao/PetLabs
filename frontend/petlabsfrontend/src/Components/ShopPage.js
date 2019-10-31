@@ -14,9 +14,16 @@ const log = console.log
 
 class ShopPage extends React.Component {
 
+	state = {
+        userGold: 0
+    }
+
 	componentDidMount() {
-        this.populatePets()
-        this.populateItems() 
+		this.setState({
+			userGold: mockDB.currUser.gold
+		})
+        this.populatePets();
+        this.populateItems();
     }
 
 	// Use DOM to populate items in the shop:
@@ -108,7 +115,7 @@ class ShopPage extends React.Component {
         }
     }
 
-    purchase(e) {
+    purchase = (e) => {
     	let parentSearch = e.target.parentElement.parentElement.parentElement;
     	let curUser = mockDB.currUser;
 
@@ -122,6 +129,10 @@ class ShopPage extends React.Component {
 	    			if (curUser.gold >= iList[i].price) {
 	    				curUser.gold -= iList[i].price;
 	    				curUser.itemIdList.push(entryId);
+	    				this.setState({
+							userGold: mockDB.currUser.gold
+						})
+	    				alert("Purchased " + iList[i].name + "!");
 	    			} else {
 	    				alert("Not enough Gold!");
 	    			}
@@ -139,7 +150,8 @@ class ShopPage extends React.Component {
 	    		if (pList[i].id == entryId) {
 	    			if (curUser.gold >= pList[i].price) {
 	    				curUser.gold -= pList[i].price;
-	    				curUser.itemIdList.push(entryId);
+	    				curUser.petIdList.push(entryId);
+	    				alert("Purchased " + pList[i].name + "!");
 	    			} else {
 	    				alert("Not enough Gold!");
 	    			}
@@ -150,12 +162,16 @@ class ShopPage extends React.Component {
 		}
     }
 
-
 	render() {
         return (
             <div>
                 <UserSideMenu/>
                 <div className='main'>
+                    <div className='showGold'>
+                    	GOLD BALANCE: &nbsp;
+                    	{this.state.userGold}
+                    	&nbsp;G &nbsp;
+                    </div>
                     <div className='category'>
                     	Purchase Pets
                     </div>
