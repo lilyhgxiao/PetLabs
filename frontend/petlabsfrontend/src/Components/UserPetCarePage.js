@@ -20,6 +20,7 @@ class UserPetCarePage extends React.Component {
     petReceived = this.props.location.state.pet;
 
     state = {
+        userGold: 0,
         petName: "",
         petImg: petNeutral,
         fullness: 50,
@@ -34,6 +35,9 @@ class UserPetCarePage extends React.Component {
     /* Automatically loaded functions */
 
     componentDidMount() {
+        this.setState({
+            userGold: mockDB.currUser.gold
+        })
         this.findPet()
         this.populateItem()
         this.selectItem = this.selectItem.bind(this)
@@ -196,15 +200,10 @@ class UserPetCarePage extends React.Component {
     }
 
     giveGold() {
-        let uList = mockDB.userList;
-        let i = 0;
-        while (i < uList.length) {
-            if (uList[i].username == this.petReceived.ownerName) {
-                uList[i].gold += 20;
-                i += uList.length;
-            }
-            i++;
-        }
+        mockDB.currUser.gold += 20;
+        this.setState({
+            userGold: mockDB.currUser.gold
+        })
     }
 
     selectItem(e) {
@@ -218,6 +217,11 @@ class UserPetCarePage extends React.Component {
             <div>
                 <UserSideMenu/>
                 <div className='main'>
+                    <div className='showGold'>
+                        GOLD BALANCE: &nbsp;
+                        {this.state.userGold}
+                        &nbsp;G &nbsp;
+                    </div>
                     { /* Shows status of the pet */ }  
                     <PetStatus
                         numFullness = {this.state.fullness}
