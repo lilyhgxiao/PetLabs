@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-// import '../CSS/__.css';
+import '../CSS/ShopPageStyle.css';
 
 import UserSideMenu from './UserSideMenu';
 import mockDB from '../TempClasses/Database';
@@ -29,6 +29,10 @@ class ShopPage extends React.Component {
             let curPetType = pList[i];
 
             let newCell = document.createElement('td');
+			
+			// Put price on items:
+        	let price = document.createTextNode("Price: " + curPetType.price);
+        	newCell.appendChild(price);
 
             // Put pet image:
             let imgElement = document.createElement('img');
@@ -48,14 +52,15 @@ class ShopPage extends React.Component {
 
             // Create a button:
             let buttonElement = document.createElement('button');
-            buttonElement.setAttribute("onClick", this.purchase());
+            buttonElement.setAttribute("value", curPetType.id);
+            buttonElement.addEventListener('click', this.purchase);
 
             let buyText = document.createTextNode("buy");
             buttonElement.appendChild(buyText);
             newCell.appendChild(buttonElement);
 
             // Put newCell under tbody of petEntry:
-            tbodyComp.appendChild(newCell)
+            tbodyComp.appendChild(newCell);
         }
     }
 
@@ -68,6 +73,10 @@ class ShopPage extends React.Component {
             let curItem = iList[i];
 
         	let newCell = document.createElement('td');
+
+        	// Put price on items:
+        	let price = document.createTextNode("Price: " + curItem.price);
+        	newCell.appendChild(price);
 
             // Put item image:
             let imgElement = document.createElement('img');
@@ -87,19 +96,58 @@ class ShopPage extends React.Component {
 
             // Create a button:
             let buttonElement = document.createElement('button');
-            buttonElement.setAttribute("onClick", this.purchase());
+            buttonElement.setAttribute("value", curItem.id);
+            buttonElement.addEventListener('click', this.purchase);
 
             let buyText = document.createTextNode("buy");
             buttonElement.appendChild(buyText);
             newCell.appendChild(buttonElement);
 
             // Put newCell under tbody of itemEntry:
-            tbodyComp.appendChild(newCell)
+            tbodyComp.appendChild(newCell);
         }
     }
 
-    purchase() {
+    purchase(e) {
+    	let parentSearch = e.target.parentElement.parentElement.parentElement;
+    	let curUser = mockDB.currUser;
 
+		if (parentSearch.id === "itemEntry") {
+	    	let entryId = e.target.value;
+
+        	let iList = mockDB.itemList;
+	    	let i = 0;
+	    	while (i < iList.length) {
+	    		if (iList[i].id == entryId) {
+	    			if (curUser.gold >= iList[i].price) {
+	    				curUser.gold -= iList[i].price;
+	    				curUser.itemIdList.push(entryId);
+	    			} else {
+	    				alert("Not enough Gold!");
+	    			}
+	    			i += iList.length;
+	    		}
+	    		i++;
+	    	}
+		} else {
+			// If it's not an item entry, it has to be a pet entry.
+			let entryId = e.target.value;
+
+        	let pList = mockDB.petTypes;
+	    	let i = 0;
+	    	while (i < pList.length) {
+	    		if (pList[i].id == entryId) {
+	    			if (curUser.gold >= pList[i].price) {
+	    				curUser.gold -= pList[i].price;
+	    				curUser.itemIdList.push(entryId);
+	    			} else {
+	    				alert("Not enough Gold!");
+	    			}
+	    			i += pList.length;
+	    		}
+	    		i++;
+	    	}
+		}
     }
 
 
@@ -108,12 +156,17 @@ class ShopPage extends React.Component {
             <div>
                 <UserSideMenu/>
                 <div className='main'>
-                    { /* Shop entries for pets */ }
+                    <div className='category'>
+                    	Purchase Pets
+                    </div>
                     <table id="petEntry">
 			            <tbody>
 
 			            </tbody>
 			        </table>
+			        <div className='category'>
+                    	Purchase Items
+                    </div>
 			        <table id="itemEntry">
 			            <tbody>
 

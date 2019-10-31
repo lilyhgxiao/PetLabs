@@ -1,0 +1,49 @@
+h1 {
+    text-align: center;
+}
+
+ul, li {
+    display:inline
+}
+
+ul {
+    width: 70%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+li {
+    font-weight: bold;
+    font-size: 12pt;
+    text-align: center;
+}
+
+table, td, th {
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td, th {
+    min-width: 200px;
+    text-align: center;
+}
+
+button {
+    margin: 6px;
+}
+
+img {
+    max-width: 160px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.category {
+    display: block;
+    font-size: 32pt;
+    text-align: center;
+}
