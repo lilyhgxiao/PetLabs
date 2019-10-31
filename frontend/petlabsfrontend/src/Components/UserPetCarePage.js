@@ -73,7 +73,12 @@ class UserPetCarePage extends React.Component {
                 let iList = uList[i].itemIdList;
 
                 for (let j = 0; j < iList.length; j++) {
-                    let iName = mockDB.itemList[iList[j]].name;
+                    let iName;
+                    for (let k = 0; k < mockDB.itemList.length; k++) {
+                        if (mockDB.itemList[k].id == iList[j]) {
+                            iName = mockDB.itemList[k].name;
+                        }
+                    }
                     let entryText = document.createTextNode(iName)
 
                     let itemEntry = document.createElement('option')
@@ -146,7 +151,12 @@ class UserPetCarePage extends React.Component {
         if (this.state.alive && this.state.itemSelected > -99) {
 
             // Find item:
-            let targetItem = mockDB.itemList[this.state.itemSelected]
+            let targetItem;
+            for (let k = 0; k < mockDB.itemList.length; k++) {
+                if (mockDB.itemList[k].id == this.state.itemSelected) {
+                    targetItem = mockDB.itemList[k];
+                }
+            }
 
             this.setState({
                 fullness: this.state.fullness + targetItem.fullness,
