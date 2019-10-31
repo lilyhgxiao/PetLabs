@@ -21,6 +21,7 @@ class AdminNewPetPage extends React.Component {
             intelligenceRate: 0,
             happinessRate: 0,
             fullnessRate: 0,
+            price: 0,
         };
     }
 
@@ -36,6 +37,7 @@ class AdminNewPetPage extends React.Component {
             this.state.intelligenceRate,
             this.state.happinessRate,
             this.state.fullnessRate,
+            this.state.price,
         ));
         console.log(Database.petTypes);
     }
@@ -79,12 +81,19 @@ class AdminNewPetPage extends React.Component {
                 <td className={'item-view'}><input className={'row'} type='Text' value={this.state.fullnessRate} onChange={this.handleFullnessChange} /></td>
             </tr>
         );
+        const price = (
+            <tr key={key++} className={'item-view'}>
+                <td className={'item-view'}>Price</td>
+                <td className={'item-view'}><input className={'row'} type='Text' value={this.state.price} onChange={this.handlePriceChange} /></td>
+            </tr>
+        );
         result.push(headerRow);
         result.push(strength);
         result.push(speed);
         result.push(intelligence);
         result.push(happiness);
         result.push(fullness);
+        result.push(price);
         return result;
     }
 
@@ -105,6 +114,9 @@ class AdminNewPetPage extends React.Component {
     }
     handleFullnessChange = (event) => {
         this.setState({fullnessRate: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+    }
+    handlePriceChange = (event) => {
+        this.setState({price: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
     }
 
     handleSaveClick = () => {
@@ -128,8 +140,6 @@ class AdminNewPetPage extends React.Component {
                         <div className={'centerView'}>
                             <p className={'addItemLink'}>Name: <input className={'addItemLink'} type='Text' value={this.state.name} onChange={this.handleNameChange}/> </p> 
                             <p className={'centerLeft'}>Sprites:</p>
-                            {/* <img className={'addItemLink'} src={AddIcon} alt={'Add new Image'} onClick={this.placeHolderHandle} /> */}
-                            {/* <input className={'imgAddItemLink'} type={'image'} src={AddIcon} alt={'Add new Image'} onClick={this.placeHolderHandle} /> */}
                             <ul className={'container'}>
                                 <li>
                                     <SpriteComponent imgURL={AddIcon} altText={'Neutral Image'} subtitle={'Neutral Image'} callback={this.placeHolderHandle}/>

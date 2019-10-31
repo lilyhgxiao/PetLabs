@@ -1,7 +1,7 @@
 class PetType {
     constructor(name, neutralImage, happyImage, sadImage, 
         strengthRate, speedRate, intelligenceRate, 
-        fullnessRate, happinessRate) {
+        fullnessRate, happinessRate, price) {
         
         if (typeof(PetType.nextId) === 'undefined') {
             PetType.nextId = 1;
@@ -9,6 +9,7 @@ class PetType {
             PetType.nextId++;
         }
         this.id = PetType.nextId;
+        this.price = price;
 
         this.name = name;
         this.neutralImage = neutralImage;

@@ -20,6 +20,7 @@ class AdminPetPage extends React.Component {
             intelligenceRate: this.petType.intelligenceRate,
             happinessRate: this.petType.happinessRate,
             fullnessRate: this.petType.fullnessRate,
+            price: this.petType.price,
         };
     }
 
@@ -70,12 +71,19 @@ class AdminPetPage extends React.Component {
                 <td className={'item-view'}><input className={'row'} type='Text' value={this.state.fullnessRate} onChange={this.handleFullnessChange} /></td>
             </tr>
         );
+        const price = (
+            <tr key={key++} className={'item-view'}>
+                <td className={'item-view'}>Price</td>
+                <td className={'item-view'}><input className={'row'} type='Text' value={this.state.price} onChange={this.handlePriceChange} /></td>
+            </tr>
+        );
         result.push(headerRow);
         result.push(strength);
         result.push(speed);
         result.push(intelligence);
         result.push(happiness);
         result.push(fullness);
+        result.push(price);
         return result;
     }
 
@@ -97,6 +105,9 @@ class AdminPetPage extends React.Component {
     handleFullnessChange = (event) => {
         this.setState({fullnessRate: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
     }
+    handlePriceChange = (event) => {
+        this.setState({price: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+    }
 
     handleSaveClick = () => {
         console.log(this.petType);
@@ -106,6 +117,7 @@ class AdminPetPage extends React.Component {
         this.petType.intelligenceRate = this.state.intelligenceRate;
         this.petType.happinessRate = this.state.happinessRate;
         this.petType.fullnessRate = this.state.fullnessRate;
+        this.petType.price = this.state.price;
         console.log(this.petType);
     }
 

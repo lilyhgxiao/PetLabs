@@ -1,15 +1,13 @@
 import Database from './Database';
 
 class Item {
-    constructor(name, strength, speed, intelligence, happiness, fullness, imgURL) {
+    constructor(name, strength, speed, intelligence, happiness, fullness, imgURL, price) {
         if (typeof(Item.nextId) === 'undefined') {
             Item.nextId = 1;
         } else {
             Item.nextId++;
         }
-        // console.log(Item.nextId);
         this.id = Item.nextId;
-        // this.type = type;
         this.name = name;
         this.strength = strength;
         this.speed = speed;
@@ -17,6 +15,7 @@ class Item {
         this.happiness = happiness;
         this.fullness = fullness;
         this.imgURL = imgURL;
+        this.price = price;
     }
 }
 

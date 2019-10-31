@@ -15,7 +15,8 @@ class AdminItemPage extends React.Component {
             speed: this.item.speed,
             intelligence: this.item.intelligence,
             happiness: this.item.happiness,
-            fullness: this.item.fullness
+            fullness: this.item.fullness,
+            price: this.item.price,
         };
     }
     getItemReference() {
@@ -64,12 +65,19 @@ class AdminItemPage extends React.Component {
                 <td className={'item-view'}><input className={'row'} type='Text' value={this.state.fullness} onChange={this.handleFullnessChange} /></td>
             </tr>
         );
+        const price = (
+            <tr key={key++} className={'item-view'}>
+                <td className={'item-view'}>Price</td>
+                <td className={'item-view'}><input className={'row'} type='Text' value={this.state.price} onChange={this.handlePriceChange} /></td>
+            </tr>
+        );
         result.push(headerRow);
         result.push(strength);
         result.push(speed);
         result.push(intelligence);
         result.push(happiness);
         result.push(fullness);
+        result.push(price);
         return result;
     }
     handleNameChange = (event) => {
@@ -90,6 +98,9 @@ class AdminItemPage extends React.Component {
     handleFullnessChange = (event) => {
         this.setState({fullness: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
     }
+    handlePriceChange = (event) => {
+        this.setState({price: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+    }
 
     placeHolderHandle = () => {
         alert("Prompt for image to upload");
@@ -106,6 +117,7 @@ class AdminItemPage extends React.Component {
         this.item.intelligence = this.state.intelligence;
         this.item.happiness = this.state.happiness;
         this.item.fullness = this.state.fullness;
+        this.item.price = this.state.price;
         console.log(this.item);
     }
     render() {
@@ -121,7 +133,6 @@ class AdminItemPage extends React.Component {
                         <div className={'centerView'}>
                             <p className={'addItemLink'}>Name: <input className={'addItemLink'} type='Text' value={this.state.name} onChange={this.handleNameChange}/> </p> 
                             <p className={'centerLeft'}>Sprite:</p>
-                            {/* <img className={'addItemLink'} src={this.item.imgURL} alt={'Add new Image'} /> */}
                             <input className={'imgAddItemLink'} type={'image'} src={this.item.imgURL} alt={'Add new Image'} onClick={this.placeHolderHandle} />
                         </div>
                         <br /><br /><br /><br /><br /><br /><br />
