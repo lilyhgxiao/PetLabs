@@ -22,7 +22,7 @@ function PetCareAction(props)  {
                         trainAction
                     }>Use an Item</button>
                     <select id="dropdown" onChange={dropdownAction}>
-                        <option value="none">Select an item</option>
+                        <option value="-99">Select an item</option>
                     </select>
                 </td>
             </tr>
