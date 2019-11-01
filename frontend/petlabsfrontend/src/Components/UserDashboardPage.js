@@ -23,7 +23,6 @@ class UserDashboardPage extends React.Component {
 
     componentDidMount() { // When the component enters the DOM
         const currUser = Database.currUser;
-        console.log("componentDidMount(): " + currUser.username)
         this.setState({
             user: currUser,
             toPetPage: false,
@@ -34,7 +33,6 @@ class UserDashboardPage extends React.Component {
 
     fetchPets = () => { //Fetching data for the pets from the username
         const currUser = this.state.user
-        console.log("fetchPets(): " + currUser.username)
 
         //fetch data from database depending on user
         const totalPetList = Database.petList;

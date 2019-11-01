@@ -6,9 +6,10 @@
     z-index: 1; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
-    background-color: #111; /* Black */
+    background-image: linear-gradient(to bottom right, #4A6CD1, #3B4C7E);
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 20px;
+    font-family: 'Montserrat', sans-serif;
   }
   
   /* The navigation menu links */
@@ -16,13 +17,13 @@
     padding: 6px 8px 6px 16px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: #ADCAFF;
     display: block;
   }
   
   /* When you mouse over the navigation links, change their color */
   .sidemenu a:hover {
-    color: #f1f1f1;
+    color:white;
   }
   
   /* Style page content */
