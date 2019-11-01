@@ -57,7 +57,7 @@ class UserCreatePetPage extends React.Component {
     }
 
     tryCreate = () => {
-        const success = true;
+        let success = true;
         if (!this.authGold()) {
             alert("Not enough gold to purchase this pet.");
             success = false;

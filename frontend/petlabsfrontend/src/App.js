@@ -40,12 +40,9 @@ function App() {
         <Route path="/UserDashboardPage" exact component={UserDashboardPage} />
         <Route path="/UserSettingsPage" exact component={UserSettingsPage} />
         <Route path="/UserPetCarePage" exact component={UserPetCarePage} />
-<<<<<<< HEAD
         <Route path="/ShopPage" exact component={ShopPage} />
         <Route path="/HelpPage" exact component={HelpPage} />
-=======
         <Route path="/UserCreatePetPage" exact component={UserCreatePetPage} />
->>>>>>> Created UserCreatePetPage and added placeholder image for selecting pet type
       </Switch>
     </Router>
   );
