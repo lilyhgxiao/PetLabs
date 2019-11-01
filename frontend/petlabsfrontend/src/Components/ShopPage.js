@@ -42,7 +42,8 @@ class ShopPage extends React.Component {
             newCell.appendChild(price);
 
             // Put pet image:
-            let imgElement = document.createElement('img');
+			let imgElement = document.createElement('img');
+			imgElement.setAttribute("class", "shopImg");
             imgElement.setAttribute("src", curPetType.neutralImage);
             newCell.appendChild(imgElement);
 
@@ -86,7 +87,8 @@ class ShopPage extends React.Component {
             newCell.appendChild(price);
 
             // Put item image:
-            let imgElement = document.createElement('img');
+			let imgElement = document.createElement('img');
+			imgElement.setAttribute("class", "shopImg");
             imgElement.setAttribute("src", curItem.imgURL);
             newCell.appendChild(imgElement);
 
