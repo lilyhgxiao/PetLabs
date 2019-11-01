@@ -108,10 +108,11 @@ class LogInPage extends React.Component {
 
         return(
             <div className='center'>
-                <img src={logo} alt='logo'/>
+                <img id='logo' src={logo} alt='logo'/>
 
                 <div className='loginForm'>
-                    Login:
+                    <span className='title'>Login:</span>
+                    <br/>
                     <br/>
                     <input name='username' 
                         value={ this.state.username } 

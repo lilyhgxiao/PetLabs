@@ -12,18 +12,12 @@ class SignUpPage extends React.Component {
         password: "",
         confirmPassword: "",
         signupSuccessful: false,
-        user: null
+        user: null,
+        backToLogin: false
     };
 
     componentDidMount() {
         Database.currUser = null;
-        this.setState({
-            username: "",
-            password: "",
-            confirmPassword: "",
-            signupSuccessful: false,
-            user: null
-        });
     }
 
     handleInputChange = (event) => {
@@ -88,6 +82,12 @@ class SignUpPage extends React.Component {
         }
     }
 
+    backToLogin = () => {
+        this.setState({
+            backToLogin: true
+        })
+    }
+
     render() {
 
         if (this.state.signupSuccessful) {
@@ -99,35 +99,44 @@ class SignUpPage extends React.Component {
             );
         }
 
+        if (this.state.backToLogin) {
+            return (
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
+
         return(
             <div className='center'>
-                <img src={logo} alt='logo'/>
+                <img id='logo' src={logo} alt='logo'/>
 
                 <div className='loginForm'>
-                    Create a new PetLabs account:
+                    <span className='title'>Create a new PetLabs account!</span>
                     <br/>
                     <br/>
-                    Username:
+                    <span className='signUpFieldTitle'>Username:</span>
                     <input name='username' 
                         value={ this.state.username } 
                         onChange={this.handleInputChange} 
                         type="text" 
                         placeholder="Username" />
                     <br/>
-                    Password:
+                    <span className='signUpFieldTitle'>Password:</span>
                     <input name='password' 
                         value={ this.state.password } 
                         onChange={this.handleInputChange} 
                         type="password" 
                         placeholder="Password" />
                     <br/>
-                    Confirm Password:
+                    <span className='signUpFieldTitle'>Confirm Password:</span>
                     <input name='confirmPassword' 
                         value={ this.state.confirmPassword } 
                         onChange={this.handleInputChange} 
                         type="password" 
                         placeholder="Confirm Password" />
                     <div className='buttons'>
+                        <button onClick={ this.backToLogin }>Back to Login</button>
                         <button onClick={ this.authSignup }>Sign Up</button>
                     </div>
                 </div>
