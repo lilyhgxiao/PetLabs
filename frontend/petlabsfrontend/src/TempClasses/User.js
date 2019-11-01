@@ -7,7 +7,7 @@ class User {
         this.itemList = []; // Should be removed
         this.petIdList = [];
         this.itemIdList = [];
-        this.gold = 100;
+        this.gold = 5000;
     }
 }
 

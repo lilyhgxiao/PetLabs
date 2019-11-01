@@ -44,15 +44,15 @@ class UserCreatePetPage extends React.Component {
         const userList = Database.userList;
         
         for (let i = 0; i < userList.length; i ++) {
-            if (Database.userList === userList[i].username) {
-                userList[i].gold -= this.state.petType.price;
+            if (Database.currUser.username === userList[i].username) {
+                userList[i].gold = userList[i].gold - this.state.petType.price;
             }
         }
     }
 
     createPet = () => {
         const username = Database.currUser.username
-        const newPet = new Pet(this.state.name, username, this.petType.name);
+        const newPet = new Pet(this.state.name, username, this.state.petType.name);
         Database.petList.push(newPet)
     }
 
