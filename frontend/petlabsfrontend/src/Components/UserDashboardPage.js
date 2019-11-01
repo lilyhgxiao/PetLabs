@@ -10,7 +10,6 @@ import '../CSS/UserDashboardStyles.css';
 
 import UserSideMenu from './UserSideMenu';
 import PetComponent from './PetComponent';
-import ImageComponent from './ImageComponent';
 
 import addNew from '../Images/add_new.png';
 
@@ -18,7 +17,8 @@ class UserDashboardPage extends React.Component {
     state = {
         user: new User('', '', false),
         toPetPage: false,
-        targetPet: null
+        targetPet: null,
+        toCreate: false
     };
 
     componentDidMount() { // When the component enters the DOM
@@ -27,7 +27,8 @@ class UserDashboardPage extends React.Component {
         this.setState({
             user: currUser,
             toPetPage: false,
-            targetPet: null
+            targetPet: null,
+            toCreate: false
         }, this.fetchPets)
     }
 
@@ -57,12 +58,26 @@ class UserDashboardPage extends React.Component {
         })
     }
 
+    goToCreate = () => {
+        console.log("create")
+        this.setState({
+            toCreate: true
+        })
+    }
+
     render() {
         if (this.state.toPetPage) {
             return(
                 <Redirect push to={{
                     pathname: "/UserPetCarePage",
                     state: { pet: this.state.targetPet }
+                }} />
+            );
+        }
+        if (this.state.toCreate) {
+            return(
+                <Redirect push to={{
+                    pathname: "/UserCreatePetPage"
                 }} />
             );
         }
@@ -73,7 +88,8 @@ class UserDashboardPage extends React.Component {
 
                 <div className='main'>
                     <div className='mainForm'>
-                        <h1>Welcome, {this.state.user.username}</h1>
+                        <span className='welcomeTitle'>Welcome, {this.state.user.username}</span>
+                        <br/>
                         <span className='description'>Visit your pets today:</span>
                         <br />
                         <br />
@@ -86,8 +102,12 @@ class UserDashboardPage extends React.Component {
                                 )
                             })
                         }
-                        <div className='addNew'>
-                            <ImageComponent imgURL={addNew} altText={'Add New Pet'} subtitle={"Add New"} link={'/UserCreatePetPage'} />
+                        <div className='addNew' onClick={this.goToCreate}>
+                            <img className='addNewImg' src={addNew} alt={'Add New Pet'}/>
+                            <br/>
+                            <span id='addNewText'>
+                                Add New
+                            </span>
                         </div>
                         </ul>
                     </div>

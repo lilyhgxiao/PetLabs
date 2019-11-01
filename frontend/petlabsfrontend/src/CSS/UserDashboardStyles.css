@@ -1,14 +1,5 @@
-h1 {
-    text-align: center;
-}
-
 ul, li {
     display:inline
-}
-
-ul {
-    width: 70%;
-    margin: auto;
 }
 
 li {
@@ -17,17 +8,58 @@ li {
     font-size: 16pt;
 }
 
-.container {
+.mainForm {
+    padding-top: 40px;
+    text-align: center;
+}
+
+ul.container {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+    margin: 0px;
+    padding: 10px;
+    width: 100%;
+}
+
+.welcomeTitle {
+    text-align: center;
+    font-size: 250%;
+    font-family: 'Paytone One', sans-serif;
+    color: #3045AF;
 }
 
 .description {
-    font-size: 16pt;
+    font-size: 120%;
     font-weight: bold;
-    margin-left: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    color: royalblue;
 }
 
 .addNew {
+    padding: 20px;
+    margin: 10px;
+    border: 2px dashed #A5BDFE;
+    border-radius: 10px;
+}
+
+.addNew:hover {
+    cursor: pointer;
+    background-color: #D2DEFE;
+}
+
+.addNewImg {
+    width: 200px;
+    height: 200px;
+}
+
+.addNew #addNewText {
     padding: 30px;
+    display: block;
+    font-size: 150%;
+    font-family: 'Paytone One', sans-serif;
+    color: royalblue;
 }

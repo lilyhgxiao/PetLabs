@@ -1,5 +1,5 @@
 import React from 'react';
-import '../CSS/ImageLinkStyle.css';
+import '../CSS/PetComponentStyle.css';
 
 import { Link } from 'react-router-dom';
 import Database from '../TempClasses/Database'
@@ -10,28 +10,21 @@ function PetComponent(props) {
     let imgURL = retrieveImgURL(pet);
 
     return(
-        <div className='pet'>
-            <div className='item'>
-                <Link to={'#'} onClick={ goToPetPage.bind(this, pet) }>
-                    <input
-                        type='image'
-                        src={imgURL}
-                        alt={pet.petName} 
-                    />
-                </Link>
+        <div className='pet' onClick={ goToPetPage.bind(this, pet) }>
+            <img className='petImg' src={imgURL} alt={pet.petName}/>
+            <div className='info'>
+                <span id='name'>
+                    {pet.petName}
+                </span>
+                <span id='happiness'>
+                    <span className='statusName'>Happiness: </span><span className='statusValue'>{ pet.happiness }%</span>
+                </span>
+                <br/>
+                <span id='hunger'>
+                    <span className='statusName'>Fullness: </span><span className='statusValue'>{pet.hunger}%</span>
+                </span>
+                <br/>
             </div>
-            <br/>
-            <span id='subtitle'>
-                {pet.petName}
-            </span>
-            <br/>
-            <span id='happiness'>
-                <span className='statusName'>Happiness: </span><span className='statusValue'>{ pet.happiness }%</span>
-            </span>
-            <br/>
-            <span id='hunger'>
-                <span className='statusName'>Hunger: </span><span className='statusValue'>{pet.hunger}%</span>
-            </span>
         </div>
     );
 }

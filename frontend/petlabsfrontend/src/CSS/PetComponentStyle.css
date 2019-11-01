@@ -1,0 +1,43 @@
+.info {
+    margin: 5px 0px;
+    padding:5px;
+}
+
+#name {
+    display: block;
+    font-size: 130%;
+    font-family: 'Paytone One', sans-serif;
+    color: white;
+    margin-bottom: 5px;
+    background-image: linear-gradient(to bottom right, dodgerblue, royalblue);
+    border-radius: 5px;
+}
+
+.statusName {
+    font-family: 'Viga', sans-serif;
+    float: left;
+    color: #1E48C8;
+}
+
+.statusValue {
+    font-family: 'Viga', sans-serif;
+    float: right;
+    color:dodgerblue;
+}
+
+.pet {
+    padding: 20px;
+    margin: 10px;
+    border: 2px solid #A5BDFE;
+    border-radius: 10px;
+}
+
+.pet:hover {
+    cursor: pointer;
+    background-color: #D2DEFE;
+}
+
+.pet .petImg {
+    width: 200px;
+    height: 200px;
+}
