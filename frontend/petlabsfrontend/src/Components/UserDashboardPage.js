@@ -87,7 +87,7 @@ class UserDashboardPage extends React.Component {
                             })
                         }
                         <div className='addNew'>
-                            <ImageComponent imgURL={addNew} altText={'Add New Pet'} subtitle={"Add New"} link={'#'} />
+                            <ImageComponent imgURL={addNew} altText={'Add New Pet'} subtitle={"Add New"} link={'/UserCreatePetPage'} />
                         </div>
                         </ul>
                     </div>
