@@ -3,7 +3,7 @@ import React from 'react';
 import type_default from '../Images/pet_creation_default.png';
 import { Redirect } from 'react-router';
 
-import '../CSS/UserDashboardStyles.css';
+import '../CSS/CreatePetStyle.css';
 
 import UserSideMenu from './UserSideMenu';
 import PetTypeComponent from './PetTypeComponent';
@@ -58,17 +58,22 @@ class UserCreatePetPage extends React.Component {
 
     tryCreate = () => {
         let success = true;
-        if (!this.authGold()) {
-            alert("Not enough gold to purchase this pet.");
-            success = false;
+        if (this.state.petType === null) {
+            alert("Please select a pet type.");
         }
-
-        if (success) {
-            this.updateGold();
-            this.createPet();
-            this.setState({
-                creationSuccess: true
-            });
+        else {
+            if (!this.authGold()) {
+                alert("Not enough gold to purchase this pet.");
+                success = false;
+            }
+    
+            if (success) {
+                this.updateGold();
+                this.createPet();
+                this.setState({
+                    creationSuccess: true
+                });
+            }
         }
     }
 
@@ -96,9 +101,15 @@ class UserCreatePetPage extends React.Component {
                 <UserSideMenu/>
 
                 <div className='main'>
-                    <h1>A New Friend!</h1>
                     <div className='mainForm'>
-                        <img src={this.state.imgURL} alt="Selected Type"/>
+                        <span className="newTitle">A New Friend!</span>
+                        <br />
+                        <div className="selectedPurchase">
+                            <img className="selectedPet" src={this.state.imgURL} alt="Selected Type"/>
+                            <br/>
+                            <span className="selectedName">{this.state.name}</span>
+                        </div>
+                        
                         <ul className='container'>
                         { Database.petTypes.map((petType) => {
                             return(
@@ -109,9 +120,8 @@ class UserCreatePetPage extends React.Component {
                             })
                         }
                         </ul>
-                        <br/>
-                        Name:
-                        <input name='name' 
+                        <span id="newName">Name:</span>
+                        <input id="newNameInput" name='name' 
                             value={ this.state.name } 
                             onChange={this.handleInputChange} 
                             type="text" 

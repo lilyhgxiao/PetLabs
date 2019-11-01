@@ -3,7 +3,7 @@ import Database from '../TempClasses/Database';
 import UserSideMenu from './UserSideMenu';
 
 //temporary
-import '../CSS/LogInStyles.css';
+import '../CSS/SettingsStyle.css';
 
 class UserSettingsPage extends React.Component {
     state = {
@@ -88,40 +88,45 @@ class UserSettingsPage extends React.Component {
                 <UserSideMenu/>
 
                 <div className='main'>
-                    <h1>Settings</h1>
+                    <span className="settingsTitle">Settings</span>
                     <br/>
-                    <h2 className='userSettingName'>Username:</h2> <span className='userSettingValue'>{ this.state.user.username }</span>
-                    <br/>
-                    <h2 className='userSettingName'>Password:</h2> <span className='userSettingValue'>{ new Array(this.state.user.password.length + 1).join('*') }</span>
+                    <div className="settingsContainer">
+                        <span className='userSettingName'>Username:</span> <span className='userSettingValue'>{ this.state.user.username }</span>
+                        <br/>
+                        <span className='userSettingName'>Password:</span> <span className='userSettingValue'>{ new Array(this.state.user.password.length + 1).join('*') }</span>
 
-                    <br/>
-                    <br/>
-                    Change Password?
-                    <div className='changePassword'>
-                        <input name='oldPass' 
-                            value={ this.state.oldPass } 
-                            onChange={this.handleInputChange} 
-                            type="password" 
-                            placeholder="Old Password" />
-                        <br/>
-                        <input name='newPass' 
-                            value={ this.state.newPass } 
-                            onChange={this.handleInputChange} 
-                            type="password" 
-                            placeholder="New Password" />
-                        <br/>
-                        <input name='confirmPass' 
-                            value={ this.state.confirmPass } 
-                            onChange={this.handleInputChange} 
-                            type="password" 
-                            placeholder="Confirm New Password" />
-                        <br/>
-                        <button onClick={ this.tryChange }>Change Password</button>
+                        <div className='changePassword'>
+                            <span className="changePasswordTitle">Change Password?</span>
+                            <br/>
+                            <span className="inputName">Old Password:</span>
+                            <br/>
+                            <input name='oldPass' 
+                                value={ this.state.oldPass } 
+                                onChange={this.handleInputChange} 
+                                type="password" 
+                                placeholder="Old Password" />
+                            <br/>
+                            <span className="inputName">New Password:</span>
+                            <br/>
+                            <input name='newPass' 
+                                value={ this.state.newPass } 
+                                onChange={this.handleInputChange} 
+                                type="password" 
+                                placeholder="New Password" />
+                            <br/>
+                            <span className="inputName">Confirm Password:</span>
+                            <br/>
+                            <input name='confirmPass' 
+                                value={ this.state.confirmPass } 
+                                onChange={this.handleInputChange} 
+                                type="password" 
+                                placeholder="Confirm New Password" />
+                            <br/>
+                            <button onClick={ this.tryChange }>Change Password</button>
+                        </div>
                     </div>
                 </div>
-
-                
-                </div>
+            </div>
         );
     }
 

@@ -25,19 +25,28 @@
     color:dodgerblue;
 }
 
-.pet {
+.petComponent {
     padding: 20px;
     margin: 10px;
     border: 2px solid #A5BDFE;
     border-radius: 10px;
 }
 
-.pet:hover {
+.petComponent:hover {
     cursor: pointer;
     background-color: #D2DEFE;
 }
 
-.pet .petImg {
+.petComponent .petImg {
     width: 200px;
     height: 200px;
+}
+
+ul.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0px;
+    padding: 10px;
+    width: 100%;
 }

@@ -1,0 +1,89 @@
+.newTitle {
+    text-align: center;
+    font-size: 250%;
+    font-family: 'Paytone One', sans-serif;
+    color: #3045AF;
+}
+
+.selectedPurchase {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.selectedPurchase .selectedPet {
+    width: 400px;
+    height: 400px;
+}
+
+.selectedPurchase .selectedName {
+    display: block;
+    font-size: 150%;
+    font-family: 'Paytone One', sans-serif;
+    color: white;
+    margin-bottom: 5px;
+    background-image: linear-gradient(to bottom right, dodgerblue, royalblue);
+    border-radius: 5px;
+    width: 100%;
+}
+
+.petType {
+    padding: 20px;
+    margin: 10px;
+}
+
+.petType:hover {
+    cursor: pointer;
+}
+
+.petType .petTypeImg {
+    width: 200px;
+    height: 200px;
+}
+
+.petType #typeName {
+    font-size: 130%;
+    font-family: 'Paytone One', sans-serif;
+    color: #1E48C8;
+}
+
+.petType #price {
+    font-size: 100%;
+    font-family: 'Viga', sans-serif;
+    color: dodgerblue;
+}
+
+#newName {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 100%;
+    color: royalblue;
+    margin-right: 20px;
+}
+
+#newNameInput {
+    width: 30%;
+    height: 50%;
+    padding: 15px 15px;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    box-sizing: border-box;
+    border: 1px solid #A5BDFE;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 100%;
+}
+
+.createButton {
+    margin-left: 10px;
+    background-color: #4878FB;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    font-family: "UD Digi Kyokasho NK-R";
+    font-size: 150%;
+}
+
+.createButton:hover {
+    background-color: #82A1F7;
+}

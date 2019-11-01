@@ -10,7 +10,7 @@ function PetComponent(props) {
     let imgURL = retrieveImgURL(pet);
 
     return(
-        <div className='pet' onClick={ goToPetPage.bind(this, pet) }>
+        <div className='petComponent' onClick={ goToPetPage.bind(this, pet) }>
             <img className='petImg' src={imgURL} alt={pet.petName}/>
             <div className='info'>
                 <span id='name'>
@@ -20,7 +20,7 @@ function PetComponent(props) {
                     <span className='statusName'>Happiness: </span><span className='statusValue'>{ pet.happiness }%</span>
                 </span>
                 <br/>
-                <span id='hunger'>
+                <span id='fullness'>
                     <span className='statusName'>Fullness: </span><span className='statusValue'>{pet.hunger}%</span>
                 </span>
                 <br/>
