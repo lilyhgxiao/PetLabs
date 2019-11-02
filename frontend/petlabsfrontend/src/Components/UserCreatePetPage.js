@@ -65,6 +65,14 @@ class UserCreatePetPage extends React.Component {
         const username = Database.currUser.username
         const newPet = new Pet(this.state.name, username, this.state.petType.name);
         Database.petList.push(newPet)
+
+        const userList = Database.userList;
+        
+        for (let i = 0; i < userList.length; i ++) {
+            if (Database.currUser.username === userList[i].username) {
+                userList[i].petIdList.push(newPet.id)
+            }
+        }
     }
 
     tryCreate = () => {
