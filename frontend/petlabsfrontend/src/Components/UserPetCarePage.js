@@ -55,7 +55,7 @@ class UserPetCarePage extends React.Component {
         this.setState({
             petName: this.petReceived.petName,
             petImg: type.neutralImage,
-            fullness: this.petReceived.hunger,
+            fullness: this.petReceived.fullness,
             happiness: this.petReceived.happiness,
             intelligence: this.petReceived.intelligence,
             strength: this.petReceived.strength,
@@ -106,10 +106,7 @@ class UserPetCarePage extends React.Component {
 
     starve() {
         if (this.state.alive) {
-            this.setState({
-                fullness: this.state.fullness - 2
-            })
-            this.petReceived.hunger -= 2
+            this.updateFullness(-2)
             this.fatigue()
         }
     }
@@ -120,38 +117,30 @@ class UserPetCarePage extends React.Component {
     feedPet = () => {
         log('feeding: -10 hunger');
         if (this.state.alive) {
-            this.setState({
-                fullness: this.state.fullness + 10
-            })
-            this.petReceived.hunger += 10
+            this.updateFullness(10);
         }
     }
 
     // Function related to feeding.
     playWithPet = () => {
-        log('playing with pet: +2 happiness');
+        log('playing with pet: +3 happiness');
         if (this.state.alive) {
 
-            let incValue = 2;
-            if (this.state.fullness < 20 && this.state.fullness >= -20) {
+            let incValue = 3;
+            if (this.state.fullness >= 20) {
+                incValue = 3;
+            } else if (this.state.fullness < 20) {
                 incValue = 1;
-            } else if (this.state.fullness < -20) {
-                incValue = 0;
             }
 
-            this.setState({
-                happiness: this.state.happiness + incValue
-            })
-            this.petReceived.happiness += incValue
-            
-            this.setPetMood();
+            this.updateHappiness(incValue)
 
             this.giveGold();
         }
     }
 
     setPetMood = () => {
-        if (this.state.happiness >= 40 && this.state.happiness < 80) {
+        if (this.state.happiness >= 30 && this.state.happiness < 80) {
             this.setState({
                 petImg: this.state.type.neutralImage
             })
@@ -159,7 +148,7 @@ class UserPetCarePage extends React.Component {
             this.setState({
                 petImg: this.state.type.happyImage
             })
-        } else if (this.state.happiness < 40) {
+        } else if (this.state.happiness < 30) {
             this.setState({
                 petImg: this.state.type.sadImage
             })
@@ -178,18 +167,17 @@ class UserPetCarePage extends React.Component {
                 }
             }
 
+            this.updateHappiness(targetItem.fullness)
+            this.updateFullness(targetItem.happiness)
+
             this.setState({
-                fullness: this.state.fullness + targetItem.fullness,
-                happiness: this.state.happiness + targetItem.happiness,
-                intelligence: this.state.intelligence + targetItem.intelligence,
-                strength: this.state.strength + targetItem.strength,
-                speed: this.state.speed + targetItem.speed
+                intelligence: this.state.intelligence + targetItem.intelligence * this.state.type.intelligenceRate,
+                strength: this.state.strength + targetItem.strength * this.state.type.strengthRate,
+                speed: this.state.speed + targetItem.speed * this.state.type.speedRate
             })
-            this.petReceived.hunger += targetItem.fullness
-            this.petReceived.happiness += targetItem.happiness
-            this.petReceived.intelligence += targetItem.intelligence
-            this.petReceived.strength += targetItem.strength
-            this.petReceived.speed += targetItem.speed
+            this.petReceived.intelligence += targetItem.intelligence * this.state.type.intelligenceRate
+            this.petReceived.strength += targetItem.strength * this.state.type.strengthRate
+            this.petReceived.speed += targetItem.speed * this.state.type.speedRate
             this.fatigue()
         } 
     }
@@ -197,18 +185,44 @@ class UserPetCarePage extends React.Component {
     /* Gameplay helper functions */
 
     fatigue() {
-        if (this.state.fullness < 20 && this.state.fullness >= -20) {
-            this.setState({
-                happiness: this.state.happiness - 20
-            })
-            this.petReceived.happiness -= 20
-            this.setPetMood();
-        } if (this.state.fullness < -20) {
+        if (this.state.fullness < 20) {
+            this.updateHappiness(-5);
+        } 
+        if (this.state.fullness === 0 && this.state.happiness === 0) {
             this.setState({
                 alive: false
             })
             this.petReceived.alive = false
         }
+    }
+
+    updateHappiness = (incValue) => {
+        if (this.state.happiness + incValue * this.state.type.happinessRate > 100) {
+            incValue = 100 - this.state.happiness
+        } else if (this.state.happiness + incValue * this.state.type.happinessRate < 0) {
+            incValue = this.state.happiness
+        } else {
+            incValue = incValue * this.state.type.happinessRate
+        }
+        this.setState({
+            happiness: this.state.happiness + incValue
+        })
+        this.petReceived.happiness += incValue
+        this.setPetMood();
+    }
+
+    updateFullness = (incValue) => {
+        if (this.state.fullness + incValue * this.state.type.fullnessRate > 100) {
+            incValue = 100 - this.state.fullness
+        } else if (this.state.fullness + incValue * this.state.type.fullnessRate < 0) {
+            incValue = this.state.fullness
+        } else {
+            incValue = incValue * this.state.type.fullnessRate
+        }
+        this.setState({
+            fullness: this.state.fullness + incValue 
+        })
+        this.petReceived.fullness += incValue
     }
 
     giveGold() {

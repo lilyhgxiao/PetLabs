@@ -20,7 +20,7 @@ function PetComponent(props) {
                 </span>
                 <br/>
                 <span id='fullness'>
-                    <span className='statusName'>Fullness: </span><span className='statusValue'>{pet.hunger}%</span>
+                    <span className='statusName'>Fullness: </span><span className='statusValue'>{pet.fullness}%</span>
                 </span>
                 <br/>
             </div>
@@ -41,7 +41,7 @@ function retrieveImgURL(pet) {
 
     if (pet.happiness >= 80) {
         return petType.happyImage;
-    } else if (pet.happiness < 80 && pet.happiness >= 50) {
+    } else if (pet.happiness < 80 && pet.happiness >= 30) {
         return petType.neutralImage;
     } else {
         return petType.sadImage;

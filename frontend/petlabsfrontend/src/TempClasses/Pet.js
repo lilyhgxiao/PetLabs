@@ -10,7 +10,7 @@ class Pet {
         this.petName = petName;
         this.type = type;
         // Default values for status:
-        this.hunger = 50;
+        this.fullness = 50;
         this.happiness = 50;
         this.intelligence = 0;
         this.strength = 0;
