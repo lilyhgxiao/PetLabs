@@ -3,11 +3,10 @@ import React from 'react';
 import '../../CSS/UserPetCareStyles.css';
 
 function PetModel(props)  {
-    const { imgSource, petName } = props;
+    const { imgSource } = props;
     return (
-        <div className='pet'>
-            <span id='petName'>{(petName) ? petName : '--'}</span>
-            <img className="petImg" src={imgSource} />
+        <div className='petModel'>
+            <img className="petImg" src={imgSource} alt="Pet Image"/>
         </div>
     );
 }

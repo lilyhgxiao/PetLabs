@@ -5,6 +5,7 @@ import PetCareAction from './PetCareComponents/PetCareAction.js';
 import PetModel from './PetCareComponents/PetModel.js';
 import PetStatus from './PetCareComponents/PetStatus.js';
 import UserSideMenu from './UserSideMenu';
+import GoldDisplay from './GoldDisplay.js';
 
 import Pet from '../TempClasses/Pet';
 import mockDB from '../TempClasses/Database';
@@ -217,26 +218,25 @@ class UserPetCarePage extends React.Component {
             <div>
                 <UserSideMenu/>
                 <div className='main'>
-                    <div className='showGold'>
-                        GOLD BALANCE: &nbsp;
-                        {this.state.userGold}
-                        &nbsp;G &nbsp;
+                    <GoldDisplay gold={ this.state.userGold }/>
+                    <div className='showPetContainer'>
+                        <div className='showPet'>
+                            { /* Shows status of the pet */ }  
+                            <PetStatus
+                                numFullness = {this.state.fullness}
+                                numHappiness = {this.state.happiness}
+                                numIntelligence = {this.state.intelligence}
+                                numStrength = {this.state.strength}
+                                numSpeed = {this.state.speed}
+                                petName = {this.state.petName}
+                            />
+                            
+                            { /* Shows model of the pet with name */ }  
+                            <PetModel
+                                imgSource = {this.state.petImg}
+                            />
+                        </div>
                     </div>
-                    { /* Shows status of the pet */ }  
-                    <PetStatus
-                        numFullness = {this.state.fullness}
-                        numHappiness = {this.state.happiness}
-                        numIntelligence = {this.state.intelligence}
-                        numStrength = {this.state.strength}
-                        numSpeed = {this.state.speed}
-                    />
-                    
-                    { /* Shows model of the pet with name */ }  
-                    <PetModel
-                        imgSource = {this.state.petImg}
-                        petName = {this.state.petName}
-                    />
-
                     { /* A table that contains three buttons */ }  
                     <PetCareAction
                         feedAction = {this.feedPet}

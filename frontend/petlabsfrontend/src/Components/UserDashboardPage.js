@@ -10,6 +10,7 @@ import '../CSS/UserDashboardStyles.css';
 
 import UserSideMenu from './UserSideMenu';
 import PetComponent from './PetComponent';
+import GoldDisplay from './GoldDisplay.js';
 
 import addNew from '../Images/add_new.png';
 
@@ -75,7 +76,8 @@ class UserDashboardPage extends React.Component {
         if (this.state.toCreate) {
             return(
                 <Redirect push to={{
-                    pathname: "/UserCreatePetPage"
+                    pathname: "/UserCreatePetPage",
+                    state: { user: this.state.user }
                 }} />
             );
         }
@@ -85,6 +87,7 @@ class UserDashboardPage extends React.Component {
                 <UserSideMenu/>
 
                 <div className='main'>
+                <GoldDisplay gold={ this.state.user.gold }/>
                     <div className='mainForm'>
                         <span className='welcomeTitle'>Welcome, {this.state.user.username}</span>
                         <br/>

@@ -6,6 +6,8 @@ import { Redirect } from 'react-router';
 import '../CSS/CreatePetStyle.css';
 
 import UserSideMenu from './UserSideMenu';
+import User from "../TempClasses/User";
+import GoldDisplay from './GoldDisplay.js';
 import PetTypeComponent from './PetTypeComponent';
 import Database from '../TempClasses/Database';
 import Pet from '../TempClasses/Pet';
@@ -17,8 +19,17 @@ class UserCreatePetPage extends React.Component {
         creationSuccess: false,
         imgURL: type_default,
         typeSelected: false,
-        priceString: ""
+        priceString: "",
+        user: new User('', '', false)
     };
+
+    componentDidMount() {
+        const currUser = this.props.location.state.user;
+
+        this.setState({
+            user: currUser
+        });
+    }
 
     handleInputChange = (event) => {
         const target = event.target;
@@ -91,7 +102,8 @@ class UserCreatePetPage extends React.Component {
         if (this.state.creationSuccess) {
             return(
                 <Redirect push to={{
-                    pathname: "/UserDashboardPage"
+                    pathname: "/UserDashboardPage",
+                    state: { user: this.state.user }
                 }} />
             );
         }
@@ -101,6 +113,7 @@ class UserCreatePetPage extends React.Component {
                 <UserSideMenu/>
 
                 <div className='main'>
+                    <GoldDisplay gold={ this.state.user.gold }/>
                     <div className='mainForm'>
                         <span className="newTitle">A New Friend!</span>
                         <br />

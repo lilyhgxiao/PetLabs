@@ -4,6 +4,7 @@ import ReactDOMServer from 'react-dom/server';
 import '../CSS/ShopPageStyle.css';
 
 import UserSideMenu from './UserSideMenu';
+import GoldDisplay from './GoldDisplay.js';
 import mockDB from '../TempClasses/Database';
 
 import petHappy from '../Images/pet_happy_placeholder.png';
@@ -189,11 +190,7 @@ class ShopPage extends React.Component {
             <div>
                 <UserSideMenu/>
                 <div className='main'>
-                    <div className='showGold'>
-                        GOLD BALANCE: &nbsp;
-                        {this.state.userGold}
-                        &nbsp;G &nbsp;
-                    </div>
+                    <GoldDisplay gold={ this.state.userGold }/>
                     <div className='category'>
                         Purchase Pets
                     </div>

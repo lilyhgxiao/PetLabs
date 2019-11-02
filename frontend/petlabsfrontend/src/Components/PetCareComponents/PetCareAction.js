@@ -4,7 +4,7 @@ import '../../CSS/UserPetCareStyles.css';
 function PetCareAction(props)  {
     const { feedAction, playAction, trainAction, dropdownAction } = props;
     return (
-        <table>
+        <table className="actions">
             <tbody>
                 <tr>
                     <td>

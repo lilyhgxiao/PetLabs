@@ -1,0 +1,22 @@
+.goldContainer {
+    position: fixed;
+    margin-left: 50px;
+    margin-top: 30px;
+    padding: 16px 32px;
+    text-decoration: none;
+    font-family: "UD Digi Kyokasho NK-R";
+    font-size: 130%;
+    border-radius: 10px;
+    background-color: cornflowerblue;
+    width: 200px;
+}
+
+.goldField {
+    float: left;
+    color: midnightblue;
+}
+
+.goldValue {
+    float: right;
+    color: white;
+}

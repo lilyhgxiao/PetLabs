@@ -2,25 +2,6 @@ h1 {
     text-align: center;
 }
 
-ul, li {
-    display:inline
-}
-
-ul {
-    width: 70%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-}
-
-li {
-    margin: 20px;
-    font-weight: bold;
-    font-size: 12pt;
-    text-align: center;
-}
-
 table, td, th {
     border-collapse: collapse;
     margin-left: auto;
@@ -32,21 +13,45 @@ td, th {
     text-align: center;
 }
 
-button {
+.actions button {
     margin-left: auto;
     margin-right: auto;
+    background-color: #4878FB;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    font-family: "UD Digi Kyokasho NK-R";
+    font-size: 100%;
+}
+
+.actions button:hover {
+    cursor: pointer;
+    background-color: #D2DEFE;
+}
+
+.actions select {
+    margin-left: 10px;
+    padding: 16px 32px;
+    border-radius: 4px;
+    font-family: "UD Digi Kyokasho NK-R";
+    font-size: 100%;
+    background-color: #9CAAEC;
+    color: white;
+    border: 1px solid #7989D5; 
 }
 
 .petImg {
-    max-width: 260px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    width: 300px;
+    height: 300px;
 }
 
 #petName {
     display: block;
-    font-size: 32pt;
+    font-family: 'Paytone One', sans-serif;
+    color: #1E48C8;
+    font-size: 200%;
     text-align: center;
 }
 
@@ -54,4 +59,44 @@ button {
     display: block;
     font-size: 20pt;
     text-align: left;
+}
+
+.showPetContainer {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.showPet {
+    display: inline-block;
+}
+
+.petModel {
+    float: left;
+}
+
+#statusBlock {
+    text-align: left;
+    float: left;
+    width: 300px;
+    margin-right: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 2px solid dodgerblue;
+    border-radius: 15px;
+}
+
+#statusBlock .careStatusName {
+    float: left;
+    font-family: 'Viga', sans-serif;
+    color: #1E48C8;
+    font-size: 120%;
+    width: 80%
+}
+
+#statusBlock .careStatusValue {
+    float: right;
+    font-family: 'Viga', sans-serif;
+    color: dodgerblue;
+    font-size: 120%;
 }
