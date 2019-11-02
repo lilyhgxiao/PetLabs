@@ -76,9 +76,9 @@ class AdminItemListPage extends React.Component {
                 <div className='main'>
                     <div className='mainForm'>
                         <div className={'list-view'}>
-                            <h1>Item Types</h1>
+                            <div className='listTitle'>Item Types</div>
                             <div id={'inner-container'} className={'list-view'}>
-                                <input className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue}></input>
+                                <input className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue} placeholder="Search"></input>
                                 <button className={'list-view'} onClick={this.handleGoButtonClick}>Go!</button>
                                 <br /> <br />
                                 <table className={'list-view'}>

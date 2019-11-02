@@ -1,8 +1,16 @@
-div.item {
+div.item a {
     vertical-align: top;
     display: inline-block;
     text-align: center;
     width: 128px;
+    padding: 40px;
+    border: 2px solid #A5BDFE;
+    border-radius: 10px;
+}
+
+div.item a:hover {
+    cursor: pointer;
+    background-color: #D2DEFE;
 }
 
 input {
@@ -10,7 +18,10 @@ input {
     height: 128px;
 }
 
-.subtitle {
+#subtitle {
+    margin-top: 10px;
     display: block;
-    font-size: 64pt;
+    font-size: 100%;
+    font-family: 'Paytone One', sans-serif;
+    color: royalblue;
 }

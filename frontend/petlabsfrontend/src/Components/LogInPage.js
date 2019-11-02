@@ -84,7 +84,7 @@ class LogInPage extends React.Component {
                 return(
                     <Redirect push to={{
                         pathname: "/AdminDashboardPage",
-                        state: { user: this.state.user }
+                        state: { username: this.state.username }
                     }} />
                 );
             } else {
