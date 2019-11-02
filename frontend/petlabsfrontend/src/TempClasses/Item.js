@@ -1,5 +1,3 @@
-import Database from './Database';
-
 class Item {
     constructor(name, strength, speed, intelligence, happiness, fullness, imgURL, price) {
         if (typeof(Item.nextId) === 'undefined') {

@@ -42,6 +42,10 @@ td, th {
     border: 1px solid #7989D5; 
 }
 
+.actions select:hover {
+    cursor: pointer; 
+}
+
 .petImg {
     width: 300px;
     height: 300px;
@@ -99,4 +103,13 @@ td, th {
     font-family: 'Viga', sans-serif;
     color: dodgerblue;
     font-size: 120%;
+}
+
+.careTitle {
+    margin-top: 40px;
+    display: block;
+    text-align: center;
+    font-size: 250%;
+    font-family: 'Paytone One', sans-serif;
+    color: #3045AF;
 }

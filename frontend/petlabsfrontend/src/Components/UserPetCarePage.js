@@ -7,12 +7,7 @@ import PetStatus from './PetCareComponents/PetStatus.js';
 import UserSideMenu from './UserSideMenu';
 import GoldDisplay from './GoldDisplay.js';
 
-import Pet from '../TempClasses/Pet';
 import mockDB from '../TempClasses/Database';
-
-import petHappy from '../Images/pet_happy_placeholder.png';
-import petNeutral from '../Images/pet_neutral_placeholder.png';
-import petSad from '../Images/pet_sad_placeholder.png';
 
 const log = console.log
 
@@ -23,14 +18,15 @@ class UserPetCarePage extends React.Component {
     state = {
         userGold: 0,
         petName: "",
-        petImg: petNeutral,
+        petImg: '',
         fullness: 50,
         happiness: 50,
         intelligence: 0,
         strength: 0,
         speed: 0,
         alive: true,
-        itemSelected: -99
+        itemSelected: -99,
+        type: null
     }
 
     /* Automatically loaded functions */
@@ -38,8 +34,7 @@ class UserPetCarePage extends React.Component {
     componentDidMount() {
         this.setState({
             userGold: mockDB.currUser.gold
-        })
-        this.findPet()
+        },this.findPet)
         this.populateItem()
         this.selectItem = this.selectItem.bind(this)
 
@@ -55,16 +50,28 @@ class UserPetCarePage extends React.Component {
 
     // Find specific pet from the database:
     findPet() {
+        const type = this.retrieveType();
+        console.log(type)
         this.setState({
             petName: this.petReceived.petName,
-            petImg: petNeutral,
+            petImg: type.neutralImage,
             fullness: this.petReceived.hunger,
             happiness: this.petReceived.happiness,
             intelligence: this.petReceived.intelligence,
             strength: this.petReceived.strength,
             speed: this.petReceived.speed,
-            alive: this.petReceived.alive
-        })
+            alive: this.petReceived.alive,
+            type: type
+        }, this.setPetMood)
+    }
+
+    retrieveType = () => {
+        const typesList = mockDB.petTypes;
+        for (let i = 0; i < typesList.length; i++) {
+            if (typesList[i].name === this.petReceived.type) {
+                return typesList[i];
+            }
+        }
     }
 
     // Use DOM to populate items in the drop down menu:
@@ -137,17 +144,25 @@ class UserPetCarePage extends React.Component {
             })
             this.petReceived.happiness += incValue
             
-            if (this.state.happiness > 60 && this.state.happiness <= 90) {
-                this.setState({
-                    petImg: petNeutral
-                })
-            } else if (this.state.happiness > 90) {
-                this.setState({
-                    petImg: petHappy
-                })
-            }
+            this.setPetMood();
 
             this.giveGold();
+        }
+    }
+
+    setPetMood = () => {
+        if (this.state.happiness >= 40 && this.state.happiness < 80) {
+            this.setState({
+                petImg: this.state.type.neutralImage
+            })
+        } else if (this.state.happiness >= 80) {
+            this.setState({
+                petImg: this.state.type.happyImage
+            })
+        } else if (this.state.happiness < 40) {
+            this.setState({
+                petImg: this.state.type.sadImage
+            })
         }
     }
 
@@ -187,11 +202,7 @@ class UserPetCarePage extends React.Component {
                 happiness: this.state.happiness - 20
             })
             this.petReceived.happiness -= 20
-            if (this.state.happiness < 20) {
-                this.setState({
-                    petImg: petSad
-                })
-            }
+            this.setPetMood();
         } if (this.state.fullness < -20) {
             this.setState({
                 alive: false
@@ -219,6 +230,7 @@ class UserPetCarePage extends React.Component {
                 <UserSideMenu/>
                 <div className='main'>
                     <GoldDisplay gold={ this.state.userGold }/>
+                    <span className='careTitle'>Care for your pet!</span><br/>
                     <div className='showPetContainer'>
                         <div className='showPet'>
                             { /* Shows status of the pet */ }  

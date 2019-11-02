@@ -1,7 +1,6 @@
 import React from 'react';
 import '../CSS/PetComponentStyle.css';
 
-import { Link } from 'react-router-dom';
 import Database from '../TempClasses/Database'
 
 function PetComponent(props) {
