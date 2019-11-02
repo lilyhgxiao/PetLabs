@@ -5,6 +5,8 @@ import ReactDOMServer from 'react-dom/server';
 
 import UserSideMenu from './UserSideMenu';
 
+import '../CSS/HelpStyle.css';
+
 const log = console.log
 
 class HelpPage extends React.Component {
@@ -14,66 +16,68 @@ class HelpPage extends React.Component {
             <div>
                 <UserSideMenu/>
                 <div className='main'>
-                    <h1>
+                    <div className='helpTitle'>
                     	WELCOME TO PETLABS !
-                    </h1>
-                    <div>
-                    	<h2>
+                    </div>
+                    <div className='helpContent'>
+                    	<div className='helpTopicBlue'>
                             ABOUT THIS GAME
-                        </h2>
-                        <div>
-                            Create!, Feed!, Train!, and most importantly, PLAY with your pets! <br/>
-                            When your bored, spend time with your own virtual pet on this web-game!
+                            </div>
+                        <div className='helpText'>
+                            Create! Feed! Train! And most importantly, PLAY with your pets! <br/>
+                            When you're bored, spend time with your own virtual pet on this web-game!
                         </div>
-                        <h2>
+                        <div className='helpTopicGreen'>
                             Creating your own pet
-                        </h2>
-                        <div>
+                        </div>
+                        <div className='helpText'>
                             On your dashboard, click on "Add new" option.  <br/>
                             Choose your pet type from available options and name your pet however you'd like.<br/> 
+                            (Note that creating a pet costs gold.)<br/> 
                             Finally, have fun with your pet!
                         </div>
-                        <h2>
+                        <div className='helpTopicBlue'>
                             Feeding your own pet
-                        </h2>
-                        <div>
-                            On your dashboard, click on your pet. <br/>
-                            Becareful! Once you start interacting with your pet, your pet will get hungrier!<br/>
-                            Make sure your pet doesn't starve! Otherwise, there will be a grave consequence! <br/>
                         </div>
-                        <h2>
+                        <div className='helpText'>
+                            On your dashboard, click on your pet. <br/>
+                            Be careful! Once you start interacting with your pet, your pet will get hungrier!<br/>
+                            Make sure your pet doesn't starve or get sad.<br/>
+                        </div>
+                        <div className='helpTopicGreen'>
                             Playing with your own pet
-                        </h2>
-                        <div>
+                        </div>
+                        <div className='helpText'>
                             On your dashboard, click on your pet. <br/>
                             You can start playing with your pet using "play" button! <br/>
                             The more you play with your pet, your pet's happiness will increase! <br/>
                             Also, playing with your pet is you main source of income! <br/>
                         </div>
-                        <h2>
+                        <div className='helpTopicBlue'>
                             Using item on your own pet
-                        </h2>
-                        <div>
+                        </div>
+                        <div className='helpText'>
                             On your dashboard, click on your pet. <br/>
                             You can select an item you bought from the shop and use it on your pet! <br/>
                             No need to worry about your items though!<br/>
                             They are not one time use!<br/>
                         </div>
-                        <h2>
+                        <div className='helpTopicGreen'>
                             Shopping
-                        </h2>
-                        <div>
+                        </div>
+                        <div className='helpText'>
                             Click on "Store" on the side menu to access shop! <br/>
+                            This is the only place where you can access items. <br/>
+                            Make sure you have enough gold if you want to buy something! <br/>
                         </div>
-                        <h2>
+                        <div className='helpTopicBlue'>
                             Setting
-                        </h2>
-                        <div>
-                            Click on "Settings" on the side menu to access settings! <br/>
                         </div>
-                        <h2>
-                            <br/>
-                        </h2>
+                        <div className='helpText'>
+                            Click on "Settings" on the side menu to access settings! <br/>
+                            You can change your password on this screen. However, make sure to remember your old password! <br/>
+                        </div>
+                        <br/>
                     </div>
                 </div>
             </div>

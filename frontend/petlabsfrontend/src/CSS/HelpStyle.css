@@ -1,0 +1,33 @@
+.helpTitle {
+    text-align: center;
+    font-size: 250%;
+    font-family: 'Paytone One', sans-serif;
+    color: #3045AF;
+}
+
+.helpContent {
+    padding: 10px 200px;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.helpTopicBlue {
+    font-family: 'Viga', sans-serif;
+    color: #1E48C8;
+    font-size: 130%;
+    margin-bottom: 10px;
+}
+
+.helpTopicGreen {
+    font-family: 'Viga', sans-serif;
+    color: #2AB287;
+    font-size: 130%;
+    margin-bottom: 10px;
+}
+
+.helpText {
+    margin-bottom: 30px;
+    font-family: 'Montserrat', sans-serif;
+    color: midnightblue;
+    font-size: 100%;
+}
