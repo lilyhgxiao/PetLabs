@@ -1,55 +1,72 @@
-h1 {
+.main {
     text-align: center;
 }
 
-ul, li {
-    display:inline
-}
-
-ul {
-    width: 70%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+.storeTitle {
     text-align: center;
+    font-size: 250%;
+    font-family: 'Paytone One', sans-serif;
+    color: #3045AF;
 }
 
-li {
+.storeSubtitle {
+    font-size: 120%;
     font-weight: bold;
-    font-size: 12pt;
-    text-align: center;
-}
-
-table, td, th {
-    border-collapse: collapse;
     margin-left: auto;
     margin-right: auto;
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    color: royalblue;
+    margin-bottom: 30px;
 }
 
-td, th {
-    min-width: 200px;
+#itemEntryContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: left;
+}
+
+.itemEntry {
+    margin: 30px;
     text-align: center;
 }
 
-button {
-    margin: 6px;
+.buyItemButton {
+    margin-left: 10px;
+    background-color: #4878FB;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-family: "UD Digi Kyokasho NK-R";
+    font-size: 90%;
+    margin-top: 5px;
+}
+
+.buyItemButton:hover {
+    cursor: pointer;
+    background-color: #82A1F7;
 }
 
 .shopImg {
-    max-width: 160px;
+    width: 160px;
+    height: 160px;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
-.category {
-    display: block;
-    font-size: 32pt;
+.itemName {
     text-align: center;
+    font-size: 130%;
+    font-family: 'Paytone One', sans-serif;
+    color: #3045AF;
 }
 
-.showGold {
-    display: block;
-    font-size: 20pt;
-    text-align: left;
+.itemPrice {
+    font-family: 'Viga', sans-serif;
+    font-size: 100%;
+    color:dodgerblue;
 }

@@ -13,7 +13,7 @@ function PetComponent(props) {
             </span>
             <br/>
             <span id='price'>
-                ${petType.price}
+                {petType.price}G
             </span>
         </div>
     );

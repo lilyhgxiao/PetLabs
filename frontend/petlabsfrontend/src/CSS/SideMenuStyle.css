@@ -29,7 +29,8 @@
   /* Style page content */
   .main {
     margin-left: 215px; /* Same as the width of the sidebar */
-    padding: 0px 10px;
+    padding-left: 10px;
+    padding-top: 90px;
   }
 
   .sidemenu input {

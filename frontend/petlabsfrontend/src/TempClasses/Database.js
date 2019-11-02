@@ -30,9 +30,16 @@ const Database = {
     ],
     
     itemList: [
-        new Item('Dumbell', 5, 1, 0, 3, -3, DumbellImage, 1000),
+        new Item('Dumbbell', 5, 1, 0, 3, -3, DumbellImage, 1000),
         new Item('Book', 0, 0, 5, 2, 0, BookImage, 2000),
-        new Item('Treadmill', 2, 5, 0, 4, -3, TreadmillImage, 3000)
+        new Item('Treadmill', 2, 5, 0, 4, -3, TreadmillImage, 3000),
+        new Item('Test', 2, 5, 0, 4, -3, TreadmillImage, 3000),
+        new Item('Test', 2, 5, 0, 4, -3, TreadmillImage, 3000),
+        new Item('Test', 2, 5, 0, 4, -3, TreadmillImage, 3000),
+        new Item('Test', 2, 5, 0, 4, -3, TreadmillImage, 3000),
+        new Item('Test', 2, 5, 0, 4, -3, TreadmillImage, 3000),
+        new Item('Test', 2, 5, 0, 4, -3, TreadmillImage, 3000),
+        new Item('Test', 2, 5, 0, 4, -3, TreadmillImage, 3000),
     ],
 
     petTypes: [

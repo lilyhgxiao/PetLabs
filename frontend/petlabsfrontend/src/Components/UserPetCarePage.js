@@ -242,8 +242,8 @@ class UserPetCarePage extends React.Component {
         return (
             <div>
                 <UserSideMenu/>
+                <GoldDisplay gold={ this.state.userGold }/>
                 <div className='main'>
-                    <GoldDisplay gold={ this.state.userGold }/>
                     <span className='careTitle'>Care for your pet!</span><br/>
                     <div className='showPetContainer'>
                         <div className='showPet'>

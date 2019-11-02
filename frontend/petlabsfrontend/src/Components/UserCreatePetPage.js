@@ -94,7 +94,7 @@ class UserCreatePetPage extends React.Component {
             petType: petType,
             typeSelected: true,
             imgURL: petType.happyImage,
-            priceString: " ($" + petType.price + ")"
+            priceString: " (" + petType.price + "G)"
         })
     }
 
@@ -111,9 +111,10 @@ class UserCreatePetPage extends React.Component {
         return(
             <div>
                 <UserSideMenu/>
+                <GoldDisplay gold={ this.state.user.gold }/>
 
                 <div className='main'>
-                    <GoldDisplay gold={ this.state.user.gold }/>
+                    
                     <div className='mainForm'>
                         <span className="newTitle">A New Friend!</span>
                         <br />

@@ -85,9 +85,9 @@ class UserDashboardPage extends React.Component {
         return(
             <div>
                 <UserSideMenu/>
-
-                <div className='main'>
                 <GoldDisplay gold={ this.state.user.gold }/>
+                <div className='main'>
+                    
                     <div className='mainForm'>
                         <span className='welcomeTitle'>Welcome, {this.state.user.username}</span>
                         <br/>

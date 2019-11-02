@@ -23,7 +23,7 @@ class ShopPage extends React.Component {
         this.setState({
             userGold: mockDB.currUser.gold
         })
-        this.populatePets();
+        //this.populatePets();
         this.populateItems();
     }
 
@@ -78,14 +78,20 @@ class ShopPage extends React.Component {
         for (let i = 0; i < iList.length; i++) {
 
             let allItems = document.querySelector("#itemEntry");
-            let tbodyComp = allItems.querySelector("tbody");
+            //let tbodyComp = allItems.querySelector("tbody");
+            let tbodyComp = document.querySelector("#itemEntryContainer");
             let curItem = iList[i];
 
-            let newCell = document.createElement('td');
+            //let newCell = document.createElement('td');
+            let newCell = document.createElement('div');
+            newCell.className = "itemEntry";
 
             // Put price on items:
-            let price = document.createTextNode("Price: " + curItem.price);
-            newCell.appendChild(price);
+            let price = document.createElement('span');
+            let priceText = document.createTextNode(curItem.price + "G");
+            price.className = "itemPrice";
+            price.appendChild(priceText);
+
 
             // Put item image:
 			let imgElement = document.createElement('img');
@@ -95,6 +101,7 @@ class ShopPage extends React.Component {
 
             // Put item type name:
             let nameElement = document.createElement('span');
+            nameElement.className = "itemName";
             if (curItem.name) {
                 let iName = document.createTextNode(curItem.name);
                 nameElement.appendChild(iName);
@@ -103,14 +110,18 @@ class ShopPage extends React.Component {
                 nameElement.appendChild(iName);
             }
             newCell.appendChild(nameElement);
+            newCell.appendChild(document.createElement('br'));
+            newCell.appendChild(price);
 
             // Create a button:
             let buttonElement = document.createElement('button');
+            buttonElement.className = "buyItemButton";
             buttonElement.setAttribute("value", curItem.id);
             buttonElement.addEventListener('click', this.purchase);
 
-            let buyText = document.createTextNode("buy");
+            let buyText = document.createTextNode("Buy This");
             buttonElement.appendChild(buyText);
+            newCell.appendChild(document.createElement('br'));
             newCell.appendChild(buttonElement);
 
             // Put newCell under tbody of itemEntry:
@@ -119,10 +130,11 @@ class ShopPage extends React.Component {
     }
 
     purchase = (e) => {
-        let parentSearch = e.target.parentElement.parentElement.parentElement;
+        let parentSearch = e.target.parentElement;
+        console.log(e)
         let curUser = mockDB.currUser;
 
-        if (parentSearch.id === "itemEntry") {
+        if (parentSearch.className === "itemEntry") {
             let entryId = e.target.value;
 
             let iList = mockDB.itemList;
@@ -189,8 +201,12 @@ class ShopPage extends React.Component {
         return (
             <div>
                 <UserSideMenu/>
+                <GoldDisplay gold={ this.state.userGold }/>
                 <div className='main'>
-                    <GoldDisplay gold={ this.state.userGold }/>
+                    
+                    <div className='storeTitle'>Welcome to the Store!</div>
+                    <div className='storeSubtitle'>Purchase items to raise your pet right!</div>
+                    { /*
                     <div className='category'>
                         Purchase Pets
                     </div>
@@ -202,11 +218,18 @@ class ShopPage extends React.Component {
                     <div className='category'>
                         Purchase Items
                     </div>
-                    <table id="itemEntry">
-                        <tbody>
+                    
+                    <div id="itemEntryContainer">
+                        <table id="itemEntry">
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
+                    */}
+
+                    <div id="itemEntryContainer">
+                    </div>
                 </div>
             </div>
         );  
