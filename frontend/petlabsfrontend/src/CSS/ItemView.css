@@ -7,23 +7,42 @@
 }
 
 input.addItemLink {
-    height: 5%;
-    width: 90%;
+    width: 85%;
+    height: 50%;
+    padding: 15px 15px;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    box-sizing: border-box;
+    border: 1px solid #A5BDFE;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 100%;
 }
 
 input.row {
     width: 99%;
+    padding: 8px 15px;
+    box-sizing: border-box;
+    border: 1px solid #A5BDFE;
+    border-radius: 4px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 100%;
 }
 
 p.addItemLink {
     font-weight: bold;
+    font-family: 'Viga', sans-serif;
+    font-size: 130%;
+    color: #3045AF;
 }
 
-.centerLeft {
+p.centerLeft {
     text-align: left;
-    margin-left: 1.4%;
-    width: 30%;
     font-weight: bold;
+    font-family: 'Viga', sans-serif;
+    font-size: 130%;
+    color: #3045AF;
+    margin-left: 2%;
 }
 
 img.addItemLink {
@@ -50,8 +69,20 @@ table.item-view, tr.item-view {
     border-collapse: collapse;
 }
 
-th.item-view, td.item-view {
-    border: 1px solid black;
+th.item-view {
+    border: 1px solid #A5BDFE;
+    font-family: 'Viga', sans-serif;
+    color: #3045AF;
+    padding: 10px;
+    font-size: 130%;
+}
+
+td.item-view
+{
+    border: 1px solid #A5BDFE;
+    color: royalblue;
+    font-family: 'Montserrat', sans-serif;
+    padding: 5px;
 }
 
 button.addItemLink {
@@ -69,4 +100,20 @@ img.saveIcon {
 .container {
     display: flex;
     justify-content: center;
+}
+
+.itemTitle {
+    text-align: center;
+    font-size: 250%;
+    font-family: 'Paytone One', sans-serif;
+    color: #3045AF;
+}
+
+.itemSubtitle {
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Viga', sans-serif;
+    font-size: 130%;
+    color: #3045AF;
+    margin: 30px;
 }

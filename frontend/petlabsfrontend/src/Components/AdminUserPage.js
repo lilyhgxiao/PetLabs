@@ -331,7 +331,7 @@ class AdminUserPage extends React.Component {
 
                 <div className='main'>
                     <div className='mainForm'>
-                        <h1>Id: {this.state.username}</h1>
+                        <div className='itemTitle'>Id: {this.state.username}</div>
                         <table className={'item-view'}>
                             <tbody>
                                 <tr className={'item-view'}>
@@ -349,7 +349,7 @@ class AdminUserPage extends React.Component {
                                     </td>
                                     <td className={'item-view'}>
                                         <input 
-                                            className={'addItemLink'} 
+                                            className={'row'} 
                                             type='Text' 
                                             value={this.state.password} 
                                             onChange={(event)=>this.handlePWChange(event)} 
@@ -363,7 +363,7 @@ class AdminUserPage extends React.Component {
                                     </td>
                                     <td className={'item-view'}>
                                         <input 
-                                            className={'addItemLink'} 
+                                            className={'row'} 
                                             type='Text' 
                                             value={this.state.gold} 
                                             onChange={(event)=>this.handleGoldChange(event)} 
@@ -372,11 +372,11 @@ class AdminUserPage extends React.Component {
                                 </tr>
                             </tbody>
                         </table>
-                        <h2>List of pets</h2>
+                        <div className='itemSubtitle'>List of pets</div>
                         <div id='petEntries'>
 
                         </div>
-                        <h2>List of Items</h2>
+                        <div className='itemSubtitle'>List of Items</div>
                         <div id='itemEntries'>
 
                         </div>

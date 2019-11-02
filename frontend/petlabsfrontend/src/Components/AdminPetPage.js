@@ -134,7 +134,7 @@ class AdminPetPage extends React.Component {
                 <AdminSideMenu />
                 <div className='main'>
                     <div className='mainForm'>
-                        <h1>Pet Type ID: {this.petType.id}</h1>
+                        <div className='itemTitle'>Pet Type ID: {this.petType.id}</div>
                         <div className={'centerView'}>
                             <p className={'addItemLink'}>Name: <input className={'addItemLink'} type='Text' value={this.state.name} onChange={this.handleNameChange} /> </p> 
                             <p className={'centerLeft'}>Sprites:</p>

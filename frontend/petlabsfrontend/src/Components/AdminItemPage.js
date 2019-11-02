@@ -129,7 +129,7 @@ class AdminItemPage extends React.Component {
             <AdminSideMenu />
                 <div className='main'>
                     <div className='mainForm'>
-                        <h1>Item ID: {this.getItemReference().id}</h1>
+                        <div className='itemTitle'>Item ID: {this.getItemReference().id}</div>
                         <div className={'centerView'}>
                             <p className={'addItemLink'}>Name: <input className={'addItemLink'} type='Text' value={this.state.name} onChange={this.handleNameChange}/> </p> 
                             <p className={'centerLeft'}>Sprite:</p>
