@@ -76,12 +76,22 @@ class UserCreatePetPage extends React.Component {
         }
     }
 
+    authEmpty = () => {
+        if (this.state.name.length === 0) {
+            return false;
+        }
+    }
+
     tryCreate = () => {
         let success = true;
         if (this.state.petType === null) {
             alert("Please select a pet type.");
         }
         else {
+            if (!this.authEmpty()) {
+                alert("Please enter a name.");
+                success = false;
+            }
             if (!this.authGold()) {
                 alert("Not enough gold to purchase this pet.");
                 success = false;

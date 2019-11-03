@@ -49,6 +49,12 @@ class SignUpPage extends React.Component {
         }
     }
 
+    authEmpty = () => {
+        if (this.state.username.length === 0 || this.state.password === 0 || this.state.confirmPassword === 0) {
+            return false;
+        }
+    }
+
     createUser = () => {
         const newUser = new User(this.state.username, this.state.password, false);
         Database.userList.push(newUser);
@@ -61,12 +67,14 @@ class SignUpPage extends React.Component {
         //temp
         let success = true;
         let newUser = null;
-        
-        if (!this.authUser()) {
+
+        if (!this.authEmpty()) {
+            alert("Please fill in all fields.");
+            success = false;
+        } else if (!this.authUser()) {
             alert('Username already taken. Please try another username.');
             success = false;
-        }
-        if (!this.authPass()) {
+        } else if (!this.authPass()) {
             alert('Passwords do not match. Please try again.')
             success = false;
         }

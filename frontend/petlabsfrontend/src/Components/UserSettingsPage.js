@@ -49,6 +49,12 @@ class UserSettingsPage extends React.Component {
         }
     }
 
+    authEmpty = () => {
+        if (this.state.oldPass.length === 0 || this.state.newPass === 0 || this.state.confirmPass === 0) {
+            return false;
+        }
+    }
+
     changePassword = () => {
         const userList = Database.userList;
         
@@ -62,11 +68,13 @@ class UserSettingsPage extends React.Component {
     tryChange = () => {
         console.log("tryChange")
         let success = true;
-        if (!this.authOldPass()) {
+        if (!this.authEmpty()) {
+            alert("Please fill in all fields.");
+            success = false;
+        } else if (!this.authOldPass()) {
             alert("The old password does not match your current password. Please try again.");
             success = false;
-        }
-        if (!this.authNewPass()) {
+        } else if (!this.authNewPass()) {
             alert('Passwords do not match. Please try again.');
             success = false;
         }
