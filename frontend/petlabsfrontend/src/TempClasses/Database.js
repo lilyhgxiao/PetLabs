@@ -3,9 +3,19 @@ import Pet from "./Pet";
 import PetType from "./PetType";
 import Item from "./Item";
 
-import petHappy from '../Images/pet_happy_placeholder.png';
-import petNeutral from '../Images/pet_neutral_placeholder.png';
-import petSad from '../Images/pet_sad_placeholder.png';
+import blob_happy from '../Images/blob_happy.png';
+import blob_neutral from '../Images/blob_neutral.png';
+import blob_sad from '../Images/blob_sad.png';
+
+import flower_happy from '../Images/flower_happy.png';
+import flower_neutral from '../Images/flower_neutral.png';
+import flower_sad from '../Images/flower_sad.png';
+
+import fireball_happy from '../Images/fireball_happy.png';
+import fireball_neutral from '../Images/fireball_neutral.png';
+import fireball_sad from '../Images/fireball_sad.png';
+
+import petrock_neutral from '../Images/petrock_neutral.png';
 
 import DumbellImage from '../Images/Dumbell.png';
 import BookImage from '../Images/Book.png';
@@ -43,10 +53,10 @@ const Database = {
     ],
 
     petTypes: [
-        new PetType('Blob', petNeutral, petHappy, petSad, 1, 1, 1, 1, 1, 4000),
-        new PetType('Flower', petNeutral, petHappy, petSad, 2, 2, 2, 2, 2, 5000),
-        new PetType('Fireball', petNeutral, petHappy, petSad, 3, 3, 3, 3, 3, 6000),
-        new PetType('Pet Rock', petNeutral, petHappy, petSad, 4, 4, 4, 4, 4, 7000),
+        new PetType('Blob', blob_neutral, blob_happy, blob_sad, 1, 1, 1, 1, 1, 4000),
+        new PetType('Flower', flower_neutral, flower_happy, flower_sad, 2, 2, 2, 2, 2, 5000),
+        new PetType('Fireball', fireball_neutral, fireball_happy, fireball_sad, 3, 3, 3, 3, 3, 6000),
+        new PetType('Pet Rock', petrock_neutral, petrock_neutral, petrock_neutral, 4, 4, 4, 4, 4, 7000),
     ],
 
     // nextItemId: 0,
