@@ -43,20 +43,13 @@ const Database = {
         new Item('Dumbbell', 5, 1, 0, 3, -3, DumbellImage, 1000),
         new Item('Book', 0, 0, 5, 2, 0, BookImage, 2000),
         new Item('Treadmill', 2, 5, 0, 4, -3, TreadmillImage, 3000),
-        new Item('Test', 2, 5, 0, 4, -3, TreadmillImage, 3000),
-        new Item('Test', 2, 5, 0, 4, -3, TreadmillImage, 3000),
-        new Item('Test', 2, 5, 0, 4, -3, TreadmillImage, 3000),
-        new Item('Test', 2, 5, 0, 4, -3, TreadmillImage, 3000),
-        new Item('Test', 2, 5, 0, 4, -3, TreadmillImage, 3000),
-        new Item('Test', 2, 5, 0, 4, -3, TreadmillImage, 3000),
-        new Item('Test', 2, 5, 0, 4, -3, TreadmillImage, 3000),
     ],
 
     petTypes: [
-        new PetType('Blob', blob_neutral, blob_happy, blob_sad, 1, 1, 1, 1, 1, 4000),
+        new PetType('Blob', blob_neutral, blob_happy, blob_sad, 1, 1, 1, 1, 1, 100),
         new PetType('Flower', flower_neutral, flower_happy, flower_sad, 2, 2, 2, 2, 2, 5000),
         new PetType('Fireball', fireball_neutral, fireball_happy, fireball_sad, 3, 3, 3, 3, 3, 6000),
-        new PetType('Pet Rock', petrock_neutral, petrock_neutral, petrock_neutral, 4, 4, 4, 4, 4, 7000),
+        new PetType('Pet Rock', petrock_neutral, petrock_neutral, petrock_neutral, 0, 0, 0, 0, 0, 7000),
     ],
 
     // nextItemId: 0,
