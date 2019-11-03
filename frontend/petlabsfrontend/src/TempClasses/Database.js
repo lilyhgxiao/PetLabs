@@ -51,12 +51,39 @@ const Database = {
         new PetType('Fireball', fireball_neutral, fireball_happy, fireball_sad, 3, 3, 3, 3, 3, 6000),
         new PetType('Pet Rock', petrock_neutral, petrock_neutral, petrock_neutral, 0, 0, 0, 0, 0, 7000),
     ],
-
-    // nextItemId: 0,
-
-    // getNextItemId: function() {
-    //     return this.nextItemId++;
-    // }
 };
+
+Database.userList[0].petIdList.push(1);
+Database.userList[0].petIdList.push(2);
+Database.userList[0].petIdList.push(3);
+
+Database.userList[1].petIdList.push(2);
+Database.userList[1].petIdList.push(3);
+Database.userList[1].petIdList.push(4);
+
+Database.userList[2].petIdList.push(1);
+Database.userList[2].petIdList.push(2);
+Database.userList[2].petIdList.push(3);
+
+Database.userList[3].petIdList.push(2);
+Database.userList[3].petIdList.push(3);
+Database.userList[3].petIdList.push(4);
+
+
+Database.userList[0].itemIdList.push(1);
+Database.userList[0].itemIdList.push(2);
+Database.userList[0].itemIdList.push(3);
+
+Database.userList[1].itemIdList.push(1);
+Database.userList[1].itemIdList.push(2);
+Database.userList[1].itemIdList.push(3);
+
+Database.userList[2].itemIdList.push(1);
+Database.userList[2].itemIdList.push(2);
+Database.userList[2].itemIdList.push(3);
+
+Database.userList[3].itemIdList.push(1);
+Database.userList[3].itemIdList.push(2);
+Database.userList[3].itemIdList.push(3);
 
 export default Database;
