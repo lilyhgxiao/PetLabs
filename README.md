@@ -22,40 +22,40 @@ To run the app:
 The login page should now be visible.
 
 # Admin Views
-To login as an administrator type in ‘admin’ for username and ‘admin’ for password and click the ‘Log in’ button.
-You should now enter the admin dashboard page. Here the admin can edit user data, edit different pet types, add new pet types, edit exiting pet items, and add new pet items.
+- To login as an administrator type in ‘admin’ for username and ‘admin’ for password and click the ‘Log in’ button.
+- You should now enter the admin dashboard page. Here the admin can edit user data, edit different pet types, add new pet types, edit exiting pet items, and add new pet items.
 
 # Adding A New Item
-To add a new item, click on the ‘items’ picture.
-Then in the items list page add click on the ‘plus’ icon at the top right corner of the page.
-Type in the name of the new item and edit the item’s attribute in the table below.
-We currently do not support the ability to upload new item images, that is a task we left for the backend phase of the project.
-When you are happy with your new item click the ‘save’ icon at the top right corner of the page. This will take you back to the admin dashboard page.
+- To add a new item, click on the ‘items’ picture.
+- Then in the items list page add click on the ‘plus’ icon at the top right corner of the page.
+- Type in the name of the new item and edit the item’s attribute in the table below.
+- We currently do not support the ability to upload new item images, that is a task we left for the backend phase of the project.
+- When you are happy with your new item click the ‘save’ icon at the top right corner of the page. This will take you back to the admin dashboard page.
 
 # Editing an Existing Item
-To edit an existing item click on the ‘items’ picture. This will take you to the item list page.
-In the search bar type in the name of the item that you wish to edit. You can even choose the newly created item from above.
-Once the correct name is typed in, click the ‘Go!’ button. This will redirect you to the item edit page.
-Note: if an incorrect name is typed in no redirection will occur. Instead an alert message will appear informing you that no such item exists. 
-Note: the search bar is case insensitive.
-In the item edit page you can change the name, price, and item properties by typing in different values in the textboxes. 
-Once you are happy with your changes you can click the ‘save’ icon at the top right-hand corner of the page. This will redirect you back to the admin dashboard page.
-You can always return to the item list page and select the edited item to review the changes you made above. 
+- To edit an existing item click on the ‘items’ picture. This will take you to the item list page.
+- In the search bar type in the name of the item that you wish to edit. You can even choose the newly created item from above.
+- Once the correct name is typed in, click the ‘Go!’ button. This will redirect you to the item edit page.
+- Note: if an incorrect name is typed in no redirection will occur. Instead an alert message will appear informing you that no such item exists. 
+- Note: the search bar is case insensitive.
+- In the item edit page you can change the name, price, and item properties by typing in different values in the textboxes. 
+- Once you are happy with your changes you can click the ‘save’ icon at the top right-hand corner of the page. This will redirect you back to the admin dashboard page.
+- You can always return to the item list page and select the edited item to review the changes you made above. 
 
 # Creating a New Pet Type
-To create a new pet in the user admin dashboard page, click on the ‘Pets’ image. This will take you to the pet list page.
-In the pet list page click on the ‘plus’ icon located at the top of the right-hand corner of the screen. This will take you to the create new pet page.
-In the create new pet page, enter the name of the new pet type, as well as the growth rate of each attribute and the price of the pet.
+- To create a new pet in the user admin dashboard page, click on the ‘Pets’ image. This will take you to the pet list page.
+- In the pet list page click on the ‘plus’ icon located at the top of the right-hand corner of the screen. This will take you to the create new pet page.
+- In the create new pet page, enter the name of the new pet type, as well as the growth rate of each attribute and the price of the pet.
 Once you are happy with your choices click the ‘save’ icon located at the top right-hand corner of the screen. This will save your changes and take you back to the admin dashboard page.
 
 # Editing an Existing Pet
-In the admin dashboard page go to the pet type list page by clicking on the ‘Pets’ picture. 
-In the pet types list page type in the name of the pet that you wish to edit and click go. This will redirect you from the admin view to the edit pet type view.
-Note that the search is case insensitive but typing in a name of a pet that does not exit and clicking go will not redirect, and instead provide the admin with an alert message informing them of the incorrect input.
-In the edit pet type view you can rename the pet type, change its associated attributes and the cost of the pet in the store. 
+- In the admin dashboard page go to the pet type list page by clicking on the ‘Pets’ picture. 
+- In the pet types list page type in the name of the pet that you wish to edit and click go. This will redirect you from the admin view to the edit pet type view.
+- Note that the search is case insensitive but typing in a name of a pet that does not exit and clicking go will not redirect, and instead provide the admin with an alert message informing them of the incorrect input.
+- In the edit pet type view you can rename the pet type, change its associated attributes and the cost of the pet in the store. 
 Once you are happy with your changes you can click the save icon located 
 
 # Admin Side Menu
-Every admin page view also has an admin side menu. Clicking on the logo redirects to the admin dashboard; clicking on the users, pets, and items texts will redirect to their respective admin list views. Clicking the logout button will logout from the admin profile and redirect to the login page. 
+- Every admin page view also has an admin side menu. Clicking on the logo redirects to the admin dashboard; clicking on the users, pets, and items texts will redirect to their respective admin list views. Clicking the logout button will logout from the admin profile and redirect to the login page. 
 
 
