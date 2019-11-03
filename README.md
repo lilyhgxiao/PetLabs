@@ -25,6 +25,16 @@ The login page should now be visible.
 - To login as an user, type in ‘user’ for username and ‘user’ for password and click the ‘Log in’ button.
 - You should now enter the user dashboard page. Here the user can choose a pet to interact with, and use the side menu to access store to buy items, setting to change personal information, or access help menu to open a manual.
 
+# Interacting With Pets
+- To interact with a specific pet, click on one of the available pets from user dashboard page. You will be redirected to user pet care view.
+- Once in user pet care view, selected pet will start to starve. A pet that's been left to starve for a long time will not only grow unhappier, but also die from starvation. 
+- To prevent your pet from starving, you need to feed your pet. To do so, you must click on "feed" button.
+- To increase your pet's happiness, you need to play with your pet. To do so, you must click on "play" button.
+- Playing with your pet will also grant you gold, which you can use to buy items from the store.
+- You could use items you bought from the store on your pet. To do so, you must choose one of the available items from the drop down menu, and click on "Use item" button. 
+- Depending on your item, one or more of three stats (intelligence, speed, or strength) will increase. Items could also increase your pet's happiness or fullness.
+
+# Purchasing an Item
 
 
 # Admin Views
