@@ -9,6 +9,7 @@ import '../CSS/ItemView.css';
 class AdminUserPage extends React.Component {
     targetUserName = this.props.location.username;
     petChanges = [];
+    itemChanges = [];
 
     state = {
         username: this.targetUserName,
@@ -51,8 +52,17 @@ class AdminUserPage extends React.Component {
             let nDiv = document.createElement('div');
 
             // Put pet's id:
-            let pId = document.createTextNode("Pet id: " + pidList[i])
+            let pId = document.createTextNode("Pet id: " + pidList[i] + '   ')
             nDiv.appendChild(pId);
+
+            // Put remove button:
+            let rButton = document.createElement('button');
+            rButton.setAttribute("value", pidList[i]);
+            rButton.addEventListener('click', this.markForRemovalP);
+
+            let bText = document.createTextNode('REMOVE');
+            rButton.appendChild(bText);
+            nDiv.appendChild(rButton);
 
             // Create a table:
             let nTable = document.createElement('table');
@@ -102,6 +112,8 @@ class AdminUserPage extends React.Component {
                                                 this.handlePetSpeedChange, pidList[i]);
                     tbodyPart.appendChild(pSpeedReturn);
                     innerArray.push(pList[j].speed);
+
+                    innerArray.push("keep");
                     
                     this.petChanges.push(innerArray);
                     j += pList.length;
@@ -110,6 +122,7 @@ class AdminUserPage extends React.Component {
             }
             nTable.appendChild(tbodyPart);
             nDiv.appendChild(nTable);
+            nDiv.appendChild(document.createElement('br'));
             pEntries.appendChild(nDiv);
 
         }
@@ -127,6 +140,15 @@ class AdminUserPage extends React.Component {
             let iId = document.createTextNode("Item id: " + iidList[i])
             nDiv.appendChild(iId);
 
+            // Put remove button:
+            let rButton = document.createElement('button');
+            rButton.setAttribute("value", iidList[i]);
+            rButton.addEventListener('click', this.markForRemovalI);
+
+            let bText = document.createTextNode('REMOVE');
+            rButton.appendChild(bText);
+            nDiv.appendChild(rButton);
+
             // Create a table:
             let nTable = document.createElement('table');
             let tbodyPart = document.createElement('tbody');
@@ -137,6 +159,8 @@ class AdminUserPage extends React.Component {
             let j = 0;
             while (j < iList.length) {
                 if (iList[j].id == iidList[i]) {
+                    let innerArray = [];
+                    innerArray.push(iList[j].id);
 
                     // Add Name entry:
                     let pNameReturn = this.AddTR("Item Name", iList[j].name, 
@@ -169,16 +193,20 @@ class AdminUserPage extends React.Component {
                     tbodyPart.appendChild(pSpeedReturn);
 
                     // Add Gold entry:
-                    let pGoldReturn = this.AddTR("Item Cost", iList[j].gold, 
+                    let pGoldReturn = this.AddTR("Item Cost", iList[j].price, 
                                             this.handleItemGoldChange, iidList[i]);
                     tbodyPart.appendChild(pGoldReturn);
                     
+                    innerArray.push("keep");
+                    
+                    this.itemChanges.push(innerArray);
                     j += iList.length;
                 }
                 j++;
             }
             nTable.appendChild(tbodyPart);
             nDiv.appendChild(nTable);
+            nDiv.appendChild(document.createElement('br'));
             iEntries.appendChild(nDiv);
         }
     }
@@ -212,15 +240,30 @@ class AdminUserPage extends React.Component {
 
     handleSaveClick = () => {
         let targetUser = Database.userList[this.state.userInd];
+        let userPetIdList = targetUser.petIdList;
+        let userItemIdList = targetUser.itemIdList;
         targetUser.password = this.state.password;
         targetUser.gold = this.state.gold;
 
+        // Changing pet information:
         let pList = Database.petList;
+        let petToBeRemoved = [];
         for (let i = 0; i < this.petChanges.length; i++) {
             for (let j = 0; j < pList.length; j++) {
                 if (this.petChanges[i][0] == pList[j].id) {
+                    if (this.petChanges[i][7] === "remove") {
+                        let innerArray = [];
+                        innerArray.push(j)
+                        // Find index of target pet in petIdList:
+                        for (let k = 0; k < userPetIdList.length; k++) {
+                            if (pList[j].id == userPetIdList[k]) {
+                                innerArray.push(k);
+                            }
+                        }
+                        petToBeRemoved.push(innerArray);
+                    }
                     pList[j].petName = this.petChanges[i][1];
-                    pList[j].hunger = this.petChanges[i][2];
+                    pList[j].fullness = this.petChanges[i][2];
                     pList[j].happiness = this.petChanges[i][3];
                     pList[j].intelligence = this.petChanges[i][4];
                     pList[j].strength = this.petChanges[i][5];
@@ -228,6 +271,40 @@ class AdminUserPage extends React.Component {
                 }
             }
         }
+
+        // Actually remove pet:
+        for (let i = 0; i < petToBeRemoved.length; i++) {
+            pList.splice(petToBeRemoved[i][0], 1);
+            userPetIdList.splice(petToBeRemoved[i][1], 1);
+        }
+
+        // Changing item information:
+        let iList = Database.itemList;
+        let itemToBeRemoved = [];
+        for (let i = 0; i < this.itemChanges.length; i++) {
+            for (let j = 0; j < iList.length; j++) {
+                if (this.itemChanges[i][0] == iList[j].id) {
+                    if (this.itemChanges[i][1] === "remove") {
+                        let innerArray = [];
+                        innerArray.push(j)
+                        // Find index of target pet in petIdList:
+                        for (let k = 0; k < userItemIdList.length; k++) {
+                            if (iList[j].id == userItemIdList[k]) {
+                                innerArray.push(k);
+                            }
+                        }
+                        itemToBeRemoved.push(innerArray);
+                    }
+                }
+            }
+        }
+
+        // Actually remove item:
+        for (let i = 0; i < itemToBeRemoved.length; i++) {
+            iList.splice(itemToBeRemoved[i][0], 1);
+            userItemIdList.splice(itemToBeRemoved[i][1], 1);
+        }
+
     }
 
     handlePWChange = (e) => {
@@ -294,6 +371,24 @@ class AdminUserPage extends React.Component {
         for (let i = 0; i < this.petChanges.length; i++) {
             if (this.petChanges[i][0] == petId) {
                 this.petChanges[i][6] = e.target.value;
+            }
+        }
+    }
+
+    markForRemovalP = (e) => {
+        let petId = e.target.value;
+        for (let i = 0; i < this.petChanges.length; i++) {
+            if (this.petChanges[i][0] == petId) {
+                this.petChanges[i][7] = "remove";
+            }
+        }
+    }
+
+    markForRemovalI = (e) => {
+        let itemId = e.target.value;
+        for (let i = 0; i < this.itemChanges.length; i++) {
+            if (this.itemChanges[i][0] == itemId) {
+                this.itemChanges[i][1] = "remove";
             }
         }
     }
