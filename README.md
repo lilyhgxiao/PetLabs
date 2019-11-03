@@ -42,7 +42,7 @@ The login page should now be visible.
 - Note that you cannot buy same item. When you try to buy an item you already own, you will be reminded about this fact.
 -  When an item is bought, the amount will be deducted from your total gold balance.
 
-# Accessing help when lost
+# Accessing Help When Lost
 - To access guidance or manual for this game, click on "help" option from the side menu located at left-hand side of the screen. You will be redirected to help view.
 - The help view will provide you very condensed, yet concise version of this manual.
 
