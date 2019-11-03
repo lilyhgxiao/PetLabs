@@ -8,6 +8,7 @@ import UserSideMenu from './UserSideMenu';
 import GoldDisplay from './GoldDisplay.js';
 
 import mockDB from '../TempClasses/Database';
+import pet_dead from '../Images/pet_dead.png';
 
 const log = console.log
 
@@ -140,19 +141,26 @@ class UserPetCarePage extends React.Component {
     }
 
     setPetMood = () => {
-        if (this.state.happiness >= 30 && this.state.happiness < 80) {
+        if (this.state.alive) {
+            if (this.state.happiness >= 30 && this.state.happiness < 80) {
+                this.setState({
+                    petImg: this.state.type.neutralImage
+                })
+            } else if (this.state.happiness >= 80) {
+                this.setState({
+                    petImg: this.state.type.happyImage
+                })
+            } else if (this.state.happiness < 30) {
+                this.setState({
+                    petImg: this.state.type.sadImage
+                })
+            }
+        } else {
             this.setState({
-                petImg: this.state.type.neutralImage
-            })
-        } else if (this.state.happiness >= 80) {
-            this.setState({
-                petImg: this.state.type.happyImage
-            })
-        } else if (this.state.happiness < 30) {
-            this.setState({
-                petImg: this.state.type.sadImage
+                petImg: pet_dead
             })
         }
+        
     }
 
     // Function related to use of item.
@@ -190,7 +198,8 @@ class UserPetCarePage extends React.Component {
         } 
         if (this.state.fullness === 0 && this.state.happiness === 0) {
             this.setState({
-                alive: false
+                alive: false,
+                petImg: pet_dead
             })
             this.petReceived.alive = false
         }
@@ -200,7 +209,7 @@ class UserPetCarePage extends React.Component {
         if (this.state.happiness + incValue * this.state.type.happinessRate > 100) {
             incValue = 100 - this.state.happiness
         } else if (this.state.happiness + incValue * this.state.type.happinessRate < 0) {
-            incValue = this.state.happiness
+            incValue = (-1) * this.state.happiness
         } else {
             incValue = incValue * this.state.type.happinessRate
         }
@@ -215,7 +224,7 @@ class UserPetCarePage extends React.Component {
         if (this.state.fullness + incValue * this.state.type.fullnessRate > 100) {
             incValue = 100 - this.state.fullness
         } else if (this.state.fullness + incValue * this.state.type.fullnessRate < 0) {
-            incValue = this.state.fullness
+            incValue = (-1 ) * this.state.fullness
         } else {
             incValue = incValue * this.state.type.fullnessRate
         }
