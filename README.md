@@ -71,7 +71,15 @@ Once you are happy with your changes you can click the save icon located on top 
 
 # User Views
 - To login as an user, type in ‘user’ for username and ‘user’ for password and click the ‘Log in’ button.
+- You may also sign up with a new username. Usernames must be unique, so an existing username will not work.
 - You should now enter the user dashboard page. Here the user can choose a pet to interact with, and use the side menu to access store to buy items, setting to change personal information, or access help menu to open a manual.
+- You can also access the Create Pet view from the user dashboard page with the "Add New" component.
+
+# Creating a Pet
+- You can create a pet if you have enough gold. Each pet type costs a different amount of gold in order to acquire it.
+- You can see all of the choices for pet types. Click on one to select it.
+- To see the selected pet type, it will appear at the top. 
+- Enter a name to create the pet.
 
 # Interacting With Pets
 - To interact with a specific pet, click on one of the available pets from user dashboard page. You will be redirected to user pet care view.
@@ -93,5 +101,9 @@ Once you are happy with your changes you can click the save icon located on top 
 # Accessing Help When Lost
 - To access guidance or manual for this game, click on "help" option from the side menu located at left-hand side of the screen. You will be redirected to help view.
 - The help view will provide you very condensed, yet concise version of this manual.
+
+# Settings
+- Here you may view your username and a censored version of your password.
+- You can change your password on this view. Enter the old password and new password, and confirm it in order to change. An alert will show if you have successfully changed your password.
 
 

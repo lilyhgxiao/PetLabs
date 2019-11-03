@@ -2,6 +2,7 @@ import React from 'react';
 
 import type_default from '../Images/pet_creation_default.png';
 import { Redirect } from 'react-router';
+import { uid } from 'react-uid';
 
 import '../CSS/CreatePetStyle.css';
 
@@ -135,7 +136,7 @@ class UserCreatePetPage extends React.Component {
                         <ul className='container'>
                         { Database.petTypes.map((petType) => {
                             return(
-                                <PetTypeComponent className='petTypes' 
+                                <PetTypeComponent className='petTypes' key={ uid(petType) }
                                 petType={petType}
                                 selectPet={this.selectPet}  />
                                 )
