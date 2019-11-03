@@ -13,7 +13,6 @@ We added a few simple classes that help us temporarily keep track of changes in 
 # Running the App
 Our web app is a relies on the React Framework to run.
 We used the yarn package manager to build and run the web app: https://yarnpkg.com/lang/en/
-
 To run the app:
 -	Open a command line in team11\frontend\petlabsfrontend
 -	run yarn
@@ -21,6 +20,12 @@ To run the app:
 -	in Google Chrome in the URL bar type in http://localhost:3000/
 
 The login page should now be visible.
+
+# User Views
+- To login as an user, type in ‘user’ for username and ‘user’ for password and click the ‘Log in’ button.
+- You should now enter the user dashboard page. Here the user can choose a pet to interact with, and use the side menu to access store to buy items, setting to change personal information, or access help menu to open a manual.
+
+
 
 # Admin Views
 - To login as an administrator type in ‘admin’ for username and ‘admin’ for password and click the ‘Log in’ button.
@@ -54,7 +59,16 @@ Once you are happy with your choices click the ‘save’ icon located at the to
 - In the pet types list page type in the name of the pet that you wish to edit and click go. This will redirect you from the admin view to the edit pet type view.
 - Note that the search is case insensitive but typing in a name of a pet that does not exit and clicking go will not redirect, and instead provide the admin with an alert message informing them of the incorrect input.
 - In the edit pet type view you can rename the pet type, change its associated attributes and the cost of the pet in the store. 
-Once you are happy with your changes you can click the save icon located 
+Once you are happy with your changes you can click the save icon located on top right corner.
+
+# Editing an Existing User
+- In the admin dashboard page, go to the user list page by clicking on the ‘Users’ picture.
+- In the user list page, type in the name of the user that you wish to edit and click "go". This will redirect you from the admin view to the edit user view.
+- Note that the search is case insensitive but typing in a name of a non-existing user and clicking "go" will provide the admin with an alert message informing them of the incorrect input.
+- In the edit user view, you are provided with selected user's password and gold balance. Values for these fields could be modified.
+- You are also provided with the list of pets owned by the selected user along with each individual pet's stats. Stats of user owned pets could be modified.
+- You are also provided with the list of items owned by the selected user, along with bonuses each item gives to user's pets. These bonus values can't be modified in this view. They could only be changed at item list page.
+- To save the changes made to selected user's password, gold, and user's individual pets, click on the "save" icon located at top right-hand corner of the screen.
 
 # Admin Side Menu
 - Every admin page view also has an admin side menu. Clicking on the logo redirects to the admin dashboard; clicking on the users, pets, and items texts will redirect to their respective admin list views. Clicking the logout button will logout from the admin profile and redirect to the login page. 
