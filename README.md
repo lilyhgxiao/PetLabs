@@ -13,6 +13,7 @@ We added a few simple classes that help us temporarily keep track of changes in 
 # Running the App
 Our web app is a relies on the React Framework to run.
 We used the yarn package manager to build and run the web app: https://yarnpkg.com/lang/en/
+
 To run the app:
 -	Open a command line in team11\frontend\petlabsfrontend
 -	run yarn
