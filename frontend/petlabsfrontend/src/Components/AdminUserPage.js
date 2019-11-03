@@ -74,10 +74,10 @@ class AdminUserPage extends React.Component {
                     innerArray.push(pList[j].petName);
                     
                     // Add Pet Hunger entry:
-                    let pHungerReturn = this.AddTR("Pet Hunger", pList[j].hunger, 
+                    let pHungerReturn = this.AddTR("Pet Hunger", pList[j].fullness, 
                                                 this.handlePetHungerChange, pidList[i]);
                     tbodyPart.appendChild(pHungerReturn);
-                    innerArray.push(pList[j].hunger);
+                    innerArray.push(pList[j].fullness);
 
                     // Add Pet Happniess entry:
                     let pHappinessReturn = this.AddTR("Pet Happniess", pList[j].happiness, 
@@ -332,46 +332,23 @@ class AdminUserPage extends React.Component {
                 <div className='main'>
                     <div className='mainForm'>
                         <div className='itemTitle'>Id: {this.state.username}</div>
-                        <table className={'item-view'}>
-                            <tbody>
-                                <tr className={'item-view'}>
-                                    <td className={'item-view'}>
-                                        Admin?
-                                    </td>
-                                    <td className={'item-view'}>
-                                        {this.state.isAdmin.toString()}
-                                    </td>
-                                </tr>
-
-                                <tr className={'item-view'}>
-                                    <td className={'item-view'}>
-                                        Password
-                                    </td>
-                                    <td className={'item-view'}>
-                                        <input 
-                                            className={'row'} 
-                                            type='Text' 
-                                            value={this.state.password} 
-                                            onChange={(event)=>this.handlePWChange(event)} 
-                                        />
-                                    </td>
-                                </tr>
-
-                                <tr className={'item-view'}>
-                                    <td className={'item-view'}>
-                                        Gold
-                                    </td>
-                                    <td className={'item-view'}>
-                                        <input 
-                                            className={'row'} 
-                                            type='Text' 
-                                            value={this.state.gold} 
-                                            onChange={(event)=>this.handleGoldChange(event)} 
-                                        />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <p className={'addItemLink'}>
+                            Password: 
+                            <input className={'addItemLink'}
+                                type='Text' 
+                                value={this.state.password} 
+                                onChange={(event)=>this.handlePWChange(event)} 
+                            /> 
+                        </p> 
+                        <p className={'addItemLink'}>
+                            Gold: 
+                            <input className={'addItemLink'}
+                                type='Text' 
+                                value={this.state.gold} 
+                                onChange={(event)=>this.handleGoldChange(event)} 
+                            /> 
+                        </p> 
+                        
                         <div className='itemSubtitle'>List of pets</div>
                         <div id='petEntries'>
 
