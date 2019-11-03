@@ -86,7 +86,9 @@ Once you are happy with your changes you can click the save icon located on top 
 - Note that the search is case insensitive but typing in a name of a non-existing user and clicking "go" will provide the admin with an alert message informing them of the incorrect input.
 - In the edit user view, you are provided with selected user's password and gold balance. Values for these fields could be modified.
 - You are also provided with the list of pets owned by the selected user along with each individual pet's stats. Stats of user owned pets could be modified.
+- You could remove a pet from the user. To do so, click on remove button beside pet's id. Then click on the "save" icon located at top right-hand corner of the screen.
 - You are also provided with the list of items owned by the selected user, along with bonuses each item gives to user's pets. These bonus values can't be modified in this view. They could only be changed at item list page.
+- However, you could remove an item from the user. To do so, click on remove button beside item's id. Then click on the "save" icon located at top right-hand corner of the screen.
 - To save the changes made to selected user's password, gold, and user's individual pets, click on the "save" icon located at top right-hand corner of the screen.
 
 # Admin Side Menu
