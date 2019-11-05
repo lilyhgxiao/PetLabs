@@ -53,6 +53,7 @@ class UserSettingsPage extends React.Component {
         if (this.state.oldPass.length === 0 || this.state.newPass === 0 || this.state.confirmPass === 0) {
             return false;
         }
+        return true;
     }
 
     changePassword = () => {

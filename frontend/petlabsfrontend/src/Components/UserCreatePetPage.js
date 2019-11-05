@@ -80,6 +80,7 @@ class UserCreatePetPage extends React.Component {
         if (this.state.name.length === 0) {
             return false;
         }
+        return true;
     }
 
     tryCreate = () => {
