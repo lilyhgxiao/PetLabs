@@ -11,21 +11,37 @@ class AdminPetListPage extends React.Component {
         this.state = {
             textFieldValue: '',
             validPet: false,
+            petName: '',
         };
         this.handleTextboxChange = this.handleTextboxChange.bind(this);
-        this.handleGoButtonClick = this.handleGoButtonClick.bind(this);
+        this.handleRowClick = this.handleRowClick.bind(this);
+        this.handleEnter = this.handleEnter.bind(this);
+    }
+
+    handleEnter(event) {
+        if (event.key === 'Enter') {
+            const contains = Database.petTypes.map((petType) => petType.name.toUpperCase())
+                .includes(this.state.textFieldValue.toUpperCase());
+            if (contains) {
+                this.setState({ 
+                    validPet: true, 
+                    petName: this.state.textFieldValue.charAt(0).toUpperCase() + this.state.textFieldValue.toLowerCase().slice(1)
+                });
+            } else {
+                alert('Invalid pet type name selected :)');
+            }
+        }
     }
 
     handleTextboxChange(event) {
         this.setState({ textFieldValue: event.target.value });
     }
 
-    handleGoButtonClick() {
-        if (this.getPetTypeId()) {
-            this.setState({ validPet: true });
-            return;
-        }
-        alert("Invalid pet type selected :)");
+    handleRowClick(event) {
+        this.setState({
+            validPet: true,
+            petName: event.target.innerText,
+        });
     }
 
     getTableRows() {
@@ -38,10 +54,10 @@ class AdminPetListPage extends React.Component {
         );
 
         for (let i = 0; i < Database.petTypes.length; i++) {
-            if (Database.petTypes[i].name.toUpperCase().includes(this.state.textFieldValue.toUpperCase())) {
+            if (Database.petTypes[i].name.toUpperCase().includes(this.state.petName.toUpperCase())) {
                 rowList.push(
                     <tr key={i}>
-                        <td className={'list-view'}>{Database.petTypes[i].name}</td>
+                        <td className={'list-view'} onClick={this.handleRowClick}>{Database.petTypes[i].name}</td>
                     </tr>
                 );
             }
@@ -51,7 +67,7 @@ class AdminPetListPage extends React.Component {
 
     getPetTypeId() {
         for (let i = 0; i < Database.petTypes.length; i++) {
-            if (Database.petTypes[i].name.toUpperCase() === this.state.textFieldValue.toUpperCase()) {
+            if (Database.petTypes[i].name.toUpperCase() === this.state.petName.toUpperCase()) {
                 return Database.petTypes[i].id;
             }
         }
@@ -76,8 +92,7 @@ class AdminPetListPage extends React.Component {
                         <div className={'list-view'}>
                             <div className='listTitle'>Pets</div>
                             <div id={'inner-container'} className={'list-view'}>
-                                <input className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue} placeholder="Search"></input>
-                                <button className={'list-view'} onClick={this.handleGoButtonClick}>Go!</button>
+                                <input onKeyDown={this.handleEnter} id={'textfield'} className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue} placeholder="Search"></input>
                                 <br /> <br />
                                 <table className={'list-view'}>
                                     <tbody>
