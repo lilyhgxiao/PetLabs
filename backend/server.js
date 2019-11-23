@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 
 // ROUTES FOLLOW
 
-// ITEM
+// ITEM ROUTES
 
 // POST route to create an item.
 app.post('/items', (request, response) => {
@@ -30,7 +30,7 @@ app.post('/items', (request, response) => {
         name: request.body.name,
         strength: request.body.strength,
         speed: request.body.speed,
-        intelligence: request.body.price,
+        intelligence: request.body.intelligence,
         happiness: request.body.happiness,
         fullness: request.body.fullness,
         // imgURL: ,
@@ -102,6 +102,34 @@ app.patch('/items/:id', (request, response) => {
         response.status(500).send(error);
     });
 });
+
+// DELETE route to remove an item with a particulart id
+app.delete('/items/:id', (request, response) => {
+    // Get the id from the from the URL
+    const id = request.params.id;
+
+    // Check for a valid mongodb id
+    if (!ObjectID.isValid(id)) {
+        response.status(404).send();
+    }
+
+    // Attempt to remove the item with the specefied id
+    Item.findByIdAndRemove(id).then((result) => {
+        if (!result) {
+            response.status(404).send();
+        } else {
+            response.status(200).send(result);
+        }
+    }).catch((error) => {
+        response.status(500).send(error);
+    })
+})
+
+// PET TYPES
+
+
+
+// HELPER FUNCTIONS
 
 // Helper function that returns an object with all the properties to be update in the item.
 function getItemPropertiesToUpdate(request) {
