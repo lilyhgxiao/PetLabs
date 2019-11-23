@@ -11,6 +11,7 @@ const { mongoose } = require('./db/mongoose');
 const { Item } = require('./models/item');
 const { PetType } = require('./models/petType');
 const { Pet } = require('./models/pet');
+const { User } = require('./models/user');
 
 // Get module that validates ObjectID's for mongodb.
 const { ObjectID } = require('mongodb');
@@ -198,7 +199,7 @@ app.patch('/pettypes/:id', (request, response) => {
     // Get the object with properties to update.
     const update = getPetTypePropertiesToUpdate(request);
 
-    // Attempt to update the item with the specified id.
+    // Attempt to update the petType with the specified id.
     PetType.findByIdAndUpdate(id, { $set: update }, { new: true }).then((result) => {
         if (!result) {
             response.status(404).send();
@@ -304,7 +305,7 @@ app.patch('/pets/:id', (request, response) => {
     // Get the object with properties to update.
     const update = getPetPropertiesToUpdate(request);
 
-    // Attempt to update the item with the specified id.
+    // Attempt to update the pet with the specified id.
     Pet.findByIdAndUpdate(id, { $set: update }, { new: true }).then((result) => {
         if (!result) {
             response.status(404).send();
@@ -328,6 +329,103 @@ app.delete('/pets/:id', (request, response) => {
 
     // Attempt to remove the pet with the specefied id
     Pet.findByIdAndRemove(id).then((result) => {
+        if (!result) {
+            response.status(404).send();
+        } else {
+            response.status(200).send(result);
+        }
+    }).catch((error) => {
+        response.status(500).send(error);
+    })
+})
+
+// USER ROUTES
+
+// POST route to create a new user.
+app.post('/users', (request, response) => {
+    // Create a new petType using the mongoose petType model.
+    const user = new User({
+        username: request.body.username,
+        password: request.body.password,
+        isAdmin: request.body.isAdmin
+    });
+
+    // Save the petType to the database.
+    user.save().then((result) => {
+        response.status(200).send(result);
+    }, (error) => {
+        response.status(400).send(error);
+    });
+});
+
+// GET route to get all regular users.
+app.get('/users', (request, response) => {
+    User.find().then((result) => {
+        response.status(200).send(result);
+    }, (error) => {
+        response.status(500).send(error);
+    });
+});
+
+// GET route to get an individual user
+app.get('/users/:id', (request, response) => {
+    // Extract the id from the URL wildcard
+    const id = request.params.id;
+
+    // Validate the id to ensure it is a valid mongodb id.
+    if (!ObjectID.isValid(id)) {
+        response.status(404).send();
+    }
+
+    // Find the user by ID
+    User.findById(id).then((result) => {
+        if (!result) {
+            response.status(404).send();
+        } else {
+            response.status(200).send(result)
+        }
+    },).catch((error) => {
+        response.status(500).send(error);
+    });
+});
+
+// PATCH route to update individual users
+app.patch('/users/:id', (request, response) => {
+    // Get the petType id from the URL
+    const id = request.params.id;
+
+    // Check for a valid mongodb id
+    if (!ObjectID.isValid(id)) {
+        response.status(404).send();
+    }
+
+    // Get the object with properties to update.
+    const update = getUserPropertiesToUpdate(request);
+
+    // Attempt to update the user with the specified id.
+    User.findByIdAndUpdate(id, { $set: update }, { new: true }).then((result) => {
+        if (!result) {
+            response.status(404).send();
+        } else {
+            response.status(200).send(result);
+        }
+    }).catch((error) => {
+        response.status(500).send(error);
+    });
+});
+
+// DELETE route to delete individual users
+app.delete('/users/:id', (request, response) => {
+    // Get the id from the from the URL
+    const id = request.params.id;
+
+    // Check for a valid mongodb id
+    if (!ObjectID.isValid(id)) {
+        response.status(404).send();
+    }
+
+    // Attempt to remove the pet with the specefied id
+    User.findByIdAndRemove(id).then((result) => {
         if (!result) {
             response.status(404).send();
         } else {
@@ -398,6 +496,23 @@ function getPetPropertiesToUpdate(request) {
         if (request.body.fullness) update.fullness = request.body.fullness;
         
         if (request.body.alive) update.alive = request.body.alive;
+    }
+
+    return update;
+}
+
+function getUserPropertiesToUpdate(request) {
+    const update = {};
+
+    if (request.body) {
+        if (request.body.username) update.username = request.body.username;
+        if (request.body.password) update.password = request.body.password;
+        if (request.body.isAdmin) update.isAdmin = request.body.isAdmin;
+
+        if (request.body.petIdList) update.petIdList = request.body.petIdList;
+        if (request.body.itemIdList) update.itemIdList = request.body.itemIdList;
+        
+        if (request.body.gold) update.gold = request.body.gold;
     }
 
     return update;
