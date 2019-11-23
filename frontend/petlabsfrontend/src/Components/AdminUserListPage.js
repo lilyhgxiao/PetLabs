@@ -10,23 +10,37 @@ class AdminUserListPage extends React.Component {
         this.state = {
             textFieldValue: '',
             validUser: false,
+            username: '',
         };
         this.handleTextboxChange = this.handleTextboxChange.bind(this);
-        this.handleGoButtonClick = this.handleGoButtonClick.bind(this);
+        this.handleRowClick = this.handleRowClick.bind(this);
+        this.handleEnter = this.handleEnter.bind(this);
+    }
+
+    handleEnter(event) {
+        if (event.key === 'Enter') {
+            const contains = Database.userList.map((user) => user.username.toUpperCase())
+                .includes(this.state.textFieldValue.toUpperCase());
+            if (contains) {
+                this.setState({ 
+                    validUser: true, 
+                    username: this.state.textFieldValue.charAt(0).toUpperCase() + this.state.textFieldValue.toLowerCase().slice(1)
+                });
+            } else {
+                alert('Invalid username selected :)');
+            }
+        }
     }
 
     handleTextboxChange(event) {
         this.setState({ textFieldValue: event.target.value });
     }
 
-    handleGoButtonClick() {
-        for (let i = 0; i < Database.userList.length; i++) {
-            if (this.getUser()) {
-                this.setState({ validUser: true });
-                return;
-            }
-        }
-        alert("Invalid username selected :)");
+    handleRowClick(event) {
+        this.setState({
+            validUser: true,
+            username: event.target.innerText,
+        });
     }
 
     getTableRows() {
@@ -39,10 +53,10 @@ class AdminUserListPage extends React.Component {
         );
 
         for (let i = 0; i < Database.userList.length; i++) {
-            if (!Database.userList[i].isAdmin && Database.userList[i].username.toUpperCase().includes(this.state.textFieldValue.toUpperCase())) {
+            if (!Database.userList[i].isAdmin && Database.userList[i].username.toUpperCase().includes(this.state.username.toUpperCase())) {
                 rowList.push(
                     <tr key={i}>
-                        <td className={'list-view'}>{Database.userList[i].username}</td>
+                        <td className={'list-view'} onClick={this.handleRowClick}>{Database.userList[i].username}</td>
                     </tr>
                 );
             }
@@ -53,7 +67,7 @@ class AdminUserListPage extends React.Component {
 
     getUser() {
         for (let i = 0; i < Database.userList.length; i++) {
-            if (Database.userList[i].username.toUpperCase() === this.state.textFieldValue.toUpperCase()) {
+            if (Database.userList[i].username.toUpperCase() === this.state.username.toUpperCase()) {
                 return Database.userList[i].username;
             }
         }
@@ -75,8 +89,7 @@ class AdminUserListPage extends React.Component {
                         <div className={'list-view'}>
                             <div className='listTitle'>Users</div>
                             <div id={'inner-container'} className={'list-view'}>
-                                <input className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue} placeholder="Search"></input>
-                                <button className={'list-view'} onClick={this.handleGoButtonClick}>Go!</button>
+                                <input onKeyDown={this.handleEnter} id={'textfield'} className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue} placeholder="Search"></input>
                                 <br /> <br />
                                 <table className={'list-view'}>
                                     <tbody>
