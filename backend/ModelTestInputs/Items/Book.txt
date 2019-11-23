@@ -1,0 +1,15 @@
+('Book', 0, 0, 5, 2, 0, BookImage, 2000),
+
+{
+    "name": "Book",
+    "strength": 0,
+    "speed": 0,
+    "intelligence": 5,
+    "happiness": 2,
+    "fullness": 0,
+    // imgURL: {
+    //     type: ,
+    //     required:
+    // },
+    "price": 2000
+}

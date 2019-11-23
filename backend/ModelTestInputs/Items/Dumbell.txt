@@ -1,0 +1,15 @@
+//'Dumbbell', 5, 1, 0, 3, -3, 1000
+
+{
+    "name": "Dumbbell",
+    "strength": 5,
+    "speed": 1,
+    "intelligence": 0,
+    "happiness": 3,
+    "fullness": -3,
+    // imgURL: {
+    //     type: ,
+    //     required:
+    // },
+    "price": 1000
+}
