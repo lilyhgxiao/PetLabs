@@ -58,6 +58,7 @@ class AdminUserPage extends React.Component {
             // Put remove button:
             let rButton = document.createElement('button');
             rButton.setAttribute("value", pidList[i]);
+            rButton.setAttribute("ind", i);
             rButton.addEventListener('click', this.markForRemovalP);
 
             let bText = document.createTextNode('REMOVE');
@@ -143,6 +144,7 @@ class AdminUserPage extends React.Component {
             // Put remove button:
             let rButton = document.createElement('button');
             rButton.setAttribute("value", iidList[i]);
+            rButton.setAttribute("ind", i);
             rButton.addEventListener('click', this.markForRemovalI);
 
             let bText = document.createTextNode('REMOVE');
@@ -379,6 +381,16 @@ class AdminUserPage extends React.Component {
         let petId = e.target.value;
         for (let i = 0; i < this.petChanges.length; i++) {
             if (this.petChanges[i][0] == petId) {
+                let pEntries = document.querySelector("#petEntries");
+                let ind = e.target.getAttribute('ind')
+                let target = pEntries.children[ind]
+
+                let notif = document.createElement('div')
+                let notifTxt = document.createTextNode("!! MARKED FOR REMOVAL !!")
+                notif.appendChild(notifTxt)
+
+                target.insertBefore(notif, target.childNodes[0])
+
                 this.petChanges[i][7] = "remove";
             }
         }
@@ -388,12 +400,21 @@ class AdminUserPage extends React.Component {
         let itemId = e.target.value;
         for (let i = 0; i < this.itemChanges.length; i++) {
             if (this.itemChanges[i][0] == itemId) {
+                let iEntries = document.querySelector("#itemEntries");
+                let ind = e.target.getAttribute('ind')
+                let target = iEntries.children[ind]
+
+                let notif = document.createElement('div')
+                let notifTxt = document.createTextNode("!! MARKED FOR REMOVAL !!")
+                notif.appendChild(notifTxt)
+                
+                target.insertBefore(notif, target.childNodes[0])
                 this.itemChanges[i][1] = "remove";
             }
         }
     }
 
-    /* For pet changes events */
+    /* For item changes events */
 
     handleItemNameChange = (e) => {}
 
