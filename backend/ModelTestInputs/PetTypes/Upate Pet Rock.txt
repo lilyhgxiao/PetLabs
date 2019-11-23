@@ -1,0 +1,12 @@
+{
+    "name": "Pet Rocky",
+    // neutralImage:
+    // happyImage:
+    // sadImage:
+    "strengthRate": 1,
+    "speedRate": 1,
+    "intelligenceRate": 1,
+    "happinessRate": 1,
+    "fullnessRate": 1,
+    "price": 1000
+}
