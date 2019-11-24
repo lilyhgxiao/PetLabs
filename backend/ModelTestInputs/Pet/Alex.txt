@@ -1,0 +1,10 @@
+        new Pet('Alex', 'user', 'Blob'),
+        new Pet('Luke', 'user', 'Flower'),
+        new Pet('Lily', 'user', 'Fireball'),
+        new Pet('Help', 'user0', 'Pet Rock'),
+
+{
+    "ownerName": "user",
+    "petName": "Alex",
+    "type": "Blob"
+}

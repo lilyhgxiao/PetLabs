@@ -1,0 +1,12 @@
+{
+    "name": "Pet Rock",
+    // neutralImage: ,
+    // happyImage: ,
+    // sadImage: ,
+    "strengthRate": 0,
+    "speedRate": 0,
+    "intelligenceRate": 0,
+    "happinessRate": 0,
+    "fullnessRate": 0,
+    "price": 7000
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Flower",
+    // neutralImage: ,
+    // happyImage: ,
+    // sadImage: ,
+    "strengthRate": 2,
+    "speedRate": 2,
+    "intelligenceRate": 2,
+    "happinessRate": 2,
+    "fullnessRate": 2,
+    "price": 5000
+}

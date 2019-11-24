@@ -1,0 +1,5 @@
+{
+    "username": "user0",
+    "password": "user",
+    "isAdmin": "false"
+}

@@ -1,0 +1,12 @@
+{
+    "name": "Fireball",
+    // neutralImage: ,
+    // happyImage: ,
+    // sadImage: ,
+    "strengthRate": 3,
+    "speedRate": 3,
+    "intelligenceRate": 3,
+    "happinessRate": 3,
+    "fullnessRate": 3,
+    "price": 6000
+}

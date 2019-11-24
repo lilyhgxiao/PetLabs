@@ -1,0 +1,6 @@
+{
+    "name": "Treadmill",
+    "speed": 3, 
+    "price": 3000,
+    "intelligence": 3
+}

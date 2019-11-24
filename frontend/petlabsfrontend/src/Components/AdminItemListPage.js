@@ -11,22 +11,37 @@ class AdminItemListPage extends React.Component {
         this.state = {
             textFieldValue: '',
             validItem: false,
+            itemName: '',
         };
         this.handleTextboxChange = this.handleTextboxChange.bind(this);
-        this.handleGoButtonClick = this.handleGoButtonClick.bind(this);
+        this.handleRowClick = this.handleRowClick.bind(this);
+        this.handleEnter = this.handleEnter.bind(this);
+    }
+
+    handleEnter(event) {
+        if (event.key === 'Enter') {
+            const contains = Database.itemList.map((item) => item.name.toUpperCase())
+                .includes(this.state.textFieldValue.toUpperCase());
+            if (contains) {
+                this.setState({ 
+                    validItem: true, 
+                    itemName: this.state.textFieldValue.charAt(0).toUpperCase() + this.state.textFieldValue.toLowerCase().slice(1)
+                });
+            } else {
+                alert('Invalid item name selected :)');
+            }
+        }
     }
 
     handleTextboxChange(event) {
         this.setState({ textFieldValue: event.target.value });
     }
 
-    handleGoButtonClick() {
-        console.log(Database.itemList);
-        if (this.getItemId()) {
-            this.setState({ validItem: true });
-            return;
-        }
-        alert("Invalid item selected :)");
+    handleRowClick(event) {
+        this.setState({
+            validItem:true,
+            itemName: event.target.innerText,
+        });
     }
 
     getTableRows() {
@@ -42,7 +57,7 @@ class AdminItemListPage extends React.Component {
             if (Database.itemList[i].name.toUpperCase().includes(this.state.textFieldValue.toUpperCase())) {
                 rowList.push(
                     <tr key={i}>
-                        <td className={'list-view'}>{Database.itemList[i].name}</td>
+                        <td className={'list-view'} onClick={this.handleRowClick}>{Database.itemList[i].name}</td>
                     </tr>
                 );
             }
@@ -52,8 +67,7 @@ class AdminItemListPage extends React.Component {
 
     getItemId() {
         for (let i = 0; i < Database.itemList.length; i++) {
-            if (Database.itemList[i].name.toUpperCase() === this.state.textFieldValue.toUpperCase()) {
-                console.log(Database.itemList[i].id);
+            if (Database.itemList[i].name.toUpperCase() === this.state.itemName.toUpperCase()) {
                 return Database.itemList[i].id;
             }
         }
@@ -78,8 +92,7 @@ class AdminItemListPage extends React.Component {
                         <div className={'list-view'}>
                             <div className='listTitle'>Item Types</div>
                             <div id={'inner-container'} className={'list-view'}>
-                                <input className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue} placeholder="Search"></input>
-                                <button className={'list-view'} onClick={this.handleGoButtonClick}>Go!</button>
+                                <input onKeyDown={this.handleEnter} id={'textfield'} className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue} placeholder="Search"></input>
                                 <br /> <br />
                                 <table className={'list-view'}>
                                     <tbody>

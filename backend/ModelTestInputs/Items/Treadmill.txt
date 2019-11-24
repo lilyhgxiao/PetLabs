@@ -1,0 +1,11 @@
+'Treadmill', 2, 5, 0, 4, -3, TreadmillImage, 3000
+
+{
+    "name": "Treadmill",
+    "strength": 2,
+    "speed": 5,
+    "intelligence": 0,
+    "happiness": 4,
+    "fullness": -1,
+    "price": 3000
+}
