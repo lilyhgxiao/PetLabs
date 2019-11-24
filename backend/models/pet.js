@@ -7,24 +7,18 @@ const schema = mongoose.Schema({
 		required: true,
 		minlength: 1,
         trim: true,
-        unique: true,
-        sparse: true
     },
     petName: {
         type: String,
 		required: true,
 		minlength: 1,
         trim: true,
-        unique: true,
-        sparse: true
     },
     type: {
         type: String,
 		required: true,
 		minlength: 1,
         trim: true,
-        unique: true,
-        sparse: true
     },
     strength: {
         type: Number,

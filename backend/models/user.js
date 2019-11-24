@@ -7,22 +7,16 @@ const schema = mongoose.Schema({
 		required: true,
 		minlength: 1,
 		trim: true,
-        unique: true,
-        sparse: true
     },
     password: {
         type: String,
 		required: true,
 		minlength: 1,
 		trim: true,
-        unique: true,
-        sparse: true
     },
     isAdmin: {
         type: Boolean,
 		required: true,
-        unique: true,
-        sparse: true
     },
     petIdList: {
         type: Array,

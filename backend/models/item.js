@@ -7,7 +7,6 @@ const schema = mongoose.Schema({
 		required: true,
 		minlength: 1,
 		trim: true,
-		unique: true,
     },
     strength: {
         type: Number,

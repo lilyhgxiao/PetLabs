@@ -7,9 +7,5 @@
     "intelligence": 5,
     "happiness": 2,
     "fullness": 0,
-    // imgURL: {
-    //     type: ,
-    //     required:
-    // },
     "price": 2000
 }
