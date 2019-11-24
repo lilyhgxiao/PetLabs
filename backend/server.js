@@ -4,6 +4,10 @@ const express = require('express');
 // Start the express server
 const app = express();
 
+// CORS: del if not needed later:
+const cors = require("cors");
+app.use(cors());
+
 // Get the mongoose module holding the connection to the mongo server.
 const { mongoose } = require('./db/mongoose');
 
