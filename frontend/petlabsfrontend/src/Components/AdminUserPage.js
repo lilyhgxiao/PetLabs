@@ -392,9 +392,7 @@ class AdminUserPage extends React.Component {
     }
 
     userUpdate() {
-        // Change to specific user URL after deciding on how to pass info.
-        // Currently getting user named "user" as placeholder
-        const url = "http://localhost:3001/users/" + "5ddae5c6c78e20500452976e";
+        const url = "http://localhost:3001/users/" + targetUserId;
         const request = new Request(url, {
             method: "PATCH",
             body: JSON.stringify(this.targetUser),
