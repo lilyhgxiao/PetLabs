@@ -9,6 +9,8 @@ import GoldDisplay from './GoldDisplay.js';
 
 import mockDB from '../TempClasses/Database';
 import pet_dead from '../Images/pet_dead.png';
+import Database from '../TempClasses/Database';
+import { Redirect } from 'react-router';
 
 const log = console.log
 
@@ -17,6 +19,7 @@ class UserPetCarePage extends React.Component {
     petReceived = this.props.location.state.pet;
 
     state = {
+        petId: null,
         userGold: 0,
         petName: "",
         petImg: '',
@@ -27,7 +30,8 @@ class UserPetCarePage extends React.Component {
         speed: 0,
         alive: true,
         itemSelected: -99,
-        type: null
+        type: null,
+        deleted: false,
     }
 
     /* Automatically loaded functions */
@@ -54,6 +58,7 @@ class UserPetCarePage extends React.Component {
         const type = this.retrieveType();
         console.log(type)
         this.setState({
+            petId: this.petReceived.id,
             petName: this.petReceived.petName,
             petImg: type.neutralImage,
             fullness: this.petReceived.fullness,
@@ -247,7 +252,29 @@ class UserPetCarePage extends React.Component {
         })
     }
 
+    deletePet = () => {
+        const confirmDelete = window.confirm("Say goodbye to " + this.state.petName + "? (You cannot undo this action!)")
+        if (confirmDelete) {
+            const petListIdx = mockDB.petList.indexOf(this.petReceived);
+            const userPetListIdx = mockDB.currUser.petIdList.indexOf(this.petReceived.id);
+
+            mockDB.petList.splice(petListIdx, 1);
+            mockDB.currUser.petIdList.splice(userPetListIdx, 1);
+            this.setState({
+                deleted: true
+            })
+        }
+    }
+
     render() {
+        if (this.state.deleted) {
+            return(
+                <Redirect push to={{
+                    pathname: "/UserDashboardPage"
+                }} />
+            );
+        }
+
         return (
             <div>
                 <UserSideMenu/>
@@ -279,6 +306,7 @@ class UserPetCarePage extends React.Component {
                         trainAction = {this.trainPet}
                         dropdownAction = {this.selectItem}
                     />
+                    <button className='deleteButton' onClick={ this.deletePet }>Say Goodbye</button>
                 </div>
             </div>
         );  
