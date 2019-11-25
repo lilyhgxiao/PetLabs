@@ -448,33 +448,35 @@ class AdminUserPage extends React.Component {
                 <div className='main'>
                     <div className='mainForm'>
                         <div className='itemTitle'>Id: {this.state.username}</div>
-                        <p className={'addItemLink'}>
-                            Password: 
-                            <input className={'addItemLink'}
-                                type='Text' 
-                                value={this.state.password} 
-                                onChange={(event)=>this.handlePWChange(event)} 
-                            /> 
-                        </p> 
-                        <p className={'addItemLink'}>
-                            Gold: 
-                            <input className={'addItemLink'}
-                                type='Text' 
-                                value={this.state.gold} 
-                                onChange={(event)=>this.handleGoldChange(event)} 
-                            /> 
-                        </p> 
-                        
-                        <div className='itemSubtitle'>List of pets</div>
-                        <div id='petEntries'>
+                        <div className='itemForm'>
+                            <p className={'addItemLink'}>
+                                Password: 
+                                <input className={'addItemLink'}
+                                    type='Text' 
+                                    value={this.state.password} 
+                                    onChange={(event)=>this.handlePWChange(event)} 
+                                /> 
+                            </p> 
+                            <p className={'addItemLink'}>
+                                Gold: 
+                                <input className={'addItemLink'}
+                                    type='Text' 
+                                    value={this.state.gold} 
+                                    onChange={(event)=>this.handleGoldChange(event)} 
+                                /> 
+                            </p> 
+                            
+                            <div className='itemSubtitle'>List of pets</div>
+                            <div id='petEntries'>
 
-                        </div>
-                        <div className='itemSubtitle'>List of Items</div>
-                        <div id='itemEntries'>
+                            </div>
+                            <div className='itemSubtitle'>List of Items</div>
+                            <div id='itemEntries'>
 
-                        </div>
-                        <br/>
-                        <br/>
+                            </div>
+                            <br/>
+                            <br/>
+                            </div>
                     </div>
                 </div>
             </div>

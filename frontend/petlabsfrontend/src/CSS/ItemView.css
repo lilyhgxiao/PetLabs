@@ -85,6 +85,14 @@ td.item-view
     padding: 5px;
 }
 
+tr.item-view
+{
+    border: 1px solid #A5BDFE;
+    color: royalblue;
+    font-family: 'Montserrat', sans-serif;
+    padding: 5px;
+}
+
 button.addItemLink {
     width: 93%;
 }
