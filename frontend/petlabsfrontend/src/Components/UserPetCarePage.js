@@ -16,6 +16,7 @@ const log = console.log
 
 class UserPetCarePage extends React.Component {
 
+    targetPetId = ""
     petReceived = this.props.location.state.pet;
 
     state = {
@@ -55,29 +56,36 @@ class UserPetCarePage extends React.Component {
 
     // Find specific pet from the database:
     findPet() {
-        const type = this.retrieveType();
-        console.log(type)
-        this.setState({
-            petId: this.petReceived.id,
-            petName: this.petReceived.petName,
-            petImg: type.neutralImage,
-            fullness: this.petReceived.fullness,
-            happiness: this.petReceived.happiness,
-            intelligence: this.petReceived.intelligence,
-            strength: this.petReceived.strength,
-            speed: this.petReceived.speed,
-            alive: this.petReceived.alive,
-            type: type
-        }, this.setPetMood)
-    }
-
-    retrieveType = () => {
-        const typesList = mockDB.petTypes;
-        for (let i = 0; i < typesList.length; i++) {
-            if (typesList[i].name === this.petReceived.type) {
-                return typesList[i];
+        const url = "http://localhost:3001/pet/" + this.targetPetId;
+        const request = new Request(url, {
+            method: "get",
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
             }
-        }
+        });
+
+        fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        }).then((pet) => {
+            this.petReceived = pet;
+            this.setState({
+                petId: pet._id,
+                petName: pet.petName,
+                fullness: pet.fullness,
+                happiness: pet.happiness,
+                intelligence: pet.intelligence,
+                strength: pet.strength,
+                speed: pet.speed,
+                alive: pet.alive,
+                type: pet.type
+            }, this.setPetMood);
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     // Use DOM to populate items in the drop down menu:

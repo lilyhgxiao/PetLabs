@@ -11,13 +11,11 @@ class AdminUserPage extends React.Component {
     // Currently getting user named "user" as placeholder
     targetUserId = "5ddae5c6c78e20500452976e";
     targetUser;
-    // pList = [];
-    // iList = [];
     petChanges = [];
     itemChanges = [];
 
     state = {
-        username: this.targetUserName,
+        targetUserId: this.targetUserId,
         password: "",
         isAdmin: false,
         gold: 0,
@@ -85,6 +83,7 @@ class AdminUserPage extends React.Component {
 
     populatePets() {
         let pEntries = document.querySelector("#petEntries");
+        pEntries.innerHTML = "";
         let pidList = this.targetUser.petIdList;
         for (let i = 0; i < pidList.length; i++) {
             // Create new div element:
@@ -193,6 +192,7 @@ class AdminUserPage extends React.Component {
 
     populateItems() {
         let iEntries = document.querySelector("#itemEntries");
+        iEntries.innerHTML = "";
         let iidList = this.targetUser.itemIdList;
         for (let i = 0; i < iidList.length; i++) {
             // Create new div element:
@@ -354,6 +354,8 @@ class AdminUserPage extends React.Component {
             userItemIdList.splice(itemToBeRemoved[i], 1);
         }
         this.userUpdate();
+        this.populateItems();
+        this.populatePets();
     }
 
     petUpdate(pid, ind) {
@@ -547,7 +549,7 @@ class AdminUserPage extends React.Component {
     render() {
         return(
             <div>
-                <Link to={'./AdminDashboardPage'}>
+                <Link to={'./AdminUserPage'}>
                     <img 
                         className={'saveIcon'} 
                         src={saveIcon} 
@@ -560,7 +562,7 @@ class AdminUserPage extends React.Component {
 
                 <div className='main'>
                     <div className='mainForm'>
-                        <div className='itemTitle'>Id: {this.state.username}</div>
+                        <div className='itemTitle'>Id: {this.state.targetUserId}</div>
                         <p className={'addItemLink'}>
                             Password: 
                             <input className={'addItemLink'}
