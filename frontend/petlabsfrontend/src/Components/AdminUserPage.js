@@ -11,8 +11,8 @@ class AdminUserPage extends React.Component {
     // Currently getting user named "user" as placeholder
     targetUserId = "5ddae5c6c78e20500452976e";
     targetUser;
-    pList = [];
-    iList = [];
+    // pList = [];
+    // iList = [];
     petChanges = [];
     itemChanges = [];
 
@@ -20,7 +20,9 @@ class AdminUserPage extends React.Component {
         username: this.targetUserName,
         password: "",
         isAdmin: false,
-        gold: 0
+        gold: 0,
+        pList: [],
+        iList: []
     };
 
     componentDidMount() {
@@ -72,7 +74,9 @@ class AdminUserPage extends React.Component {
                 return res.json();
             }
         }).then((pets) => {
-            this.pList = pets;
+            this.setState({
+                pList: pets
+            })
             this.populatePets();
         }).catch((error) => {
             console.log(error);
@@ -107,51 +111,51 @@ class AdminUserPage extends React.Component {
             
             // Start populating:
             let j = 0;
-            while (j < this.pList.length) {
-                if (this.pList[j]._id == pidList[i]) {
+            while (j < this.state.pList.length) {
+                if (this.state.pList[j]._id == pidList[i]) {
                     let innerArray = [];
-                    innerArray.push(this.pList[j]._id);
+                    innerArray.push(this.state.pList[j]._id);
 
                     // Add Pet Name entry:
-                    let pNameReturn = this.AddTR("Pet Name", this.pList[j].petName, 
+                    let pNameReturn = this.AddTR("Pet Name", this.state.pList[j].petName, 
                                                 this.handlePetNameChange, pidList[i]);
                     tbodyPart.appendChild(pNameReturn);
-                    innerArray.push(this.pList[j].petName);
+                    innerArray.push(this.state.pList[j].petName);
                     
                     // Add Pet Hunger entry:
-                    let pHungerReturn = this.AddTR("Pet Hunger", this.pList[j].fullness, 
+                    let pHungerReturn = this.AddTR("Pet Hunger", this.state.pList[j].fullness, 
                                                 this.handlePetHungerChange, pidList[i]);
                     tbodyPart.appendChild(pHungerReturn);
-                    innerArray.push(this.pList[j].fullness);
+                    innerArray.push(this.state.pList[j].fullness);
 
                     // Add Pet Happniess entry:
-                    let pHappinessReturn = this.AddTR("Pet Happniess", this.pList[j].happiness, 
+                    let pHappinessReturn = this.AddTR("Pet Happniess", this.state.pList[j].happiness, 
                                                 this.handlePetHappinessChange, pidList[i]);
                     tbodyPart.appendChild(pHappinessReturn);
-                    innerArray.push(this.pList[j].happiness);
+                    innerArray.push(this.state.pList[j].happiness);
 
                     // Add Pet Intelligence entry:
-                    let pIntelligenceReturn = this.AddTR("Pet Intelligence", this.pList[j].intelligence,
+                    let pIntelligenceReturn = this.AddTR("Pet Intelligence", this.state.pList[j].intelligence,
                                                 this.handlePetIntelligenceChange, pidList[i]);
                     tbodyPart.appendChild(pIntelligenceReturn);
-                    innerArray.push(this.pList[j].intelligence);
+                    innerArray.push(this.state.pList[j].intelligence);
 
                     // Add Pet Strength entry:
-                    let pStrengthReturn = this.AddTR("Pet Strength", this.pList[j].strength, 
+                    let pStrengthReturn = this.AddTR("Pet Strength", this.state.pList[j].strength, 
                                                 this.handlePetStrengthChange, pidList[i]);
                     tbodyPart.appendChild(pStrengthReturn);
-                    innerArray.push(this.pList[j].strength);
+                    innerArray.push(this.state.pList[j].strength);
 
                     // Add Pet Speed entry:
-                    let pSpeedReturn = this.AddTR("Pet Speed", this.pList[j].speed, 
+                    let pSpeedReturn = this.AddTR("Pet Speed", this.state.pList[j].speed, 
                                                 this.handlePetSpeedChange, pidList[i]);
                     tbodyPart.appendChild(pSpeedReturn);
-                    innerArray.push(this.pList[j].speed);
+                    innerArray.push(this.state.pList[j].speed);
 
                     innerArray.push("keep");
                     
                     this.petChanges.push(innerArray);
-                    j += this.pList.length;
+                    j += this.state.pList.length;
                 }
                 j++;
             }
@@ -178,7 +182,9 @@ class AdminUserPage extends React.Component {
                 return res.json();
             }
         }).then((items) => {
-            this.iList = items;
+            this.setState({
+                iList: items
+            })
             this.populateItems();
         }).catch((error) => {
             console.log(error);
@@ -213,50 +219,50 @@ class AdminUserPage extends React.Component {
             
             // Start populating:
             let j = 0;
-            while (j < this.iList.length) {
-                if (this.iList[j]._id == iidList[i]) {
+            while (j < this.state.iList.length) {
+                if (this.state.iList[j]._id == iidList[i]) {
                     let innerArray = [];
-                    innerArray.push(this.iList[j]._id);
+                    innerArray.push(this.state.iList[j]._id);
 
                     // Add Name entry:
-                    let pNameReturn = this.AddTR("Item Name", this.iList[j].name, 
+                    let pNameReturn = this.AddTR("Item Name", this.state.iList[j].name, 
                                             this.handleItemNameChange, iidList[i]);
                     tbodyPart.appendChild(pNameReturn);
                     
                     // Add Hunger entry:
-                    let pHungerReturn = this.AddTR("Item Hunger", this.iList[j].fullness, 
+                    let pHungerReturn = this.AddTR("Item Hunger", this.state.iList[j].fullness, 
                                                 this.handleItemHungerChange, iidList[i]);
                     tbodyPart.appendChild(pHungerReturn);
 
                     // Add Happniess entry:
-                    let pHappinessReturn = this.AddTR("Item Happniess", this.iList[j].happiness, 
+                    let pHappinessReturn = this.AddTR("Item Happniess", this.state.iList[j].happiness, 
                                                     this.handleItemHappinessChange, iidList[i]);
                     tbodyPart.appendChild(pHappinessReturn);
 
                     // Add Intelligence entry:
-                    let pIntelligenceReturn = this.AddTR("Item Intelligence", this.iList[j].intelligence, 
+                    let pIntelligenceReturn = this.AddTR("Item Intelligence", this.state.iList[j].intelligence, 
                                                     this.handleItemIntelligenceChange, iidList[i]);
                     tbodyPart.appendChild(pIntelligenceReturn);
 
                     // Add Strength entry:
-                    let pStrengthReturn = this.AddTR("Item Strength", this.iList[j].strength, 
+                    let pStrengthReturn = this.AddTR("Item Strength", this.state.iList[j].strength, 
                                                 this.handleItemStrengthChange, iidList[i]);
                     tbodyPart.appendChild(pStrengthReturn);
 
                     // Add Speed entry:
-                    let pSpeedReturn = this.AddTR("Item Speed", this.iList[j].speed, 
+                    let pSpeedReturn = this.AddTR("Item Speed", this.state.iList[j].speed, 
                                                 this.handleItemSpeedChange, iidList[i]);
                     tbodyPart.appendChild(pSpeedReturn);
 
                     // Add Gold entry:
-                    let pGoldReturn = this.AddTR("Item Cost", this.iList[j].price, 
+                    let pGoldReturn = this.AddTR("Item Cost", this.state.iList[j].price, 
                                             this.handleItemGoldChange, iidList[i]);
                     tbodyPart.appendChild(pGoldReturn);
                     
                     innerArray.push("keep");
                     
                     this.itemChanges.push(innerArray);
-                    j += this.iList.length;
+                    j += this.state.iList.length;
                 }
                 j++;
             }
@@ -303,17 +309,21 @@ class AdminUserPage extends React.Component {
         // Changing pet information:
         let petToBeRemoved = [];
         for (let i = 0; i < this.petChanges.length; i++) {
-            for (let j = 0; j < this.pList.length; j++) {
-                if (this.petChanges[i][0] == this.pList[j]._id) {
+            for (let j = 0; j < this.state.pList.length; j++) {
+                if (this.petChanges[i][0] == this.state.pList[j]._id) {
                     if (this.petChanges[i][7] === "remove") {
                         petToBeRemoved.push(this.petChanges[i][0]);
                     } else if (this.petChanges[i][7] === "keep") {
-                        this.pList[j].petName = this.petChanges[i][1];
-                        this.pList[j].fullness = this.petChanges[i][2];
-                        this.pList[j].happiness = this.petChanges[i][3];
-                        this.pList[j].intelligence = this.petChanges[i][4];
-                        this.pList[j].strength = this.petChanges[i][5];
-                        this.pList[j].speed = this.petChanges[i][6];
+                        let newPList = this.state.pList;
+                        newPList[j].petName = this.petChanges[i][1];
+                        newPList[j].fullness = this.petChanges[i][2];
+                        newPList[j].happiness = this.petChanges[i][3];
+                        newPList[j].intelligence = this.petChanges[i][4];
+                        newPList[j].strength = this.petChanges[i][5];
+                        newPList[j].speed = this.petChanges[i][6];
+                        this.setState({
+                            pList: newPList
+                        })
                         this.petUpdate(this.petChanges[i][0], j);
                     }
                 }
@@ -352,7 +362,7 @@ class AdminUserPage extends React.Component {
         const url = "http://localhost:3001/pets/" + pid;
         const request = new Request(url, {
             method: "PATCH",
-            body: JSON.stringify(this.pList[ind]),
+            body: JSON.stringify(this.state.pList[ind]),
             headers: { 
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
@@ -392,7 +402,7 @@ class AdminUserPage extends React.Component {
     }
 
     userUpdate() {
-        const url = "http://localhost:3001/users/" + targetUserId;
+        const url = "http://localhost:3001/users/" + this.targetUserId;
         const request = new Request(url, {
             method: "PATCH",
             body: JSON.stringify(this.targetUser),
