@@ -26,27 +26,12 @@ class AdminNewPetPage extends React.Component {
     }
 
     addPetType() {
-        console.log(Database.petTypes);
-        Database.petTypes.push(new PetType(
-            this.state.name,
-            this.state.neutralImage,
-            this.state.happyImage,
-            this.state.sadImage,
-            this.state.strengthRate,
-            this.state.speedRate,
-            this.state.intelligenceRate,
-            this.state.happinessRate,
-            this.state.fullnessRate,
-            this.state.price,
-        ));
-        console.log(Database.petTypes);
-
         const url = "http://localhost:3001/pettypes/";
 
         const request = new Request(url, {
             method: 'post',
             body: JSON.stringify({
-                name: this.state.name,
+                name: this.formatName(),
                 // neutralImage:
                 // happyImage: 
                 // sadImage: 
@@ -76,9 +61,13 @@ class AdminNewPetPage extends React.Component {
     }
 
     handleEnter = (event) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && this.state.name.length > 0) {
             this.addPetType();
         }
+    }
+
+    formatName = () => {
+        return this.state.name.charAt(0).toUpperCase() + this.state.name.toLowerCase().slice(1);
     }
 
     getTableRows() {

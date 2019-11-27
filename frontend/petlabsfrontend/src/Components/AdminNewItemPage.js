@@ -28,7 +28,7 @@ class AdminNewItemPage extends React.Component {
         const request = new Request(url, {
             method: 'post',
             body: JSON.stringify({
-                name: this.state.name,
+                name: this.formatName(),
                 strength: this.state.strength,
                 speed: this.state.speed,
                 intelligence: this.state.intelligence,
@@ -55,9 +55,13 @@ class AdminNewItemPage extends React.Component {
     }
 
     handleEnter = (event) => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' && this.state.name.length > 0) {
             this.handleSaveClick();
         }
+    }
+
+    formatName = () => {
+        return this.state.name.charAt(0).toUpperCase() + this.state.name.toLowerCase().slice(1);
     }
 
     getTableRows() {
