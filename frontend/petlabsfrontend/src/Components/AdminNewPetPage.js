@@ -40,6 +40,45 @@ class AdminNewPetPage extends React.Component {
             this.state.price,
         ));
         console.log(Database.petTypes);
+
+        const url = "http://localhost:3001/pettypes/";
+
+        const request = new Request(url, {
+            method: 'post',
+            body: JSON.stringify({
+                name: this.state.name,
+                // neutralImage:
+                // happyImage: 
+                // sadImage: 
+                strengthRate: this.state.strengthRate,
+                speedRate: this.state.speedRate,
+                intelligenceRate: this.state.intelligenceRate,
+                happinessRate: this.state.happinessRate,
+                fullnessRate: this.state.fullnessRate,
+                // imgURL
+                price: this.state.price
+            }),
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request).then((result) => {
+            if (result && result.status === 200) {
+                alert('Added new pet type successfully :)');
+            } else if (result && result.status === 409) {
+                alert('Pet Type with chosen name already exists :(');
+            }
+        }).catch((error) => {
+            alert('Failed to Save :(', error);
+        })
+    }
+
+    handleEnter = (event) => {
+        if (event.key === 'Enter') {
+            this.addPetType();
+        }
     }
 
     getTableRows() {
@@ -129,10 +168,10 @@ class AdminNewPetPage extends React.Component {
     
     render() {
         return(
-            <div>
-            <Link to={'./AdminDashboardPage'}>
-                <img className={'saveIcon'} src={saveIcon} alt={'Save Icon'} onClick={this.handleSaveClick}></img>
-            </Link>
+            <div onKeyDown={this.handleEnter}>
+            {/* <Link to={'./AdminDashboardPage'}> */}
+                <input type={'image'} className={'saveIcon'} src={saveIcon} alt={'Save Icon'} onClick={this.handleSaveClick}></input>
+            {/* </Link> */}
             <AdminSideMenu />
                 <div className='main'>
                     <div className='mainForm'>

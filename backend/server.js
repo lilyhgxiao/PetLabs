@@ -4,6 +4,9 @@ const express = require('express');
 // Start the express server
 const app = express();
 
+const cors = require('cors');
+app.use(cors());
+
 // Get the mongoose module holding the connection to the mongo server.
 const { mongoose } = require('./db/mongoose');
 
@@ -28,23 +31,35 @@ app.use(bodyParser.json());
 
 // POST route to create an item.
 app.post('/items', (request, response) => {
-    // Create a new item using the mongoose Item model.
-    const item = new Item({
-        name: request.body.name,
-        strength: request.body.strength,
-        speed: request.body.speed,
-        intelligence: request.body.intelligence,
-        happiness: request.body.happiness,
-        fullness: request.body.fullness,
-        // imgURL: ,
-        price: request.body.price
-    });
+    Item.findOne({name: request.body.name}, (error, item) => {
+        if (error) {
+            response.send(error);
+        } else if (item) {
+            // Conflict, item with this name exists.
+            response.status(409).send();
+        } else {
+            // Item with this name does not exist yet.
+            // response.status(404).send();
+            
+            // Create a new item using the mongoose Item model.
+            const item = new Item({
+                name: request.body.name,
+                strength: request.body.strength,
+                speed: request.body.speed,
+                intelligence: request.body.intelligence,
+                happiness: request.body.happiness,
+                fullness: request.body.fullness,
+                // imgURL: ,
+                price: request.body.price
+            });
 
-    // Save the item to the database.
-    item.save().then((result) => {
-        response.status(200).send(result);
-    }, (error) => {
-        response.status(400).send(error);
+            // Save the item to the database.
+            item.save().then((result) => {
+                response.status(200).send(result);
+            }, (error) => {
+                response.status(400).send(error);
+            });
+        }
     });
 });
 
@@ -132,25 +147,37 @@ app.delete('/items/:id', (request, response) => {
 
 // POST route to create a new petType.
 app.post('/pettypes', (request, response) => {
-    // Create a new petType using the mongoose petType model.
-    const petType = new PetType({
-        name: request.body.name,
-        // neutralImage: ,
-        // happyImage: ,
-        // sadImage: ,
-        strengthRate: request.body.strengthRate,
-        speedRate: request.body.speedRate,
-        intelligenceRate: request.body.intelligenceRate,
-        happinessRate: request.body.happinessRate,
-        fullnessRate: request.body.fullnessRate,
-        price: request.body.price
-    });
+    PetType.findOne({name: request.body.name}, (error, item) => {
+        if (error) {
+            response.send(error);
+        } else if (item) {
+            // Conflict, PetType with this name exists.
+            response.status(409).send();
+        } else {
+            // PetType with this name does not exist yet.
+            // response.status(404).send();
+            
+            // Create a new petType using the mongoose petType model.
+            const petType = new PetType({
+                name: request.body.name,
+                // neutralImage: ,
+                // happyImage: ,
+                // sadImage: ,
+                strengthRate: request.body.strengthRate,
+                speedRate: request.body.speedRate,
+                intelligenceRate: request.body.intelligenceRate,
+                happinessRate: request.body.happinessRate,
+                fullnessRate: request.body.fullnessRate,
+                price: request.body.price
+            });
 
-    // Save the petType to the database.
-    petType.save().then((result) => {
-        response.status(200).send(result);
-    }, (error) => {
-        response.status(400).send(error);
+            // Save the petType to the database.
+            petType.save().then((result) => {
+                response.status(200).send(result);
+            }, (error) => {
+                response.status(400).send(error);
+            });
+        }
     });
 });
 
