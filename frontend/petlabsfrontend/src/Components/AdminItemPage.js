@@ -4,28 +4,57 @@ import AdminSideMenu from '../Components/AdminSideMenu';
 import '../CSS/ItemView.css';
 import { Link } from 'react-router-dom';
 import saveIcon from '../Images/Save_Icon.png';
+import AddIcon from '../Images/add_new.png';
 
 class AdminItemPage extends React.Component {
     constructor(props) {
         super(props);
-        this.item = this.getItemReference();
+        // this.item = this.getItemReference();
         this.state = {
-            name: this.item.name,
-            strength: this.item.strength,
-            speed: this.item.speed,
-            intelligence: this.item.intelligence,
-            happiness: this.item.happiness,
-            fullness: this.item.fullness,
-            price: this.item.price,
+            name: '',
+            strength: 0,
+            speed: 0,
+            intelligence: 0,
+            happiness: 0,
+            fullness: 0,
+            price: 0,
+            id: 0,
+            imgURL: AddIcon
         };
     }
-    getItemReference() {
-        for (let i = 0; i < Database.itemList.length; i++) {
-            if (Database.itemList[i].id === this.props.location.itemId) {
-                return Database.itemList[i];
+
+    componentDidMount() {
+        const url = 'http://localhost:3001/items/' + this.props.location.itemId;
+
+        const request = new Request(url, {
+            method: 'get',
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
             }
-        }
+        });
+
+        fetch(request)
+        .then((result) => {
+            if (result.status === 200) {
+                return result.json();
+            }
+        }).then((result) => {
+            this.setState({
+                name: result.name,
+                strength: result.strength,
+                speed: result.speed,
+                intelligence: result.intelligence,
+                happiness: result.happiness,
+                fullness: result.fullness,
+                price: result.price,
+                id: result._id
+            })
+        }).catch((error) => {
+            alert('Failed to fetch items :(');
+        });
     }
+
     getTableRows() {
         let key = 0;
         const result = [];
@@ -110,30 +139,64 @@ class AdminItemPage extends React.Component {
      * Update the properties of the reference
      */
     handleSaveClick = () => {
-        console.log(this.item);
-        this.item.name = this.state.name;
-        this.item.strength = this.state.strength
-        this.item.speed = this.state.speed
-        this.item.intelligence = this.state.intelligence;
-        this.item.happiness = this.state.happiness;
-        this.item.fullness = this.state.fullness;
-        this.item.price = this.state.price;
-        console.log(this.item);
+        if (this.state.name.length === 0) {
+            alert('Item name cannot be blank');
+            return;
+        }
+
+        const url = 'http://localhost:3001/items/' + this.props.location.itemId;
+
+        const request = new Request(url, {
+            method: 'PATCH',
+            body: JSON.stringify({
+                name: this.state.name,
+                strength: this.state.strength,
+                speed: this.state.speed,
+                intelligence: this.state.intelligence,
+                happiness: this.state.happiness,
+                fullness: this.state.fullness,
+                price: this.state.price,
+            }),
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((result) => {
+            if (result.status === 200) {
+                alert('Item updated successfully :)');
+            }
+        }).catch((error) => {
+            alert('Failed to update item :(');
+            console.log(error);
+        })
+
     }
+
+    handleEnter = (event) => {
+        if (event.key === 'Enter' && this.state.name.length > 0) {
+            this.handleSaveClick();
+        } else if (event.key === 'Enter') {
+            alert('Item name cannot be blank :(');
+        }
+    }
+
     render() {
         return (
-        <div>
-            <Link to={'./AdminDashboardPage'}>
-                <img className={'saveIcon'} src={saveIcon} alt={'Save Icon'} onClick={this.handleSaveClick}></img>
-            </Link>
+        <div onKeyDown={this.handleEnter}>
+            {/* <Link to={'./AdminDashboardPage'}> */}
+                <input type={'image'} src={saveIcon} className={'saveIcon'} alt={'Save Icon'} onClick={this.handleSaveClick}></input>
+            {/* </Link> */}
             <AdminSideMenu />
                 <div className='main'>
                     <div className='mainForm'>
-                        <div className='itemTitle'>Item ID: {this.getItemReference().id}</div>
+                        <div className='itemTitle'>Item ID: {this.state.id}</div>
                         <div className={'centerView'}>
                             <p className={'addItemLink'}>Name: <input className={'addItemLink'} type='Text' value={this.state.name} onChange={this.handleNameChange}/> </p> 
                             <p className={'centerLeft'}>Sprite:</p>
-                            <input className={'imgAddItemLink'} type={'image'} src={this.item.imgURL} alt={'Add new Image'} onClick={this.placeHolderHandle} />
+                            <input className={'imgAddItemLink'} type={'image'} src={this.state.imgURL} alt={'Add new Image'} onClick={this.placeHolderHandle} />
                         </div>
                         <br /><br /><br /><br /><br /><br /><br />
                         <table className={'item-view'}>
