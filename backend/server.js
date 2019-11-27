@@ -147,10 +147,10 @@ app.delete('/items/:id', (request, response) => {
 
 // POST route to create a new petType.
 app.post('/pettypes', (request, response) => {
-    PetType.findOne({name: request.body.name}, (error, item) => {
+    PetType.findOne({name: request.body.name}, (error, petType) => {
         if (error) {
             response.send(error);
-        } else if (item) {
+        } else if (petType) {
             // Conflict, PetType with this name exists.
             response.status(409).send();
         } else {
@@ -264,27 +264,36 @@ app.delete('/pettypes/:id', (request, response) => {
 
 // POST route to create a new petType.
 app.post('/pets', (request, response) => {
-    // Create a new petType using the mongoose petType model.
-    const pet = new Pet({
-        ownerName: request.body.ownerName,
-        petName: request.body.petName,
-        type: request.body.type,
-        // neutralImage: ,
-        // happyImage: ,
-        // sadImage: ,
-        strength: request.body.strength,
-        speed: request.body.speedRate,
-        intelligence: request.body.intelligence,
-        happiness: request.body.happiness,
-        fullness: request.body.fullness,
-        price: request.body.price
-    });
+    PetType.findOne({name: request.body.petName}, (error, pet) => {
+        if (error) {
+            response.send(error);
+        } else if (pet) {
+            // Conflict, Pet with this name exists.
+            response.status(409).send();
+        } else {
+             // Create a new petType using the mongoose petType model.
+            const pet = new Pet({
+                ownerName: request.body.ownerName,
+                petName: request.body.petName,
+                type: request.body.type,
+                // neutralImage: ,
+                // happyImage: ,
+                // sadImage: ,
+                strength: request.body.strength,
+                speed: request.body.speedRate,
+                intelligence: request.body.intelligence,
+                happiness: request.body.happiness,
+                fullness: request.body.fullness,
+                price: request.body.price
+            });
 
-    // Save the petType to the database.
-    pet.save().then((result) => {
-        response.status(200).send(result);
-    }, (error) => {
-        response.status(400).send(error);
+            // Save the pet to the database.
+            pet.save().then((result) => {
+                response.status(200).send(result);
+            }, (error) => {
+                response.status(400).send(error);
+            });
+        }
     });
 });
 
@@ -370,18 +379,27 @@ app.delete('/pets/:id', (request, response) => {
 
 // POST route to create a new user.
 app.post('/users', (request, response) => {
-    // Create a new petType using the mongoose petType model.
-    const user = new User({
-        username: request.body.username,
-        password: request.body.password,
-        isAdmin: request.body.isAdmin
-    });
+    User.findOne({username: request.body.username}, (error, user) => {
+        if (error) {
+            response.send(error);
+        } else if (user) {
+            // Conflict, User with this username exists.
+            response.status(409).send();
+        } else {
+            // Create a new petType using the mongoose petType model.
+            const user = new User({
+                username: request.body.username,
+                password: request.body.password,
+                isAdmin: request.body.isAdmin
+            });
 
-    // Save the petType to the database.
-    user.save().then((result) => {
-        response.status(200).send(result);
-    }, (error) => {
-        response.status(400).send(error);
+            // Save the petType to the database.
+            user.save().then((result) => {
+                response.status(200).send(result);
+            }, (error) => {
+                response.status(400).send(error);
+            });     
+        }
     });
 });
 
