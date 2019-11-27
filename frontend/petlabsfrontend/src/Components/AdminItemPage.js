@@ -113,22 +113,22 @@ class AdminItemPage extends React.Component {
         this.setState({name: event.target.value});
     }
     handleStrengthChange = (event) => {
-        this.setState({strength: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({strength: event.target.value});
     }
     handleSpeedChange = (event) => {
-        this.setState({speed: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({speed: event.target.value});
     }
     handleIntelligenceChange = (event) => {
-        this.setState({intelligence: (parseInt(event.target.value)) ? parseInt(event.target.value) : 0});
+        this.setState({intelligence: event.target.value});
     }
     handleHappinessChange = (event) => {
-        this.setState({happiness: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({happiness: event.target.value});
     }
     handleFullnessChange = (event) => {
-        this.setState({fullness: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({fullness: event.target.value});
     }
     handlePriceChange = (event) => {
-        this.setState({price: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({price: event.target.value});
     }
 
     placeHolderHandle = () => {
@@ -141,6 +141,11 @@ class AdminItemPage extends React.Component {
     handleSaveClick = () => {
         if (this.state.name.length === 0) {
             alert('Item name cannot be blank');
+            return;
+        }
+
+        if (!this.validateState()) {
+            alert('One or more invalid inputs detected :(');
             return;
         }
 
@@ -172,7 +177,11 @@ class AdminItemPage extends React.Component {
             alert('Failed to update item :(');
             console.log(error);
         })
+    }
 
+    validateState = () => {
+        return !isNaN(this.state.strength) && !isNaN(this.state.speed) && !isNaN(this.state.intelligence) && 
+        !isNaN(this.state.happiness) && !isNaN(this.state.fullness) && !isNaN(this.state.price);
     }
 
     handleEnter = (event) => {
