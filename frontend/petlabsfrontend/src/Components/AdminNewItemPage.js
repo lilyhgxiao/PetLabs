@@ -54,6 +54,12 @@ class AdminNewItemPage extends React.Component {
         })
     }
 
+    handleEnter = (event) => {
+        if (event.key === 'Enter') {
+            this.handleSaveClick();
+        }
+    }
+
     getTableRows() {
         let key = 0;
         const result = [];
@@ -141,7 +147,7 @@ class AdminNewItemPage extends React.Component {
     
     render() {
         return(
-            <div>
+            <div onKeyDown={this.handleEnter}>
             {/* <Link to={'./AdminDashboardPage'}> */}
                 <input type={'image'} className={'saveIcon'} src={saveIcon} alt={'Save Icon'} onClick={this.handleSaveClick}></input>
             {/* </Link> */}
