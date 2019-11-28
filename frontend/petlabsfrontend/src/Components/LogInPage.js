@@ -1,7 +1,8 @@
 import React from 'react';
 import '../CSS/LogInStyles.css';
 import { Redirect } from 'react-router';
-import Database from '../TempClasses/Database';
+
+import { login, logout, updateLoginForm } from "../actions/userhelpers"
 
 import logo from '../Images/logo_placeholder.png';
 
@@ -16,7 +17,7 @@ class LogInPage extends React.Component {
     };
 
     componentDidMount() {
-        Database.currUser = null;
+        logout()
         this.setState({
             username: "",
             password: "",
@@ -31,21 +32,13 @@ class LogInPage extends React.Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
+
+        updateLoginForm(target)
     
         // 'this' is bound to the component in this arrow function.
         this.setState({
           [name]: value  // [name] sets the object property name to the value of the 'name' variable.
         });
-    }
-
-    findUser = () => {
-        const userList = Database.userList;
-        for (let i = 0; i < userList.length; i ++) {
-            if (this.state.username === userList[i].username && this.state.password === userList[i].password) {
-                return userList[i];
-            }
-        }
-        return null
     }
 
     signup = () => {
@@ -54,27 +47,13 @@ class LogInPage extends React.Component {
         }); 
     }
 
-    login = () => {
-        //authenticate
+    tryLogin = () => {
+        const { isAdmin, loginSuccessful } = login()
 
-        //temp
-        let userToLogin = null;
-
-        userToLogin = this.findUser();
-        
-        //if login wasn't successful, show warning.
-        if (userToLogin === null) {
-            alert('Invalid username/password combination. Please try again.');
-        }
-        //if login was a success, determine which dashboard to show.
-        else {
-            Database.currUser = userToLogin;
-            this.setState({
-                isAdmin: userToLogin.isAdmin,
-                user: userToLogin,
-                loginSuccessful: true
-            })
-        }
+        this.setState({
+            isAdmin: isAdmin,
+            loginSuccessful: loginSuccessful
+        })
     }
 
     render() {
@@ -116,18 +95,18 @@ class LogInPage extends React.Component {
                     <br/>
                     <input name='username' 
                         value={ this.state.username } 
-                        onChange={this.handleInputChange} 
+                        onChange={ this.handleInputChange } 
                         type="text" 
                         placeholder="Username" />
                     <br/>
                     <input name='password' 
                         value={ this.state.password } 
-                        onChange={this.handleInputChange} 
+                        onChange={ this.handleInputChange } 
                         type="password" 
                         placeholder="Password" />
                     <div className='buttons'>
                     <button onClick={ this.signup } >Sign Up</button>
-                    <button onClick={ this.login }>Log In</button>
+                    <button onClick={ this.tryLogin }>Log In</button>
                 </div>
                 </div>
             </div>

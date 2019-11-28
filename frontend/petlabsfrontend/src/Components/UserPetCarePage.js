@@ -9,18 +9,21 @@ import GoldDisplay from './GoldDisplay.js';
 
 import mockDB from '../TempClasses/Database';
 import pet_dead from '../Images/pet_dead.png';
-import Database from '../TempClasses/Database';
+
+//statezero
+import BaseReactComponent from "./../BaseReactComponent";
+import { updateUserState } from "../actions/userhelpers"
+
 import { Redirect } from 'react-router';
 
 const log = console.log
 
-class UserPetCarePage extends React.Component {
+class UserPetCarePage extends BaseReactComponent {
 
     petReceived = this.props.location.state.pet;
 
     state = {
         petId: null,
-        userGold: 0,
         petName: "",
         petImg: '',
         fullness: 50,
@@ -34,12 +37,14 @@ class UserPetCarePage extends React.Component {
         deleted: false,
     }
 
+    filterState({ currUser }) {
+        return { currUser };
+    }
+
     /* Automatically loaded functions */
 
     componentDidMount() {
-        this.setState({
-            userGold: mockDB.currUser.gold
-        },this.findPet)
+        this.findPet()
         this.populateItem()
         this.selectItem = this.selectItem.bind(this)
 
@@ -82,31 +87,23 @@ class UserPetCarePage extends React.Component {
 
     // Use DOM to populate items in the drop down menu:
     populateItem() {
-        let uList = mockDB.userList;
-        let i = 0;
-        while (i < uList.length) {
-            if (uList[i].username == this.petReceived.ownerName) {
+        let itemDropDown = document.querySelector("#dropdown");
+        let iList = this.state.currUser.itemIdList;
 
-                let itemDropDown = document.querySelector("#dropdown");
-                let iList = uList[i].itemIdList;
-
-                for (let j = 0; j < iList.length; j++) {
-                    let iName;
-                    for (let k = 0; k < mockDB.itemList.length; k++) {
-                        if (mockDB.itemList[k].id == iList[j]) {
-                            iName = mockDB.itemList[k].name;
-                        }
-                    }
-                    let entryText = document.createTextNode(iName)
-
-                    let itemEntry = document.createElement('option')
-                    itemEntry.setAttribute("value", iList[j])
-
-                    itemEntry.appendChild(entryText)
-                    itemDropDown.appendChild(itemEntry)
+        for (let j = 0; j < iList.length; j++) {
+            let iName;
+            for (let k = 0; k < mockDB.itemList.length; k++) {
+                if (mockDB.itemList[k].id === iList[j]) {
+                    iName = mockDB.itemList[k].name;
                 }
             }
-            i++;
+            let entryText = document.createTextNode(iName)
+
+            let itemEntry = document.createElement('option')
+            itemEntry.setAttribute("value", iList[j])
+
+            itemEntry.appendChild(entryText)
+            itemDropDown.appendChild(itemEntry)
         }
     }
 
@@ -175,7 +172,7 @@ class UserPetCarePage extends React.Component {
             // Find item:
             let targetItem;
             for (let k = 0; k < mockDB.itemList.length; k++) {
-                if (mockDB.itemList[k].id == this.state.itemSelected) {
+                if (mockDB.itemList[k].id === this.state.itemSelected) {
                     targetItem = mockDB.itemList[k];
                 }
             }
@@ -240,10 +237,8 @@ class UserPetCarePage extends React.Component {
     }
 
     giveGold() {
-        mockDB.currUser.gold += 20;
-        this.setState({
-            userGold: mockDB.currUser.gold
-        })
+        const currUser = this.state.currUser;
+        updateUserState({gold: currUser.gold + 20})
     }
 
     selectItem(e) {
@@ -256,10 +251,10 @@ class UserPetCarePage extends React.Component {
         const confirmDelete = window.confirm("Say goodbye to " + this.state.petName + "? (You cannot undo this action!)")
         if (confirmDelete) {
             const petListIdx = mockDB.petList.indexOf(this.petReceived);
-            const userPetListIdx = mockDB.currUser.petIdList.indexOf(this.petReceived.id);
+            const userPetListIdx = this.state.currUser.petIdList.indexOf(this.petReceived.id);
 
             mockDB.petList.splice(petListIdx, 1);
-            mockDB.currUser.petIdList.splice(userPetListIdx, 1);
+            this.state.currUser.petIdList.splice(userPetListIdx, 1);
             this.setState({
                 deleted: true
             })
@@ -267,6 +262,8 @@ class UserPetCarePage extends React.Component {
     }
 
     render() {
+        const { currUser } = this.state;
+
         if (this.state.deleted) {
             return(
                 <Redirect push to={{
@@ -278,7 +275,7 @@ class UserPetCarePage extends React.Component {
         return (
             <div>
                 <UserSideMenu/>
-                <GoldDisplay gold={ this.state.userGold }/>
+                <GoldDisplay gold={ currUser.gold }/>
                 <div className='main'>
                     <span className='careTitle'>Care for your pet!</span><br/>
                     <div className='showPetContainer'>

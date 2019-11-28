@@ -4,7 +4,6 @@ import { uid } from 'react-uid';
 import { Redirect } from 'react-router';
 
 import Database from '../TempClasses/Database'
-import User from "../TempClasses/User";
 
 import '../CSS/UserDashboardStyles.css';
 
@@ -12,20 +11,26 @@ import UserSideMenu from './UserSideMenu';
 import PetComponent from './PetComponent';
 import GoldDisplay from './GoldDisplay.js';
 
+//statezero
+import BaseReactComponent from "./../BaseReactComponent";
+
 import addNew from '../Images/add_new.png';
 
-class UserDashboardPage extends React.Component {
+class UserDashboardPage extends BaseReactComponent {
+    
     state = {
-        user: new User('', '', false),
         toPetPage: false,
+        petList: [],
         targetPet: null,
         toCreate: false
     };
 
+    filterState({ currUser }) {
+        return { currUser };
+    }
+
     componentDidMount() { // When the component enters the DOM
-        const currUser = Database.currUser;
         this.setState({
-            user: currUser,
             toPetPage: false,
             targetPet: null,
             toCreate: false
@@ -33,21 +38,20 @@ class UserDashboardPage extends React.Component {
     }
 
     fetchPets = () => { //Fetching data for the pets from the username
-        const currUser = this.state.user
+        const currUser = this.state.currUser
 
-        //fetch data from database depending on user
+        const petList = []
         const totalPetList = Database.petList;
-        const userPetList = [];
 
-        for (let i = 0; i < totalPetList.length; i ++) {
-            if (currUser.username === totalPetList[i].ownerName) {
-                userPetList.push(totalPetList[i]);
-            }
+        for (const petId of currUser.petIdList) {
+            petList.push(totalPetList.filter(pet => pet['id'] === petId)[0])
         }
-        currUser.petList = userPetList;
+
+        console.log(petList)
+
         this.setState({
-            user: currUser
-        })
+            petList: petList
+        });
     }
 
     goToPetPage = (pet) => {
@@ -65,6 +69,8 @@ class UserDashboardPage extends React.Component {
     }
 
     render() {
+        const { currUser } = this.state;
+
         if (this.state.toPetPage) {
             return(
                 <Redirect push to={{
@@ -77,7 +83,7 @@ class UserDashboardPage extends React.Component {
             return(
                 <Redirect push to={{
                     pathname: "/UserCreatePetPage",
-                    state: { user: this.state.user }
+                    state: { user: currUser }
                 }} />
             );
         }
@@ -85,17 +91,17 @@ class UserDashboardPage extends React.Component {
         return(
             <div>
                 <UserSideMenu/>
-                <GoldDisplay gold={ this.state.user.gold }/>
+                <GoldDisplay gold={ currUser.gold }/>
                 <div className='main'>
                     
                     <div className='mainForm'>
-                        <span className='welcomeTitle'>Welcome, {this.state.user.username}</span>
+                        <span className='welcomeTitle'>Welcome, {currUser.username}</span>
                         <br/>
                         <span className='description'>Visit your pets today:</span>
                         <br />
                         <br />
                         <ul className='container'>
-                        { this.state.user.petList.map((pet) => {
+                        { this.state.petList.map((pet) => {
                             return(
                                 <PetComponent className='pets' key={ uid(pet) /*unique id required to help React render more efficiently when we delete pets.*/ } 
                                 pet={pet}

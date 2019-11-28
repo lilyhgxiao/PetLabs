@@ -4,6 +4,9 @@ import { Redirect } from 'react-router';
 import Database from '../TempClasses/Database';
 import User from '../TempClasses/User';
 
+//statezero
+import { signup } from "../actions/userhelpers"
+
 import logo from '../Images/logo_placeholder.png';
 
 class SignUpPage extends React.Component {
@@ -12,7 +15,6 @@ class SignUpPage extends React.Component {
         password: "",
         confirmPassword: "",
         signupSuccessful: false,
-        user: null,
         backToLogin: false
     };
 
@@ -56,18 +58,11 @@ class SignUpPage extends React.Component {
         return true;
     }
 
-    createUser = () => {
-        const newUser = new User(this.state.username, this.state.password, false);
-        Database.userList.push(newUser);
-        return newUser;
-    }
-
     authSignup = () => {
         //authenticate
 
         //temp
         let success = true;
-        let newUser = null;
 
         if (!this.authEmpty()) {
             alert("Please fill in all fields.");
@@ -82,11 +77,10 @@ class SignUpPage extends React.Component {
 
         //if signup was successful, create new user entry in database and log in.
         if (success) {
-            newUser = this.createUser()
-            Database.currUser = newUser;
+            const signupSuccess = signup(new User(this.state.username, this.state.password, false));
+
             this.setState({
-                user: newUser,
-                signupSuccessful: true
+                signupSuccessful: signupSuccess
             })
         }
     }
@@ -102,8 +96,7 @@ class SignUpPage extends React.Component {
         if (this.state.signupSuccessful) {
             return (
                 <Redirect push to={{
-                    pathname: "/UserDashboardPage",
-                    state: { user: this.state.user }
+                    pathname: "/UserDashboardPage"
                 }} />
             );
         }

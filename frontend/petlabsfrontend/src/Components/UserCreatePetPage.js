@@ -7,29 +7,28 @@ import { uid } from 'react-uid';
 import '../CSS/CreatePetStyle.css';
 
 import UserSideMenu from './UserSideMenu';
-import User from "../TempClasses/User";
 import GoldDisplay from './GoldDisplay.js';
 import PetTypeComponent from './PetTypeComponent';
 import Database from '../TempClasses/Database';
 import Pet from '../TempClasses/Pet';
 
-class UserCreatePetPage extends React.Component {
+//statezero
+import BaseReactComponent from "./../BaseReactComponent";
+import { updateUserState } from "../actions/userhelpers"
+
+class UserCreatePetPage extends BaseReactComponent {
+
     state = {
         name: "",
         petType: null,
         creationSuccess: false,
         imgURL: type_default,
         typeSelected: false,
-        priceString: "",
-        user: new User('', '', false)
+        priceString: ""
     };
 
-    componentDidMount() {
-        const currUser = this.props.location.state.user;
-
-        this.setState({
-            user: currUser
-        });
+    filterState({ currUser }) {
+        return { currUser };
     }
 
     handleInputChange = (event) => {
@@ -44,7 +43,7 @@ class UserCreatePetPage extends React.Component {
     }
 
     authGold = () => {
-        if (Database.currUser.gold < this.state.petType.price) {
+        if (this.state.currUser.gold < this.state.petType.price) {
             return false;
         }
         else {
@@ -52,28 +51,25 @@ class UserCreatePetPage extends React.Component {
         }
     }
 
-    updateGold = () => {
-        const userList = Database.userList;
-        
-        for (let i = 0; i < userList.length; i ++) {
-            if (Database.currUser.username === userList[i].username) {
-                userList[i].gold = userList[i].gold - this.state.petType.price;
-            }
-        }
-    }
-
     createPet = () => {
-        const username = Database.currUser.username
-        const newPet = new Pet(this.state.name, username, this.state.petType.name);
-        Database.petList.push(newPet)
+        const currUser = this.state.currUser;
+        const newPet = new Pet(this.state.name, currUser.username, this.state.petType.name);
 
-        const userList = Database.userList;
+        const petIdListCopy = currUser.petIdList.slice()
+        petIdListCopy.push(newPet.id)
+        return updateUserState({
+            gold: this.state.currUser.gold - this.state.petType.price,
+            petIdList: petIdListCopy}
+        );
+
+        //const username = currUser.username;
+/*         const userList = Database.userList;
         
         for (let i = 0; i < userList.length; i ++) {
             if (Database.currUser.username === userList[i].username) {
                 userList[i].petIdList.push(newPet.id)
             }
-        }
+        } */
     }
 
     authEmpty = () => {
@@ -99,10 +95,13 @@ class UserCreatePetPage extends React.Component {
             }
     
             if (success) {
-                this.updateGold();
-                this.createPet();
+                const creationSuccess = this.createPet();
+                if (!creationSuccess) {
+                    alert("An error occurred while creating the pet. Please try again.")
+                }
+                
                 this.setState({
-                    creationSuccess: true
+                    creationSuccess: creationSuccess
                 });
             }
         }
@@ -131,7 +130,7 @@ class UserCreatePetPage extends React.Component {
         return(
             <div>
                 <UserSideMenu/>
-                <GoldDisplay gold={ this.state.user.gold }/>
+                <GoldDisplay gold={ this.state.currUser.gold }/>
 
                 <div className='main'>
                     

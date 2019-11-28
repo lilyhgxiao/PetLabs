@@ -6,7 +6,7 @@ function PetModel(props)  {
     const { imgSource } = props;
     return (
         <div className='petModel'>
-            <img className="petImg" src={imgSource} alt="Pet Image"/>
+            <img className="petImg" src={imgSource} alt="Pet"/>
         </div>
     );
 }

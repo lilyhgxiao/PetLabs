@@ -3,6 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { startLogging } from "statezero";
+import { setEmptyState } from "./actions/helpers";
+
+setEmptyState();
+
+//uncomment to see changes in state
+//startLogging();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

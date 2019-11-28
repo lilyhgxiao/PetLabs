@@ -70,9 +70,9 @@ Database.userList[3].petIdList.push(3);
 Database.userList[3].petIdList.push(4);
 
 
-Database.userList[0].itemIdList.push(1);
-Database.userList[0].itemIdList.push(2);
-Database.userList[0].itemIdList.push(3);
+//Database.userList[0].itemIdList.push(1);
+//Database.userList[0].itemIdList.push(2);
+//Database.userList[0].itemIdList.push(3);
 
 Database.userList[1].itemIdList.push(1);
 Database.userList[1].itemIdList.push(2);
