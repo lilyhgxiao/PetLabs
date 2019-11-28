@@ -1,5 +1,4 @@
 import React from 'react';
-import Database from '../TempClasses/Database';
 import AdminSideMenu from '../Components/AdminSideMenu';
 import { Link } from 'react-router-dom';
 import saveIcon from '../Images/Save_Icon.png';
@@ -7,15 +6,14 @@ import saveIcon from '../Images/Save_Icon.png';
 import '../CSS/ItemView.css';
 
 class AdminUserPage extends React.Component {
-    // Change to specific user after deciding on how to pass info.
-    // Currently getting user named "user" as placeholder
-    targetUserId = "5ddae5c6c78e20500452976e";
+    // Get user Id from AdminUserList
+    targetUserId = this.props.location.userId;
     targetUser;
     petChanges = [];
     itemChanges = [];
 
     state = {
-        targetUserId: this.targetUserId,
+        targetUserName: "",
         password: "",
         isAdmin: false,
         gold: 0,
@@ -47,6 +45,7 @@ class AdminUserPage extends React.Component {
         }).then((user) => {
             this.targetUser = user;
             this.setState({
+                targetUserName: user.username,
                 password: user.password,
                 isAdmin: user.isAdmin,
                 gold: user.gold
@@ -111,7 +110,7 @@ class AdminUserPage extends React.Component {
             // Start populating:
             let j = 0;
             while (j < this.state.pList.length) {
-                if (this.state.pList[j]._id == pidList[i]) {
+                if (this.state.pList[j]._id === pidList[i]) {
                     let innerArray = [];
                     innerArray.push(this.state.pList[j]._id);
 
@@ -220,7 +219,7 @@ class AdminUserPage extends React.Component {
             // Start populating:
             let j = 0;
             while (j < this.state.iList.length) {
-                if (this.state.iList[j]._id == iidList[i]) {
+                if (this.state.iList[j]._id === iidList[i]) {
                     let innerArray = [];
                     innerArray.push(this.state.iList[j]._id);
 
@@ -310,7 +309,7 @@ class AdminUserPage extends React.Component {
         let petToBeRemoved = [];
         for (let i = 0; i < this.petChanges.length; i++) {
             for (let j = 0; j < this.state.pList.length; j++) {
-                if (this.petChanges[i][0] == this.state.pList[j]._id) {
+                if (this.petChanges[i][0] === this.state.pList[j]._id) {
                     if (this.petChanges[i][7] === "remove") {
                         petToBeRemoved.push(this.petChanges[i][0]);
                     } else if (this.petChanges[i][7] === "keep") {
@@ -341,7 +340,7 @@ class AdminUserPage extends React.Component {
         for (let i = 0; i < this.itemChanges.length; i++) {
             // Find index of target item in itemIdList:
             for (let k = 0; k < userItemIdList.length; k++) {
-                if (this.itemChanges[i][0] == userItemIdList[k] 
+                if (this.itemChanges[i][0] === userItemIdList[k] 
                         && this.itemChanges[i][1] === "remove") {
                     itemToBeRemoved.push(k);
                 }
@@ -441,7 +440,7 @@ class AdminUserPage extends React.Component {
     handlePetNameChange = (e) => {
         let petId = e.target.attributes.getNamedItem('itemId').value;
         for (let i = 0; i < this.petChanges.length; i++) {
-            if (this.petChanges[i][0] == petId) {
+            if (this.petChanges[i][0] === petId) {
                 this.petChanges[i][1] = e.target.value;
             }
         }
@@ -450,7 +449,7 @@ class AdminUserPage extends React.Component {
     handlePetHungerChange = (e) => {
         let petId = e.target.attributes.getNamedItem('itemId').value;
         for (let i = 0; i < this.petChanges.length; i++) {
-            if (this.petChanges[i][0] == petId) {
+            if (this.petChanges[i][0] === petId) {
                 this.petChanges[i][2] = e.target.value;
             }
         }
@@ -459,7 +458,7 @@ class AdminUserPage extends React.Component {
     handlePetHappinessChange = (e) => {
         let petId = e.target.attributes.getNamedItem('itemId').value;
         for (let i = 0; i < this.petChanges.length; i++) {
-            if (this.petChanges[i][0] == petId) {
+            if (this.petChanges[i][0] === petId) {
                 this.petChanges[i][3] = e.target.value;
             }
         }
@@ -468,7 +467,7 @@ class AdminUserPage extends React.Component {
     handlePetIntelligenceChange = (e) => {
         let petId = e.target.attributes.getNamedItem('itemId').value;
         for (let i = 0; i < this.petChanges.length; i++) {
-            if (this.petChanges[i][0] == petId) {
+            if (this.petChanges[i][0] === petId) {
                 this.petChanges[i][4] = e.target.value;
             }
         }
@@ -477,7 +476,7 @@ class AdminUserPage extends React.Component {
     handlePetStrengthChange = (e) => {
         let petId = e.target.attributes.getNamedItem('itemId').value;
         for (let i = 0; i < this.petChanges.length; i++) {
-            if (this.petChanges[i][0] == petId) {
+            if (this.petChanges[i][0] === petId) {
                 this.petChanges[i][5] = e.target.value;
             }
         }
@@ -486,7 +485,7 @@ class AdminUserPage extends React.Component {
     handlePetSpeedChange = (e) => {
         let petId = e.target.attributes.getNamedItem('itemId').value;
         for (let i = 0; i < this.petChanges.length; i++) {
-            if (this.petChanges[i][0] == petId) {
+            if (this.petChanges[i][0] === petId) {
                 this.petChanges[i][6] = e.target.value;
             }
         }
@@ -495,7 +494,7 @@ class AdminUserPage extends React.Component {
     markForRemovalP = (e) => {
         let petId = e.target.value;
         for (let i = 0; i < this.petChanges.length; i++) {
-            if (this.petChanges[i][0] == petId) {
+            if (this.petChanges[i][0] === petId) {
                 let pEntries = document.querySelector("#petEntries");
                 let ind = e.target.getAttribute('ind')
                 let target = pEntries.children[ind]
@@ -514,7 +513,7 @@ class AdminUserPage extends React.Component {
     markForRemovalI = (e) => {
         let itemId = e.target.value;
         for (let i = 0; i < this.itemChanges.length; i++) {
-            if (this.itemChanges[i][0] == itemId) {
+            if (this.itemChanges[i][0] === itemId) {
                 let iEntries = document.querySelector("#itemEntries");
                 let ind = e.target.getAttribute('ind')
                 let target = iEntries.children[ind]
@@ -562,7 +561,7 @@ class AdminUserPage extends React.Component {
 
                 <div className='main'>
                     <div className='mainForm'>
-                        <div className='itemTitle'>Id: {this.state.username}</div>
+                        <div className='itemTitle'>Username: {this.state.targetUserName}</div>
                         <div className='itemForm'>
                             <p className={'addItemLink'}>
                                 Password: 

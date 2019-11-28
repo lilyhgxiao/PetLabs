@@ -1,11 +1,7 @@
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-
-import '../CSS/ShopPageStyle.css';
-
 import UserSideMenu from './UserSideMenu';
 import GoldDisplay from './GoldDisplay.js';
-import mockDB from '../TempClasses/Database';
+import '../CSS/ShopPageStyle.css';
 
 class ShopPage extends React.Component {
     // Change to specific user after deciding on how to pass info.

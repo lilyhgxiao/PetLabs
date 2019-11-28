@@ -9,15 +9,16 @@ import GoldDisplay from './GoldDisplay.js';
 
 import mockDB from '../TempClasses/Database';
 import pet_dead from '../Images/pet_dead.png';
-import Database from '../TempClasses/Database';
 import { Redirect } from 'react-router';
 
 const log = console.log
 
 class UserPetCarePage extends React.Component {
 
-    targetPetId = ""
-    petReceived = this.props.location.state.pet;
+    targetPetId = "5ddd9306601cd328c704e095";
+    owner;
+    ownerItems = [];
+    petReceived;
 
     state = {
         petId: null,
@@ -30,7 +31,7 @@ class UserPetCarePage extends React.Component {
         strength: 0,
         speed: 0,
         alive: true,
-        itemSelected: -99,
+        itemSelected: "No item",
         type: null,
         deleted: false,
     }
@@ -38,10 +39,9 @@ class UserPetCarePage extends React.Component {
     /* Automatically loaded functions */
 
     componentDidMount() {
-        this.setState({
-            userGold: mockDB.currUser.gold
-        },this.findPet)
-        this.populateItem()
+        this.findPet()
+        this.findPetType()
+        this.findOwner()
         this.selectItem = this.selectItem.bind(this)
 
         this.dTimer = setInterval(
@@ -56,7 +56,7 @@ class UserPetCarePage extends React.Component {
 
     // Find specific pet from the database:
     findPet() {
-        const url = "http://localhost:3001/pet/" + this.targetPetId;
+        const url = "http://localhost:3001/pets/" + this.targetPetId;
         const request = new Request(url, {
             method: "get",
             headers: { 
@@ -88,34 +88,104 @@ class UserPetCarePage extends React.Component {
         })
     }
 
-    // Use DOM to populate items in the drop down menu:
-    populateItem() {
-        let uList = mockDB.userList;
-        let i = 0;
-        while (i < uList.length) {
-            if (uList[i].username == this.petReceived.ownerName) {
+    // Find owner from the database:
+    findOwner() {
+        const url = "http://localhost:3001/users/";
+        const request = new Request(url, {
+            method: "get",
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
 
-                let itemDropDown = document.querySelector("#dropdown");
-                let iList = uList[i].itemIdList;
-
-                for (let j = 0; j < iList.length; j++) {
-                    let iName;
-                    for (let k = 0; k < mockDB.itemList.length; k++) {
-                        if (mockDB.itemList[k].id == iList[j]) {
-                            iName = mockDB.itemList[k].name;
-                        }
-                    }
-                    let entryText = document.createTextNode(iName)
-
-                    let itemEntry = document.createElement('option')
-                    itemEntry.setAttribute("value", iList[j])
-
-                    itemEntry.appendChild(entryText)
-                    itemDropDown.appendChild(itemEntry)
+        fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        }).then((users) => {
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].username === this.petReceived.ownerName) {
+                    this.populateItem(users[i].itemIdList);
+                    this.owner = users[i];
+                    this.setState({
+                        userGold: users[i].gold
+                    })
                 }
             }
-            i++;
-        }
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    // Find pet type from the database:
+    findPetType() {
+        const url = "http://localhost:3001/pettypes/";
+        const request = new Request(url, {
+            method: "get",
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        }).then((pTypes) => {
+            for (let i = 0; i < pTypes.length; i++) {
+                if (pTypes[i].name === this.petReceived.type) {
+                    this.setState({
+                        type: pTypes[i]
+                    })
+                }
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    // Use DOM to populate items in the drop down menu:
+    populateItem(iList) {
+        let itemDropDown = document.querySelector("#dropdown");
+
+        const url = "http://localhost:3001/items/";
+        const request = new Request(url, {
+            method: "get",
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        }).then((items) => {
+            for (let j = 0; j < iList.length; j++) {
+                let iName;
+                for (let k = 0; k < items.length; k++) {
+                    if (items[k]._id === iList[j]) {
+                        iName = items[k].name;
+                        this.ownerItems.push(items[k])
+                    }
+                }
+                let entryText = document.createTextNode(iName)
+    
+                let itemEntry = document.createElement('option')
+                itemEntry.setAttribute("value", iList[j])
+    
+                itemEntry.appendChild(entryText)
+                itemDropDown.appendChild(itemEntry)
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     starve() {
@@ -178,18 +248,18 @@ class UserPetCarePage extends React.Component {
 
     // Function related to use of item.
     trainPet = () => {
-        if (this.state.alive && this.state.itemSelected > -99) {
+        if (this.state.alive && this.state.itemSelected !== "No item") {
 
             // Find item:
             let targetItem;
-            for (let k = 0; k < mockDB.itemList.length; k++) {
-                if (mockDB.itemList[k].id == this.state.itemSelected) {
-                    targetItem = mockDB.itemList[k];
+            for (let k = 0; k < this.ownerItems.length; k++) {
+                if (this.ownerItems[k]._id === this.state.itemSelected) {
+                    targetItem = this.ownerItems[k];
                 }
             }
 
-            this.updateHappiness(targetItem.fullness)
-            this.updateFullness(targetItem.happiness)
+            this.updateHappiness(targetItem.fullness);
+            this.updateFullness(targetItem.happiness);
 
             this.setState({
                 intelligence: this.state.intelligence + targetItem.intelligence * this.state.type.intelligenceRate,
@@ -199,8 +269,10 @@ class UserPetCarePage extends React.Component {
             this.petReceived.intelligence += targetItem.intelligence * this.state.type.intelligenceRate
             this.petReceived.strength += targetItem.strength * this.state.type.strengthRate
             this.petReceived.speed += targetItem.speed * this.state.type.speedRate
-            this.fatigue()
-        } 
+
+            this.fatigue();
+            this.petsUpdate();
+        }
     }
 
     /* Gameplay helper functions */
@@ -209,12 +281,13 @@ class UserPetCarePage extends React.Component {
         if (this.state.fullness < 20) {
             this.updateHappiness(-5);
         } 
-        if (this.state.fullness === 0 && this.state.happiness === 0) {
+        if (this.petReceived.fullness === 0 && this.petReceived.happiness === 0) {
             this.setState({
                 alive: false,
                 petImg: pet_dead
             })
             this.petReceived.alive = false
+            this.petsUpdate();
         }
     }
 
@@ -231,6 +304,7 @@ class UserPetCarePage extends React.Component {
         })
         this.petReceived.happiness += incValue
         this.setPetMood();
+        this.petsUpdate();
     }
 
     updateFullness = (incValue) => {
@@ -241,17 +315,19 @@ class UserPetCarePage extends React.Component {
         } else {
             incValue = incValue * this.state.type.fullnessRate
         }
+        this.petReceived.fullness += incValue
         this.setState({
             fullness: this.state.fullness + incValue 
         })
-        this.petReceived.fullness += incValue
+        this.petsUpdate();
     }
 
     giveGold() {
-        mockDB.currUser.gold += 20;
+        this.owner.gold += 20;
         this.setState({
-            userGold: mockDB.currUser.gold
+            userGold: this.owner.gold
         })
+        this.userUpdate();
     }
 
     selectItem(e) {
@@ -264,14 +340,58 @@ class UserPetCarePage extends React.Component {
         const confirmDelete = window.confirm("Say goodbye to " + this.state.petName + "? (You cannot undo this action!)")
         if (confirmDelete) {
             const petListIdx = mockDB.petList.indexOf(this.petReceived);
-            const userPetListIdx = mockDB.currUser.petIdList.indexOf(this.petReceived.id);
+            const userPetListIdx = this.owner.petIdList.indexOf(this.petReceived.id);
 
             mockDB.petList.splice(petListIdx, 1);
-            mockDB.currUser.petIdList.splice(userPetListIdx, 1);
+            this.owner.petIdList.splice(userPetListIdx, 1);
             this.setState({
                 deleted: true
             })
+            this.userUpdate();
         }
+    }
+
+    /* Update DB */
+    userUpdate() {
+        const url = "http://localhost:3001/users/" + this.owner._id;
+        const request = new Request(url, {
+            method: "PATCH",
+            body: JSON.stringify(this.owner),
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                console.log("Changes made to server db")
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    petsUpdate() {
+        const url = "http://localhost:3001/pets/" + this.targetPetId;
+        const request = new Request(url, {
+            method: "PATCH",
+            body: JSON.stringify(this.petReceived),
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                console.log("Changes made to server db")
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     render() {
