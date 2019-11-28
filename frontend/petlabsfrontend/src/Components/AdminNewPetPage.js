@@ -1,10 +1,7 @@
 import React from 'react';
-import Database from '../TempClasses/Database';
 import AdminSideMenu from '../Components/AdminSideMenu';
 import '../CSS/ItemView.css';
-import { Link } from 'react-router-dom';
 import saveIcon from '../Images/Save_Icon.png';
-import PetType from '../TempClasses/PetType';
 import AddIcon from '../Images/add_new.png';
 import SpriteComponent from '../Components/SpriteComponent';
 
@@ -26,6 +23,16 @@ class AdminNewPetPage extends React.Component {
     }
 
     addPetType() {
+        if (this.state.name.length === 0) {
+            alert('Item name cannot be blank :(');
+            return;
+        }
+
+        if (!this.validateState()) {
+            alert('One or more invalid inputs detected :(');
+            return;
+        }
+
         const url = "http://localhost:3001/pettypes/";
 
         const request = new Request(url, {
@@ -129,22 +136,27 @@ class AdminNewPetPage extends React.Component {
         this.setState({name: event.target.value});
     }
     handleStrengthChange = (event) => {
-        this.setState({strengthRate: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({strengthRate: event.target.value});
     }
     handleSpeedChange = (event) => {
-        this.setState({speedRate: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({speedRate: event.target.value});
     }
     handleIntelligenceChange = (event) => {
-        this.setState({intelligenceRate: (parseInt(event.target.value)) ? parseInt(event.target.value) : 0});
+        this.setState({intelligenceRate: event.target.value});
     }
     handleHappinessChange = (event) => {
-        this.setState({happinessRate: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({happinessRate: event.target.value});
     }
     handleFullnessChange = (event) => {
-        this.setState({fullnessRate: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({fullnessRate: event.target.value});
     }
     handlePriceChange = (event) => {
-        this.setState({price: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({price: event.target.value});
+    }
+
+    validateState = () => {
+        return !isNaN(this.state.strengthRate) && !isNaN(this.state.speedRate) && !isNaN(this.state.intelligenceRate) && 
+        !isNaN(this.state.happinessRate) && !isNaN(this.state.fullnessRate) && !isNaN(this.state.price);
     }
 
     handleSaveClick = () => {
@@ -158,9 +170,7 @@ class AdminNewPetPage extends React.Component {
     render() {
         return(
             <div onKeyDown={this.handleEnter}>
-            {/* <Link to={'./AdminDashboardPage'}> */}
                 <input type={'image'} className={'saveIcon'} src={saveIcon} alt={'Save Icon'} onClick={this.handleSaveClick}></input>
-            {/* </Link> */}
             <AdminSideMenu />
                 <div className='main'>
                     <div className='mainForm'>

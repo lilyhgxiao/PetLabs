@@ -1,10 +1,7 @@
 import React from 'react';
-import Database from '../TempClasses/Database';
 import AdminSideMenu from '../Components/AdminSideMenu';
 import '../CSS/ItemView.css';
-import { Link } from 'react-router-dom';
 import saveIcon from '../Images/Save_Icon.png';
-import Item from '../TempClasses/Item';
 import AddIcon from '../Images/add_new.png';
 
 class AdminNewItemPage extends React.Component {
@@ -23,6 +20,16 @@ class AdminNewItemPage extends React.Component {
     }
 
     addItem() {
+        if (this.state.name.length === 0) {
+            alert('Item name cannot be blank :(');
+            return;
+        }
+
+        if (!this.validateState()) {
+            alert('One or more invalid inputs detected :(');
+            return;
+        }
+
         const url = "http://localhost:3001/items/";
 
         const request = new Request(url, {
@@ -123,22 +130,27 @@ class AdminNewItemPage extends React.Component {
         this.setState({name: event.target.value});
     }
     handleStrengthChange = (event) => {
-        this.setState({strength: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({strength: event.target.value});
     }
     handleSpeedChange = (event) => {
-        this.setState({speed: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({speed: event.target.value});
     }
     handleIntelligenceChange = (event) => {
-        this.setState({intelligence: (parseInt(event.target.value)) ? parseInt(event.target.value) : 0});
+        this.setState({intelligence: event.target.value});
     }
     handleHappinessChange = (event) => {
-        this.setState({happiness: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({happiness: event.target.value});
     }
     handleFullnessChange = (event) => {
-        this.setState({fullness: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({fullness: event.target.value});
     }
     handlePriceChange = (event) => {
-        this.setState({price: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({price: event.target.value});
+    }
+
+    validateState = () => {
+        return !isNaN(this.state.strength) && !isNaN(this.state.speed) && !isNaN(this.state.intelligence) && 
+        !isNaN(this.state.happiness) && !isNaN(this.state.fullness) && !isNaN(this.state.price);
     }
 
     handleSaveClick = () => {
@@ -152,9 +164,7 @@ class AdminNewItemPage extends React.Component {
     render() {
         return(
             <div onKeyDown={this.handleEnter}>
-            {/* <Link to={'./AdminDashboardPage'}> */}
                 <input type={'image'} className={'saveIcon'} src={saveIcon} alt={'Save Icon'} onClick={this.handleSaveClick}></input>
-            {/* </Link> */}
             <AdminSideMenu />
                 <div className='main'>
                     <div className='mainForm'>
