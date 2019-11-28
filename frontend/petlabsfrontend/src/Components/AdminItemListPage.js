@@ -104,7 +104,7 @@ class AdminItemListPage extends React.Component {
             }} />
         }
         return(
-            <div>
+            <div onKeyDown={this.handleEnter} >
                 <Link to={'./AdminNewItemPage'}>
                     <img className={'addIcon'} src={AddIcon} alt={'Add Icon'}></img>
                 </Link>
@@ -114,7 +114,7 @@ class AdminItemListPage extends React.Component {
                         <div className={'list-view'}>
                             <div className='listTitle'>Item Types</div>
                             <div id={'inner-container'} className={'list-view'}>
-                                <input onKeyDown={this.handleEnter} id={'textfield'} className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue} placeholder="Search"></input>
+                                <input id={'textfield'} className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue} placeholder="Search"></input>
                                 <br /> <br />
                                 <table className={'list-view'}>
                                     <tbody>
