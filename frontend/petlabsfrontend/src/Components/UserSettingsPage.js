@@ -90,7 +90,7 @@ class UserSettingsPage extends BaseReactComponent {
         }
 
         if (success) {
-            //this.changePassword(this.state.newPass); //delete later
+            this.changePassword(this.state.newPass); //delete later
 
             updateUserPassword(this.state.newPass);
             alert('Password changed successfully.')

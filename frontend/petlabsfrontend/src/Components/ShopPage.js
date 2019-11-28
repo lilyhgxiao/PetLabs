@@ -130,8 +130,7 @@ class ShopPage extends BaseReactComponent {
         let curUser = this.state.currUser;
 
         if (parentSearch.className === "itemEntry") {
-            let entryId = e.target.value;
-
+            let entryId = parseInt(e.target.value);
             let iList = mockDB.itemList;
             let i = 0;
             while (i < iList.length) {

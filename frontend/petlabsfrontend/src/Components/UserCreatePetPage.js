@@ -121,8 +121,7 @@ class UserCreatePetPage extends BaseReactComponent {
         if (this.state.creationSuccess) {
             return(
                 <Redirect push to={{
-                    pathname: "/UserDashboardPage",
-                    state: { user: this.state.user }
+                    pathname: "/UserDashboardPage"
                 }} />
             );
         }

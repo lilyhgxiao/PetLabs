@@ -11,7 +11,8 @@ import { action } from "statezero";
 // - studentList state path is used by the StudentList component
 export const setEmptyState = () => {
     setState("currUser", null);
-    setState("loginForm", {username: "", password: ""})
+    setState("loginForm", {username: "", password: ""});
+    setState("currPet", null);
 };
 
 // Helper method to set a state path.

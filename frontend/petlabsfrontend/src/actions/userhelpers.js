@@ -16,6 +16,18 @@ const findUser = () => {
     return null
 }
 
+//temp, delete later
+const changeUser = (user) => {
+    const userList = Database.userList;
+
+    for (let i = 0; i < userList.length; i ++) {
+        if (userList[i].id === user.id) {
+            userList[i] = user;
+            break;
+        }
+    }
+}
+
 
 export const login = () => {
     //DB CALL: FIND USER
@@ -28,7 +40,7 @@ export const login = () => {
    }
    else {
         //delete later after updating admin views:
-        //Database.currUser = userToLogin
+        Database.currUser = userToLogin
 
         setState("currUser", userToLogin);
         return {isAdmin: userToLogin.isAdmin, loginSuccessful: true}
@@ -76,5 +88,6 @@ export const updateUserState = (state) => {
     for (const property in state) {
         setState(`currUser.${property}`, state[property])
     }
+    changeUser(getState("currUser"))
     return true
 }

@@ -15,30 +15,23 @@ import BaseReactComponent from "./../BaseReactComponent";
 import { updateUserState } from "../actions/userhelpers"
 
 import { Redirect } from 'react-router';
+import { updatePetState } from '../actions/pethelpers';
 
 const log = console.log
 
 class UserPetCarePage extends BaseReactComponent {
 
-    petReceived = this.props.location.state.pet;
-
     state = {
-        petId: null,
-        petName: "",
         petImg: '',
-        fullness: 50,
-        happiness: 50,
-        intelligence: 0,
-        strength: 0,
-        speed: 0,
-        alive: true,
         itemSelected: -99,
         type: null,
         deleted: false,
+        currUser: null,
+        currPet: null
     }
 
-    filterState({ currUser }) {
-        return { currUser };
+    filterState({ currUser, currPet }) {
+        return { currUser, currPet };
     }
 
     /* Automatically loaded functions */
@@ -63,15 +56,7 @@ class UserPetCarePage extends BaseReactComponent {
         const type = this.retrieveType();
         console.log(type)
         this.setState({
-            petId: this.petReceived.id,
-            petName: this.petReceived.petName,
             petImg: type.neutralImage,
-            fullness: this.petReceived.fullness,
-            happiness: this.petReceived.happiness,
-            intelligence: this.petReceived.intelligence,
-            strength: this.petReceived.strength,
-            speed: this.petReceived.speed,
-            alive: this.petReceived.alive,
             type: type
         }, this.setPetMood)
     }
@@ -79,7 +64,7 @@ class UserPetCarePage extends BaseReactComponent {
     retrieveType = () => {
         const typesList = mockDB.petTypes;
         for (let i = 0; i < typesList.length; i++) {
-            if (typesList[i].name === this.petReceived.type) {
+            if (typesList[i].name === this.state.currPet.type) {
                 return typesList[i];
             }
         }
@@ -108,7 +93,7 @@ class UserPetCarePage extends BaseReactComponent {
     }
 
     starve() {
-        if (this.state.alive) {
+        if (this.state.currPet.alive) {
             this.updateFullness(-2)
             this.fatigue()
         }
@@ -119,7 +104,7 @@ class UserPetCarePage extends BaseReactComponent {
     // Function related to feeding.
     feedPet = () => {
         log('feeding: -10 hunger');
-        if (this.state.alive) {
+        if (this.state.currPet.alive) {
             this.updateFullness(10);
         }
     }
@@ -127,12 +112,14 @@ class UserPetCarePage extends BaseReactComponent {
     // Function related to feeding.
     playWithPet = () => {
         log('playing with pet: +3 happiness');
-        if (this.state.alive) {
+
+        const currPet = this.state.currPet
+        if (currPet.alive) {
 
             let incValue = 3;
-            if (this.state.fullness >= 20) {
+            if (currPet.fullness >= 20) {
                 incValue = 3;
-            } else if (this.state.fullness < 20) {
+            } else if (currPet.fullness < 20) {
                 incValue = 1;
             }
 
@@ -143,16 +130,18 @@ class UserPetCarePage extends BaseReactComponent {
     }
 
     setPetMood = () => {
-        if (this.state.alive) {
-            if (this.state.happiness >= 30 && this.state.happiness < 80) {
+        const currPet = this.state.currPet
+
+        if (currPet.alive) {
+            if (currPet.happiness >= 30 && currPet.happiness < 80) {
                 this.setState({
                     petImg: this.state.type.neutralImage
                 })
-            } else if (this.state.happiness >= 80) {
+            } else if (currPet.happiness >= 80) {
                 this.setState({
                     petImg: this.state.type.happyImage
                 })
-            } else if (this.state.happiness < 30) {
+            } else if (currPet.happiness < 30) {
                 this.setState({
                     petImg: this.state.type.sadImage
                 })
@@ -167,7 +156,9 @@ class UserPetCarePage extends BaseReactComponent {
 
     // Function related to use of item.
     trainPet = () => {
-        if (this.state.alive && this.state.itemSelected > -99) {
+        const currPet = this.state.currPet
+
+        if (currPet.alive && this.state.itemSelected > -99) {
 
             // Find item:
             let targetItem;
@@ -180,14 +171,11 @@ class UserPetCarePage extends BaseReactComponent {
             this.updateHappiness(targetItem.fullness)
             this.updateFullness(targetItem.happiness)
 
-            this.setState({
-                intelligence: this.state.intelligence + targetItem.intelligence * this.state.type.intelligenceRate,
-                strength: this.state.strength + targetItem.strength * this.state.type.strengthRate,
-                speed: this.state.speed + targetItem.speed * this.state.type.speedRate
+            updatePetState({
+                intelligence: currPet.intelligence + targetItem.intelligence * this.state.type.intelligenceRate,
+                strength: currPet.strength + targetItem.strength * this.state.type.strengthRate,
+                speed: currPet.speed + targetItem.speed * this.state.type.speedRate
             })
-            this.petReceived.intelligence += targetItem.intelligence * this.state.type.intelligenceRate
-            this.petReceived.strength += targetItem.strength * this.state.type.strengthRate
-            this.petReceived.speed += targetItem.speed * this.state.type.speedRate
             this.fatigue()
         } 
     }
@@ -195,45 +183,44 @@ class UserPetCarePage extends BaseReactComponent {
     /* Gameplay helper functions */
 
     fatigue() {
-        if (this.state.fullness < 20) {
+        const currPet = this.state.currPet;
+        if (currPet.fullness < 20) {
             this.updateHappiness(-5);
         } 
-        if (this.state.fullness === 0 && this.state.happiness === 0) {
+        if (currPet.fullness === 0 && this.state.happiness === 0) {
+            updatePetState({alive: false});
             this.setState({
-                alive: false,
                 petImg: pet_dead
-            })
-            this.petReceived.alive = false
+            });
         }
     }
 
     updateHappiness = (incValue) => {
-        if (this.state.happiness + incValue * this.state.type.happinessRate > 100) {
-            incValue = 100 - this.state.happiness
-        } else if (this.state.happiness + incValue * this.state.type.happinessRate < 0) {
-            incValue = (-1) * this.state.happiness
+        const currPet = this.state.currPet
+
+        if (currPet.happiness + incValue * this.state.type.happinessRate > 100) {
+            incValue = 100 - currPet.happiness
+        } else if (currPet.happiness + incValue * this.state.type.happinessRate < 0) {
+            incValue = (-1) * currPet.happiness
         } else {
             incValue = incValue * this.state.type.happinessRate
         }
-        this.setState({
-            happiness: this.state.happiness + incValue
-        })
-        this.petReceived.happiness += incValue
+
+        updatePetState({happiness: currPet.happiness + incValue});
         this.setPetMood();
     }
 
     updateFullness = (incValue) => {
-        if (this.state.fullness + incValue * this.state.type.fullnessRate > 100) {
-            incValue = 100 - this.state.fullness
-        } else if (this.state.fullness + incValue * this.state.type.fullnessRate < 0) {
-            incValue = (-1 ) * this.state.fullness
+        const currPet = this.state.currPet;
+
+        if (currPet.fullness + incValue * this.state.type.fullnessRate > 100) {
+            incValue = 100 - currPet.fullness
+        } else if (currPet.fullness + incValue * this.state.type.fullnessRate < 0) {
+            incValue = (-1 ) * currPet.fullness
         } else {
             incValue = incValue * this.state.type.fullnessRate
         }
-        this.setState({
-            fullness: this.state.fullness + incValue 
-        })
-        this.petReceived.fullness += incValue
+        updatePetState({fullness: currPet.fullness + incValue})
     }
 
     giveGold() {
@@ -243,18 +230,21 @@ class UserPetCarePage extends BaseReactComponent {
 
     selectItem(e) {
         this.setState({
-            itemSelected: e.target.value
+            itemSelected: parseInt(e.target.value)
         })
     }
 
     deletePet = () => {
-        const confirmDelete = window.confirm("Say goodbye to " + this.state.petName + "? (You cannot undo this action!)")
+        const currPet = this.state.currPet;
+        const currUser = this.state.currUser;
+
+        const confirmDelete = window.confirm("Say goodbye to " + currPet.petName + "? (You cannot undo this action!)")
         if (confirmDelete) {
-            const petListIdx = mockDB.petList.indexOf(this.petReceived);
-            const userPetListIdx = this.state.currUser.petIdList.indexOf(this.petReceived.id);
+            const petListIdx = mockDB.petList.indexOf(currPet);
+            const userPetListIdx = currUser.petIdList.indexOf(currPet.id);
 
             mockDB.petList.splice(petListIdx, 1);
-            this.state.currUser.petIdList.splice(userPetListIdx, 1);
+            currUser.petIdList.splice(userPetListIdx, 1);
             this.setState({
                 deleted: true
             })
@@ -262,7 +252,7 @@ class UserPetCarePage extends BaseReactComponent {
     }
 
     render() {
-        const { currUser } = this.state;
+        const { currUser, currPet } = this.state;
 
         if (this.state.deleted) {
             return(
@@ -282,12 +272,12 @@ class UserPetCarePage extends BaseReactComponent {
                         <div className='showPet'>
                             { /* Shows status of the pet */ }  
                             <PetStatus
-                                numFullness = {this.state.fullness}
-                                numHappiness = {this.state.happiness}
-                                numIntelligence = {this.state.intelligence}
-                                numStrength = {this.state.strength}
-                                numSpeed = {this.state.speed}
-                                petName = {this.state.petName}
+                                numFullness = {currPet.fullness}
+                                numHappiness = {currPet.happiness}
+                                numIntelligence = {currPet.intelligence}
+                                numStrength = {currPet.strength}
+                                numSpeed = {currPet.speed}
+                                petName = {currPet.petName}
                             />
                             
                             { /* Shows model of the pet with name */ }  

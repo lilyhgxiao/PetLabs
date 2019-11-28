@@ -13,6 +13,7 @@ import GoldDisplay from './GoldDisplay.js';
 
 //statezero
 import BaseReactComponent from "./../BaseReactComponent";
+import { setTargetPet } from "../actions/pethelpers";
 
 import addNew from '../Images/add_new.png';
 
@@ -21,18 +22,18 @@ class UserDashboardPage extends BaseReactComponent {
     state = {
         toPetPage: false,
         petList: [],
-        targetPet: null,
-        toCreate: false
+        toCreate: false,
+        currUser: null,
+        currPet: null
     };
 
-    filterState({ currUser }) {
-        return { currUser };
+    filterState({ currUser, currPet }) {
+        return { currUser, currPet };
     }
 
     componentDidMount() { // When the component enters the DOM
         this.setState({
             toPetPage: false,
-            targetPet: null,
             toCreate: false
         }, this.fetchPets)
     }
@@ -55,10 +56,10 @@ class UserDashboardPage extends BaseReactComponent {
     }
 
     goToPetPage = (pet) => {
+        setTargetPet(pet);
         this.setState({
-            targetPet: pet,
             toPetPage: true
-        })
+        });
     }
 
     goToCreate = () => {
@@ -74,16 +75,14 @@ class UserDashboardPage extends BaseReactComponent {
         if (this.state.toPetPage) {
             return(
                 <Redirect push to={{
-                    pathname: "/UserPetCarePage",
-                    state: { pet: this.state.targetPet }
+                    pathname: "/UserPetCarePage"
                 }} />
             );
         }
         if (this.state.toCreate) {
             return(
                 <Redirect push to={{
-                    pathname: "/UserCreatePetPage",
-                    state: { user: currUser }
+                    pathname: "/UserCreatePetPage"
                 }} />
             );
         }

@@ -18,10 +18,6 @@ class SignUpPage extends React.Component {
         backToLogin: false
     };
 
-    componentDidMount() {
-        Database.currUser = null;
-    }
-
     handleInputChange = (event) => {
         const target = event.target;
         const value = target.value;
