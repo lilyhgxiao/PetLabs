@@ -1,10 +1,7 @@
 import React from 'react';
-import Database from '../TempClasses/Database';
 import AdminSideMenu from '../Components/AdminSideMenu';
 import '../CSS/ItemView.css';
-import { Link } from 'react-router-dom';
 import saveIcon from '../Images/Save_Icon.png';
-import PetType from '../TempClasses/PetType';
 import AddIcon from '../Images/add_new.png';
 import SpriteComponent from '../Components/SpriteComponent';
 
@@ -173,9 +170,7 @@ class AdminNewPetPage extends React.Component {
     render() {
         return(
             <div onKeyDown={this.handleEnter}>
-            {/* <Link to={'./AdminDashboardPage'}> */}
                 <input type={'image'} className={'saveIcon'} src={saveIcon} alt={'Save Icon'} onClick={this.handleSaveClick}></input>
-            {/* </Link> */}
             <AdminSideMenu />
                 <div className='main'>
                     <div className='mainForm'>
