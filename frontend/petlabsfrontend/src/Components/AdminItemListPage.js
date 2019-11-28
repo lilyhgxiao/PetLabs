@@ -1,7 +1,6 @@
 import React from 'react';
 import '../CSS/ListView.css';
 import AdminSideMenu from './AdminSideMenu';
-import Database from '../TempClasses/Database';
 import { Redirect, Link } from 'react-router-dom';
 import AddIcon from '../Images/add_new.png';
 

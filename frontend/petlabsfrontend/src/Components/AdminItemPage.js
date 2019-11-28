@@ -1,15 +1,12 @@
 import React from 'react';
-import Database from '../TempClasses/Database';
 import AdminSideMenu from '../Components/AdminSideMenu';
 import '../CSS/ItemView.css';
-import { Link } from 'react-router-dom';
 import saveIcon from '../Images/Save_Icon.png';
 import AddIcon from '../Images/add_new.png';
 
 class AdminItemPage extends React.Component {
     constructor(props) {
         super(props);
-        // this.item = this.getItemReference();
         this.state = {
             name: '',
             strength: 0,
@@ -25,9 +22,10 @@ class AdminItemPage extends React.Component {
 
     componentDidMount() {
         const url = 'http://localhost:3001/items/' + this.props.location.itemId;
+        // const url = '/items' + this.props.location.itemId;
 
         const request = new Request(url, {
-            method: 'get',
+            method: 'GET',
             headers: { 
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'
@@ -195,9 +193,7 @@ class AdminItemPage extends React.Component {
     render() {
         return (
         <div onKeyDown={this.handleEnter}>
-            {/* <Link to={'./AdminDashboardPage'}> */}
                 <input type={'image'} src={saveIcon} className={'saveIcon'} alt={'Save Icon'} onClick={this.handleSaveClick}></input>
-            {/* </Link> */}
             <AdminSideMenu />
                 <div className='main'>
                     <div className='mainForm'>
