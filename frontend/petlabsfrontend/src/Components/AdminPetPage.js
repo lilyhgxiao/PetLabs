@@ -1,35 +1,62 @@
 import React from 'react';
-import Database from '../TempClasses/Database';
 import AdminSideMenu from '../Components/AdminSideMenu';
-import { Link } from 'react-router-dom';
 import saveIcon from '../Images/Save_Icon.png';
 import '../CSS/ItemView.css';
 import SpriteComponent from '../Components/SpriteComponent';
+import AddIcon from '../Images/add_new.png';
 
 class AdminPetPage extends React.Component {
     constructor(props) {
         super(props);
-        this.petType = this.getPetReference();
         this.state = {
-            name: this.petType.name,
-            neutralImage: this.petType.neutralImage,
-            happyImage: this.petType.happyImage,
-            sadImage: this.petType.sadImage,
-            strengthRate: this.petType.strengthRate,
-            speedRate: this.petType.speedRate,
-            intelligenceRate: this.petType.intelligenceRate,
-            happinessRate: this.petType.happinessRate,
-            fullnessRate: this.petType.fullnessRate,
-            price: this.petType.price,
+            name: '',
+            neutralImage: AddIcon,
+            happyImage: AddIcon,
+            sadImage: AddIcon,
+            strengthRate: 0,
+            speedRate: 0,
+            intelligenceRate: 0,
+            happinessRate: 0,
+            fullnessRate: 0,
+            price: 0,
+            id: 0
         };
     }
 
-    getPetReference = () => {
-        for (let i = 0; i < Database.petTypes.length; i++) {
-            if (Database.petTypes[i].id === this.props.location.petTypeId) {
-                return Database.petTypes[i];
+    componentDidMount() {
+        const url = 'http://localhost:3001/pettypes/' + this.props.location.petTypeId;
+
+        const request = new Request(url, {
+            method: 'GET',
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
             }
-        }
+        });
+
+        fetch(request)
+        .then((result) => {
+            if (result.status === 200) {
+                return result.json();
+            }
+        }).then((result) => {
+            this.setState({
+                name: result.name,
+                // neutralImage: result.neutralImage,
+                // happyImage: this.petType.happyImage,
+                // sadImage: this.petType.sadImage,
+                strengthRate: result.strengthRate,
+                speedRate: result.speedRate,
+                intelligenceRate: result.intelligenceRate,
+                happinessRate: result.happinessRate,
+                fullnessRate: result.fullnessRate,
+                price: result.price,
+                id: result.id
+            })
+        }).catch((error) => {
+            console.log(error);
+            alert('Unable to fetch pet type :(', error);
+        })
     }
 
     getTableRows() {
@@ -91,62 +118,102 @@ class AdminPetPage extends React.Component {
         this.setState({name: event.target.value});
     }
     handleStrengthChange = (event) => {
-        this.setState({strengthRate: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({strengthRate: event.target.value});
     }
     handleSpeedChange = (event) => {
-        this.setState({speedRate: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({speedRate: event.target.value});
     }
     handleIntelligenceChange = (event) => {
-        this.setState({intelligenceRate: (parseInt(event.target.value)) ? parseInt(event.target.value) : 0});
+        this.setState({intelligenceRate: event.target.value});
     }
     handleHappinessChange = (event) => {
-        this.setState({happinessRate: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({happinessRate: event.target.value});
     }
     handleFullnessChange = (event) => {
-        this.setState({fullnessRate: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({fullnessRate: event.target.value});
     }
     handlePriceChange = (event) => {
-        this.setState({price: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({price: event.target.value});
     }
 
     handleSaveClick = () => {
-        console.log(this.petType);
-        this.petType.name = this.state.name;
-        this.petType.strengthRate = this.state.strengthRate;
-        this.petType.speedRate = this.state.speedRate;
-        this.petType.intelligenceRate = this.state.intelligenceRate;
-        this.petType.happinessRate = this.state.happinessRate;
-        this.petType.fullnessRate = this.state.fullnessRate;
-        this.petType.price = this.state.price;
-        console.log(this.petType);
+        if (this.state.name.length === 0) {
+            alert('Pet Type name cannot be blank');
+            return;
+        }
+
+        if (!this.validateState()) {
+            alert('One or more invalid inputs detected :(');
+            return;
+        }
+
+        const url = 'http://localhost:3001/pettypes/' + this.props.location.petTypeId;
+
+        const request = new Request(url, {
+            method: 'PATCH',
+            body: JSON.stringify({
+                name: this.state.name,
+                strengthRate: this.state.strengthRate,
+                speedRate: this.state.speedRate,
+                intelligenceRate: this.state.intelligenceRate,
+                happinessRate: this.state.happinessRate,
+                fullnessRate: this.state.fullnessRate,
+                price: this.state.price,
+            }),
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((result) => {
+            if (result.status === 200) {
+                alert('Pet Type updated successfully :)');
+            }
+        }).catch((error) => {
+            alert('Failed to update pet type :(');
+            console.log(error);
+        });
     }
 
     placeHolderHandle = () => {
         alert("Prompt for image to upload");
     }
 
+    validateState = () => {
+        return !isNaN(this.state.strengthRate) && !isNaN(this.state.speedRate) && !isNaN(this.state.intelligenceRate) && 
+        !isNaN(this.state.happinessRate) && !isNaN(this.state.fullnessRate) && !isNaN(this.state.price);
+    }
+
+    handleEnter = (event) => {
+        if (event.key === 'Enter' && this.state.name.length > 0) {
+            this.handleSaveClick();
+        } else if (event.key === 'Enter') {
+            alert('Pet Type name cannot be blank :(');
+        }
+    }
+
     render() {
         return(
-            <div>
-                <Link to={'./AdminDashboardPage'}>
-                    <img className={'saveIcon'} src={saveIcon} alt={'Save Icon'} onClick={this.handleSaveClick}></img>
-                </Link>
+            <div onKeyDown={this.handleEnter}>
+                <input type={'image'} className={'saveIcon'} src={saveIcon} alt={'Save Icon'} onClick={this.handleSaveClick}></input>
                 <AdminSideMenu />
                 <div className='main'>
                     <div className='mainForm'>
-                        <div className='itemTitle'>Pet Type ID: {this.petType.id}</div>
+                        <div className='itemTitle'>Pet Type ID: {this.state.id}</div>
                         <div className={'centerView'}>
                             <p className={'addItemLink'}>Name: <input className={'addItemLink'} type='Text' value={this.state.name} onChange={this.handleNameChange} /> </p> 
                             <p className={'centerLeft'}>Sprites:</p>
                             <ul className={'container'}>
                                 <li>
-                                    <SpriteComponent imgURL={this.petType .neutralImage} altText={'Neutral Image'} subtitle={'Neutral Image'} callback={this.placeHolderHandle}/>
+                                    <SpriteComponent imgURL={this.state.neutralImage} altText={'Neutral Image'} subtitle={'Neutral Image'} callback={this.placeHolderHandle}/>
                                 </li>
                                 <li>
-                                    <SpriteComponent imgURL={this.petType .happyImage} altText={'Happy Image'} subtitle={'Happy Image'} callback={this.placeHolderHandle}/>
+                                    <SpriteComponent imgURL={this.state.happyImage} altText={'Happy Image'} subtitle={'Happy Image'} callback={this.placeHolderHandle}/>
                                 </li>
                                 <li>
-                                    <SpriteComponent imgURL={this.petType .sadImage} altText={'Sad Image'} subtitle={'Sad Image'} callback={this.placeHolderHandle}/>
+                                    <SpriteComponent imgURL={this.state.sadImage} altText={'Sad Image'} subtitle={'Sad Image'} callback={this.placeHolderHandle}/>
                                 </li>
                             </ul>
                             <br />
