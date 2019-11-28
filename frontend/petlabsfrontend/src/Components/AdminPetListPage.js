@@ -1,7 +1,6 @@
 import React from 'react';
 import '../CSS/ListView.css';
 import AdminSideMenu from './AdminSideMenu';
-import Database from '../TempClasses/Database';
 import { Redirect, Link } from 'react-router-dom';
 import AddIcon from '../Images/add_new.png';
 
@@ -12,15 +11,39 @@ class AdminPetListPage extends React.Component {
             textFieldValue: '',
             validPet: false,
             petName: '',
+            petTypes: []
         };
         this.handleTextboxChange = this.handleTextboxChange.bind(this);
         this.handleRowClick = this.handleRowClick.bind(this);
         this.handleEnter = this.handleEnter.bind(this);
     }
 
+    componentDidMount() {
+        const url = 'http://localhost:3001/pettypes';
+
+        const request = new Request(url, {
+            method: 'GET',
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((result) => {
+            if (result.status === 200) {
+                return result.json();
+            }
+        }).then((result) => {
+            this.setState({petTypes: result})
+        }).catch((error) => {
+            alert('Failed to fetch pet types :(');
+        });
+    }
+
     handleEnter(event) {
         if (event.key === 'Enter') {
-            const contains = Database.petTypes.map((petType) => petType.name.toUpperCase())
+            const contains = this.state.petTypes.map((petType) => petType.name.toUpperCase())
                 .includes(this.state.textFieldValue.toUpperCase());
             if (contains) {
                 this.setState({ 
@@ -48,16 +71,15 @@ class AdminPetListPage extends React.Component {
         const rowList = [];
 
         rowList.push(
-            <tr key={Database.petTypes.length}>
+            <tr key={this.state.petTypes.length}>
                 <th className={'list-view'}>Pets</th>
             </tr>
         );
-
-        for (let i = 0; i < Database.petTypes.length; i++) {
-            if (Database.petTypes[i].name.toUpperCase().includes(this.state.petName.toUpperCase())) {
+        for (let i = 0; i < this.state.petTypes.length; i++) {
+            if (this.state.petTypes[i].name.toUpperCase().includes(this.state.textFieldValue.toUpperCase())) {
                 rowList.push(
                     <tr key={i}>
-                        <td className={'list-view'} onClick={this.handleRowClick}>{Database.petTypes[i].name}</td>
+                        <td className={'list-view'} onClick={this.handleRowClick}>{this.state.petTypes[i].name}</td>
                     </tr>
                 );
             }
@@ -66,9 +88,9 @@ class AdminPetListPage extends React.Component {
     }
 
     getPetTypeId() {
-        for (let i = 0; i < Database.petTypes.length; i++) {
-            if (Database.petTypes[i].name.toUpperCase() === this.state.petName.toUpperCase()) {
-                return Database.petTypes[i].id;
+        for (let i = 0; i < this.state.petTypes.length; i++) {
+            if (this.state.petTypes[i].name.toUpperCase() === this.state.petName.toUpperCase()) {
+                return this.state.petTypes[i]._id;
             }
         }
         return null;

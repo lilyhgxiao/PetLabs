@@ -1,7 +1,6 @@
 import React from 'react';
 import '../CSS/ListView.css';
 import AdminSideMenu from './AdminSideMenu';
-import Database from '../TempClasses/Database';
 import { Redirect, Link } from 'react-router-dom';
 import AddIcon from '../Images/add_new.png';
 
@@ -12,15 +11,38 @@ class AdminItemListPage extends React.Component {
             textFieldValue: '',
             validItem: false,
             itemName: '',
+            items: []
         };
         this.handleTextboxChange = this.handleTextboxChange.bind(this);
         this.handleRowClick = this.handleRowClick.bind(this);
         this.handleEnter = this.handleEnter.bind(this);
     }
 
+    componentDidMount() {
+        const url = 'http://localhost:3001/items/';
+        const request = new Request(url, {
+            method: 'get',
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((result) => {
+            if (result.status === 200) {
+                return result.json();
+            }
+        }).then((result) => {
+            this.setState({items: result});
+        }).catch((error) => {
+            alert('Failed to fetch items :(');
+        })
+    }
+
     handleEnter(event) {
         if (event.key === 'Enter') {
-            const contains = Database.itemList.map((item) => item.name.toUpperCase())
+            const contains = this.state.items.map((item) => item.name.toUpperCase())
                 .includes(this.state.textFieldValue.toUpperCase());
             if (contains) {
                 this.setState({ 
@@ -48,16 +70,16 @@ class AdminItemListPage extends React.Component {
         const rowList = [];
 
         rowList.push(
-            <tr key={Database.itemList.length}>
+            <tr key={this.state.items.length}>
                 <th className={'list-view'}>Item Type</th>
             </tr>
         );
 
-        for (let i = 0; i < Database.itemList.length; i++) {
-            if (Database.itemList[i].name.toUpperCase().includes(this.state.textFieldValue.toUpperCase())) {
+        for (let i = 0; i < this.state.items.length; i++) {
+            if (this.state.items[i].name.toUpperCase().includes(this.state.textFieldValue.toUpperCase())) {
                 rowList.push(
                     <tr key={i}>
-                        <td className={'list-view'} onClick={this.handleRowClick}>{Database.itemList[i].name}</td>
+                        <td className={'list-view'} onClick={this.handleRowClick}>{this.state.items[i].name}</td>
                     </tr>
                 );
             }
@@ -66,9 +88,9 @@ class AdminItemListPage extends React.Component {
     }
 
     getItemId() {
-        for (let i = 0; i < Database.itemList.length; i++) {
-            if (Database.itemList[i].name.toUpperCase() === this.state.itemName.toUpperCase()) {
-                return Database.itemList[i].id;
+        for (let i = 0; i < this.state.items.length; i++) {
+            if (this.state.items[i].name.toUpperCase() === this.state.itemName.toUpperCase()) {
+                return this.state.items[i]._id;
             }
         }
         return null;
@@ -82,7 +104,7 @@ class AdminItemListPage extends React.Component {
             }} />
         }
         return(
-            <div>
+            <div onKeyDown={this.handleEnter} >
                 <Link to={'./AdminNewItemPage'}>
                     <img className={'addIcon'} src={AddIcon} alt={'Add Icon'}></img>
                 </Link>
@@ -92,7 +114,7 @@ class AdminItemListPage extends React.Component {
                         <div className={'list-view'}>
                             <div className='listTitle'>Item Types</div>
                             <div id={'inner-container'} className={'list-view'}>
-                                <input onKeyDown={this.handleEnter} id={'textfield'} className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue} placeholder="Search"></input>
+                                <input id={'textfield'} className={'list-view'} type={'text'} onChange={this.handleTextboxChange} value={this.state.textFieldValue} placeholder="Search"></input>
                                 <br /> <br />
                                 <table className={'list-view'}>
                                     <tbody>

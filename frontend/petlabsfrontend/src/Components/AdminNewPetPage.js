@@ -1,10 +1,7 @@
 import React from 'react';
-import Database from '../TempClasses/Database';
 import AdminSideMenu from '../Components/AdminSideMenu';
 import '../CSS/ItemView.css';
-import { Link } from 'react-router-dom';
 import saveIcon from '../Images/Save_Icon.png';
-import PetType from '../TempClasses/PetType';
 import AddIcon from '../Images/add_new.png';
 import SpriteComponent from '../Components/SpriteComponent';
 
@@ -26,20 +23,58 @@ class AdminNewPetPage extends React.Component {
     }
 
     addPetType() {
-        console.log(Database.petTypes);
-        Database.petTypes.push(new PetType(
-            this.state.name,
-            this.state.neutralImage,
-            this.state.happyImage,
-            this.state.sadImage,
-            this.state.strengthRate,
-            this.state.speedRate,
-            this.state.intelligenceRate,
-            this.state.happinessRate,
-            this.state.fullnessRate,
-            this.state.price,
-        ));
-        console.log(Database.petTypes);
+        if (this.state.name.length === 0) {
+            alert('Item name cannot be blank :(');
+            return;
+        }
+
+        if (!this.validateState()) {
+            alert('One or more invalid inputs detected :(');
+            return;
+        }
+
+        const url = "http://localhost:3001/pettypes/";
+
+        const request = new Request(url, {
+            method: 'post',
+            body: JSON.stringify({
+                name: this.formatName(),
+                // neutralImage:
+                // happyImage: 
+                // sadImage: 
+                strengthRate: this.state.strengthRate,
+                speedRate: this.state.speedRate,
+                intelligenceRate: this.state.intelligenceRate,
+                happinessRate: this.state.happinessRate,
+                fullnessRate: this.state.fullnessRate,
+                // imgURL
+                price: this.state.price
+            }),
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request).then((result) => {
+            if (result && result.status === 200) {
+                alert('Added new pet type successfully :)');
+            } else if (result && result.status === 409) {
+                alert('Pet Type with chosen name already exists :(');
+            }
+        }).catch((error) => {
+            alert('Failed to Save :(', error);
+        })
+    }
+
+    handleEnter = (event) => {
+        if (event.key === 'Enter' && this.state.name.length > 0) {
+            this.addPetType();
+        }
+    }
+
+    formatName = () => {
+        return this.state.name.charAt(0).toUpperCase() + this.state.name.toLowerCase().slice(1);
     }
 
     getTableRows() {
@@ -101,22 +136,27 @@ class AdminNewPetPage extends React.Component {
         this.setState({name: event.target.value});
     }
     handleStrengthChange = (event) => {
-        this.setState({strengthRate: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({strengthRate: event.target.value});
     }
     handleSpeedChange = (event) => {
-        this.setState({speedRate: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({speedRate: event.target.value});
     }
     handleIntelligenceChange = (event) => {
-        this.setState({intelligenceRate: (parseInt(event.target.value)) ? parseInt(event.target.value) : 0});
+        this.setState({intelligenceRate: event.target.value});
     }
     handleHappinessChange = (event) => {
-        this.setState({happinessRate: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({happinessRate: event.target.value});
     }
     handleFullnessChange = (event) => {
-        this.setState({fullnessRate: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({fullnessRate: event.target.value});
     }
     handlePriceChange = (event) => {
-        this.setState({price: (parseInt(event.target.value) ? parseInt(event.target.value) : 0)});
+        this.setState({price: event.target.value});
+    }
+
+    validateState = () => {
+        return !isNaN(this.state.strengthRate) && !isNaN(this.state.speedRate) && !isNaN(this.state.intelligenceRate) && 
+        !isNaN(this.state.happinessRate) && !isNaN(this.state.fullnessRate) && !isNaN(this.state.price);
     }
 
     handleSaveClick = () => {
@@ -129,10 +169,8 @@ class AdminNewPetPage extends React.Component {
     
     render() {
         return(
-            <div>
-            <Link to={'./AdminDashboardPage'}>
-                <img className={'saveIcon'} src={saveIcon} alt={'Save Icon'} onClick={this.handleSaveClick}></img>
-            </Link>
+            <div onKeyDown={this.handleEnter}>
+                <input type={'image'} className={'saveIcon'} src={saveIcon} alt={'Save Icon'} onClick={this.handleSaveClick}></input>
             <AdminSideMenu />
                 <div className='main'>
                     <div className='mainForm'>

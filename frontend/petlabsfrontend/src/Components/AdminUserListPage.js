@@ -1,7 +1,6 @@
 import React from 'react';
 import '../CSS/ListView.css';
 import AdminSideMenu from './AdminSideMenu';
-import Database from '../TempClasses/Database';
 import { Redirect } from 'react-router-dom';
 
 class AdminUserListPage extends React.Component {
@@ -10,16 +9,39 @@ class AdminUserListPage extends React.Component {
         this.state = {
             textFieldValue: '',
             validUser: false,
-            username: '',
+            users: []
         };
         this.handleTextboxChange = this.handleTextboxChange.bind(this);
         this.handleRowClick = this.handleRowClick.bind(this);
         this.handleEnter = this.handleEnter.bind(this);
     }
 
+    componentDidMount() {
+        const url = 'http://localhost:3001/users';
+
+        const request = new Request(url, {
+            method: 'GET',
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((result) => {
+            if (result.status === 200) {
+                return result.json();
+            }
+        }).then((result) => {
+            this.setState({users: result});
+        }).catch((error) => {
+            alert('Failed to fetch pet types :(');
+        });
+    }
+
     handleEnter(event) {
         if (event.key === 'Enter') {
-            const contains = Database.userList.map((user) => user.username.toUpperCase())
+            const contains = this.state.users.map((user) => user.username.toUpperCase())
                 .includes(this.state.textFieldValue.toUpperCase());
             if (contains) {
                 this.setState({ 
@@ -47,16 +69,16 @@ class AdminUserListPage extends React.Component {
         const rowList = [];
 
         rowList.push(
-            <tr key={Database.userList.length}>
+            <tr key={this.state.users.length}>
                 <th className={'list-view'}>Usernames</th>
             </tr>
         );
 
-        for (let i = 0; i < Database.userList.length; i++) {
-            if (!Database.userList[i].isAdmin && Database.userList[i].username.toUpperCase().includes(this.state.username.toUpperCase())) {
+        for (let i = 0; i < this.state.users.length; i++) {
+            if (!this.state.users[i].isAdmin && this.state.users[i].username.toUpperCase().includes(this.state.textFieldValue.toUpperCase())) {
                 rowList.push(
                     <tr key={i}>
-                        <td className={'list-view'} onClick={this.handleRowClick}>{Database.userList[i].username}</td>
+                        <td className={'list-view'} onClick={this.handleRowClick}>{this.state.users[i].username}</td>
                     </tr>
                 );
             }
@@ -65,10 +87,10 @@ class AdminUserListPage extends React.Component {
         return rowList;
     }
 
-    getUser() {
-        for (let i = 0; i < Database.userList.length; i++) {
-            if (Database.userList[i].username.toUpperCase() === this.state.username.toUpperCase()) {
-                return Database.userList[i].username;
+    getUserID() {
+        for (let i = 0; i < this.state.users.length; i++) {
+            if (this.state.users[i].username.toUpperCase() === this.state.username.toUpperCase()) {
+                return this.state.users[i]._id;
             }
         }
         return null;
@@ -78,7 +100,7 @@ class AdminUserListPage extends React.Component {
         if (this.state.validUser) {
             return <Redirect to={{
                 pathname: './AdminUserPage',
-                username: this.getUser()
+                userId: this.getUserID()
             }} />
         }
         return(
