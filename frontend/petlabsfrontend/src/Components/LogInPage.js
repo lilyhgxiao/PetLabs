@@ -41,18 +41,21 @@ class LogInPage extends React.Component {
         });
     }
 
-    signup = () => {
+    goToSignup = () => {
         this.setState({
             signup: true
         }); 
     }
 
     tryLogin = () => {
-        const { isAdmin, loginSuccessful } = login()
+        const loginReq = login();
 
-        this.setState({
-            isAdmin: isAdmin,
-            loginSuccessful: loginSuccessful
+        loginReq.then((result) => {
+            const { isAdmin, loginSuccessful } = result;
+            this.setState({
+                isAdmin: isAdmin,
+                loginSuccessful: loginSuccessful
+            })
         })
     }
 
@@ -105,7 +108,7 @@ class LogInPage extends React.Component {
                         type="password" 
                         placeholder="Password" />
                     <div className='buttons'>
-                    <button onClick={ this.signup } >Sign Up</button>
+                    <button onClick={ this.goToSignup } >Sign Up</button>
                     <button onClick={ this.tryLogin }>Log In</button>
                 </div>
                 </div>

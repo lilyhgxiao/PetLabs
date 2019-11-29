@@ -1,7 +1,3 @@
-import { setState, setEmptyState } from "./helpers";
-import { getState } from "statezero";
-
-
 export const getPetType = (petTypeName) => {
     const url = "http://localhost:3001/pettypes/";
     const request = new Request(url, {

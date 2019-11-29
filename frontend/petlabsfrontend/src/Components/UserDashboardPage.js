@@ -13,7 +13,7 @@ import GoldDisplay from './GoldDisplay.js';
 
 //statezero
 import BaseReactComponent from "./../BaseReactComponent";
-import { setTargetPet } from "../actions/pethelpers";
+import { setTargetPet, getAllPets } from "../actions/pethelpers";
 
 import addNew from '../Images/add_new.png';
 
@@ -41,19 +41,33 @@ class UserDashboardPage extends BaseReactComponent {
 
     fetchPets = () => { //Fetching data for the pets from the username
         const currUser = this.state.currUser
+        const petListReq = getAllPets();
 
-        const petList = []
-        const totalPetList = Database.petList;
-
-        for (const petId of currUser.petIdList) {
-            petList.push(totalPetList.filter(pet => pet['id'] === petId)[0])
-        }
-
-        console.log(petList)
-
-        this.setState({
-            petList: petList
-        });
+        petListReq.then((pets) => {
+            const petList = [];
+            let petFiltered;
+            let petToAdd;
+            for (const petId of currUser.petIdList) {
+                petFiltered = pets.filter(pet => pet['_id'] === petId)[0]
+                petToAdd = {
+                    id: petFiltered._id,
+                    petName: petFiltered.petName,
+                    ownerName: petFiltered.ownerName,
+                    happiness: petFiltered.happiness,
+                    fullness: petFiltered.fullness,
+                    strength: petFiltered.strength,
+                    intelligence: petFiltered.intelligence,
+                    speed: petFiltered.speed,
+                    type: petFiltered.type
+                };
+                petList.push(petToAdd);
+            }
+            this.setState({
+                petList: petList
+            });
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     goToPetPage = (pet) => {

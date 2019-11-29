@@ -1,4 +1,4 @@
-import { setState, setEmptyState, convertJSON } from "./helpers";
+import { setState, convertJSON } from "./helpers";
 import { getState } from "statezero";
 import { getUserByUsername, updateUserState, changeUser } from "./userhelpers"
 
@@ -53,6 +53,30 @@ export const updatePetState = (state, targetPetId) => {
     
     return true
 }
+
+
+export const getAllPets = () => {
+    const url = "http://localhost:3001/pets";
+    const request = new Request(url, {
+        method: "get",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    return fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        }).then((pets) => {
+            return pets;
+        }).catch((error) => {
+            console.log(error);
+        });
+}
+
 
 export const deletePet = (targetPetId) => {
     //DB CALL: DELETE PET

@@ -1,6 +1,3 @@
-import { setState, setEmptyState } from "./helpers";
-import { getState } from "statezero";
-
 export const getAllItems = () => {
     const url = "http://localhost:3001/items/";
     const request = new Request(url, {
@@ -20,7 +17,5 @@ export const getAllItems = () => {
             return items;
         }).catch((error) => {
             console.log(error);
-        })
-    
-    return null;
+        });
 }

@@ -5,7 +5,7 @@ import Database from '../TempClasses/Database';
 import User from '../TempClasses/User';
 
 //statezero
-import { signup } from "../actions/userhelpers"
+import { signup, getUserByUsername } from "../actions/userhelpers"
 
 import logo from '../Images/logo_placeholder.png';
 
@@ -27,16 +27,6 @@ class SignUpPage extends React.Component {
         this.setState({
           [name]: value  // [name] sets the object property name to the value of the 'name' variable.
         });
-    }
-
-    authUser = () => {
-        const userList = Database.userList;
-        for (let i = 0; i < userList.length; i ++) {
-            if (this.state.username === userList[i].username) {
-                return false;
-            }
-        }
-        return true;
     }
 
     authPass = () => {
@@ -63,20 +53,27 @@ class SignUpPage extends React.Component {
         if (!this.authEmpty()) {
             alert("Please fill in all fields.");
             success = false;
-        } else if (!this.authUser()) {
-            alert('Username already taken. Please try another username.');
-            success = false;
         } else if (!this.authPass()) {
             alert('Passwords do not match. Please try again.')
             success = false;
-        }
+        } else {
+            const checkUsernameReq = getUserByUsername(this.state.username);
 
-        //if signup was successful, create new user entry in database and log in.
-        if (success) {
-            const signupSuccess = signup(new User(this.state.username, this.state.password, false));
+            checkUsernameReq.then((user) => {
+                if (user !== null) {
+                    alert('Username already taken. Please try another username.');
+                    success = false;
+                } else {
+                    const signupReq = signup(new User(this.state.username, this.state.password, false));
 
-            this.setState({
-                signupSuccessful: signupSuccess
+                    signupReq.then((result) => {
+                        this.setState({
+                            signupSuccessful: result
+                        });
+                    }).catch((error) => {
+                        alert("Login failed. Please try again.");
+                    })
+                }
             })
         }
     }

@@ -31,20 +31,30 @@ const changeUser = (user) => {
 
 export const login = () => {
     //DB CALL: FIND USER
-    const userToLogin = findUser();
+    const { username, password } = getState("loginForm");
+    const userReq = getUserByUsername(username);
+    let success = true;
 
-    //if login wasn't successful, show warning.
-    if (userToLogin === null) {
-        alert('Invalid username/password combination. Please try again.');
-        return {isAdmin: false, loginSuccessful: false}
-   }
-   else {
-        //delete later after updating admin views:
-        Database.currUser = userToLogin
+    return userReq.then((user) => {
+        if (user === null) {
+            success = false;
+        }
 
-        setState("currUser", userToLogin);
-        return {isAdmin: userToLogin.isAdmin, loginSuccessful: true}
-   }
+        //authentication. hash password here
+        if (password !== user.password) {
+            success = false;
+        }
+
+        if (success) {
+            Database.currUser = user
+
+            setState("currUser", user);
+            return {isAdmin: user.isAdmin, loginSuccessful: true}
+        } else {
+            alert('Invalid username/password combination. Please try again.');
+            return {isAdmin: false, loginSuccessful: false}
+        }
+    })
 }
 
 export const logout = () => {
@@ -58,16 +68,38 @@ export const updateLoginForm = field => {
 
 export const signup = (newUser) => {
     //HASH PASSWORD
+    const hashedPass = newUser.password;
+
+    const newUserBody = {
+        username: newUser.username,
+        password: hashedPass,
+        isAdmin: newUser.isAdmin
+    };
 
     //DB CALL: CREATE USER
-    Database.userList.push(newUser);
+    const createReq = createNewUser(newUserBody);
 
-    //set statezero
-    setState("currUser", newUser);
-    return true
-    //if it wasn't successful, show warning.
+    return createReq.then((user) => {
+        const currUser = {
+            id: user._id,
+            username: user.username,
+            password: user.password,
+            isAdmin: user.isAdmin,
+            gold: user.gold,
+            petIdList: user.petIdList,
+            itemIdList: user.itemIdList
+        }
+        setState("currUser", currUser);
 
+        //temp, delete later
+        newUser.id = currUser.id;
+        Database.userList.push(newUser);
 
+        return true;
+    }).catch((error) => {
+        console.log(error)
+        return false;
+    })
 }
 
 
@@ -138,7 +170,40 @@ export const getUserByUsername = (username) => {
                     return users[i];
                 }
             }
+            //const usersFiltered = users.filter(usr -> usr['username'] === username)
+            //if (usersFiltered.length < 1) {
+            //    return null
+            //} else {
+            //    return usersFiltered[0]
+            //}
+            return null;
         }).catch((error) => {
             console.log(error);
+        });
+}
+
+export const createNewUser = (newUser) => {
+    const url = "http://localhost:3001/users"
+
+    const request = new Request(url, {
+        method: "POST",
+        body: JSON.stringify(convertJSON(newUser)),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    console.log(JSON.stringify(convertJSON(newUser)))
+
+    return fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                console.log("createNewUser changed DB")
+                return res.json();
+            }
+        }).catch((error) => {
+            console.log(error);
+            return false;
         });
 }
