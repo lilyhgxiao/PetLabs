@@ -34,7 +34,8 @@ class UserDashboardPage extends BaseReactComponent {
     componentDidMount() { // When the component enters the DOM
         this.setState({
             toPetPage: false,
-            toCreate: false
+            toCreate: false,
+            currPet: null
         }, this.fetchPets)
     }
 

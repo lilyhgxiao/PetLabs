@@ -21,3 +21,14 @@ export const setState = action(({ commit, state }, path, value) => {
     set(state, path, value);
     commit(state);
 });
+
+export const convertJSON = (obj) => {
+    let newObj = JSON.parse(JSON.stringify(obj));
+
+    for (const property in obj) {
+        if (typeof newObj[property] === 'number' || typeof newObj[property] === 'boolean') {
+            newObj[property] = `${newObj[property]}`;
+        }
+    }
+    return newObj;
+}

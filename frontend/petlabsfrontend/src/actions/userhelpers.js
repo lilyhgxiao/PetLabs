@@ -1,4 +1,4 @@
-import { setState, setEmptyState } from "./helpers";
+import { setState, setEmptyState, convertJSON } from "./helpers";
 import { getState } from "statezero";
 
 //temp, delete later
@@ -82,12 +82,63 @@ export const updateUserPassword = (password) => {
     setState('currUser.password', hashedPass);
 }
 
-export const updateUserState = (state) => {
+export const updateUserState = (state, targetUserId) => {
     //DB CALL: UPDATE USER
-    //if it succeeds call:
-    for (const property in state) {
-        setState(`currUser.${property}`, state[property])
-    }
-    changeUser(getState("currUser"))
-    return true
+    const url = "http://localhost:3001/users/" + targetUserId;
+
+    const request = new Request(url, {
+        method: "PATCH",
+        body: JSON.stringify(convertJSON(state)),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    console.log(JSON.stringify(convertJSON(state)))
+
+    return fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                console.log("updateUserState changed DB", targetUserId)
+
+                //if it succeeds, and targetPetId === currPet call:
+                const currUser = getState("currUser");
+                if (currUser.id === targetUserId) {
+                    for (const property in state) {
+                        setState(`currUser.${property}`, state[property])
+                    }
+                    changeUser(getState("currUser")); //delete later
+                }
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+}
+
+
+export const getUserByUsername = (username) => {
+    const url = "http://localhost:3001/users/";
+    const request = new Request(url, {
+        method: "get",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    return fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        }).then((users) => {
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].username === username) {
+                    return users[i];
+                }
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
 }
