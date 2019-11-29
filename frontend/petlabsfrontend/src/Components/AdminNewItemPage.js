@@ -158,7 +158,26 @@ class AdminNewItemPage extends React.Component {
     }
 
     placeHolderHandle = () => {
-        alert("Prompt for image to upload");
+        // alert("Prompt for image to upload");
+        const pathObj = {imgPath : "./pet_happy_placeholder.png"}
+        const url = "http://localhost:3001/upload";
+        const request = new Request(url, {
+            method: "post",
+            body: JSON.stringify(pathObj),
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                console.log(res);
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
     }
     
     render() {

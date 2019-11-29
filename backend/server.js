@@ -22,8 +22,31 @@ const { ObjectID } = require('mongodb');
 // Import the bodyparser middleware to parse an HTTP JSON body into a usable object.
 const bodyParser = require('body-parser');
 
+// For img upload.
+const path = require("path");
+const fs = require("fs");
+const multer = require('multer');
+const upload = multer({dest: 'images/file'})
+
 // Use the body parse middleware between requests.
 app.use(bodyParser.json()); 
+
+// Connect mongoDB
+// mongoose.connect('http://localhost:3001/');
+
+// For image upload
+app.post('/upload', upload.single('file'), (request, response) => {
+    const tempPath = request.body.imgPath;
+    const targetPath = path.join(__dirname, "./uploads/image.png");
+
+    fs.readFileSync(tempPath, targetPath, (error) => {
+        if (error) {
+            response.send(error);
+        } else {
+            response.status(200).send("image uploaded");
+        }
+    });
+})
 
 // ROUTES FOLLOW
 
