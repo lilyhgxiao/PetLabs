@@ -9,12 +9,12 @@ import '../CSS/CreatePetStyle.css';
 import UserSideMenu from './UserSideMenu';
 import GoldDisplay from './GoldDisplay.js';
 import PetTypeComponent from './PetTypeComponent';
-import Database from '../TempClasses/Database';
-import Pet from '../TempClasses/Pet';
 
 //statezero
 import BaseReactComponent from "./../BaseReactComponent";
 import { updateUserState } from "../actions/userhelpers"
+import { getAllPetTypes } from "../actions/pettypehelpers"
+import { createNewPet } from "../actions/pethelpers"
 
 class UserCreatePetPage extends BaseReactComponent {
 
@@ -24,11 +24,16 @@ class UserCreatePetPage extends BaseReactComponent {
         creationSuccess: false,
         imgURL: type_default,
         typeSelected: false,
-        priceString: ""
+        priceString: "",
+        petTypeList: []
     };
 
     filterState({ currUser }) {
         return { currUser };
+    }
+
+    componentDidMount() { // When the component enters the DOM
+        this.fetchTypes();
     }
 
     handleInputChange = (event) => {
@@ -42,6 +47,33 @@ class UserCreatePetPage extends BaseReactComponent {
         });
     }
 
+    fetchTypes = () => {
+        const petListReq = getAllPetTypes();
+
+        petListReq.then((pettypes) => {
+            const petTypeList = [];
+            let petTypeToAdd;
+            for (const petType of pettypes) {
+                petTypeToAdd = {
+                    _id: petType._id,
+                    name: petType.name,
+                    happinessRate: petType.happinessRate,
+                    fullnessRate: petType.fullnessRate,
+                    strengthRate: petType.strengthRate,
+                    intelligenceRate: petType.intelligenceRate,
+                    speedRate: petType.speedRate,
+                    price: petType.price
+                };
+                petTypeList.push(petTypeToAdd);
+            }
+            this.setState({
+                petTypeList: petTypeList
+            });
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
     authGold = () => {
         if (this.state.currUser.gold < this.state.petType.price) {
             return false;
@@ -53,23 +85,29 @@ class UserCreatePetPage extends BaseReactComponent {
 
     createPet = () => {
         const currUser = this.state.currUser;
-        const newPet = new Pet(this.state.name, currUser.username, this.state.petType.name);
+        const newPet = {
+            ownerName: currUser.username,
+            petName: this.state.name,
+            type: this.state.petType.name
+        };
 
-        const petIdListCopy = currUser.petIdList.slice()
-        petIdListCopy.push(newPet.id)
-        return updateUserState({
-            gold: this.state.currUser.gold - this.state.petType.price,
-            petIdList: petIdListCopy}
-        );
+        const petReq = createNewPet(newPet);
 
-        //const username = currUser.username;
-/*         const userList = Database.userList;
-        
-        for (let i = 0; i < userList.length; i ++) {
-            if (Database.currUser.username === userList[i].username) {
-                userList[i].petIdList.push(newPet.id)
-            }
-        } */
+        return petReq.then((pet) => {
+            const petIdListCopy = currUser.petIdList.slice();
+            petIdListCopy.push(pet._id);
+            const updateReq = updateUserState({
+                gold: this.state.currUser.gold - this.state.petType.price,
+                petIdList: petIdListCopy}
+            , currUser._id);
+
+            return updateReq.then((result) => {
+                return result;
+            })
+        }).catch((error) => {
+            console.log(error);
+            return false;
+        });
     }
 
     authEmpty = () => {
@@ -95,14 +133,16 @@ class UserCreatePetPage extends BaseReactComponent {
             }
     
             if (success) {
-                const creationSuccess = this.createPet();
-                if (!creationSuccess) {
-                    alert("An error occurred while creating the pet. Please try again.")
-                }
-                
-                this.setState({
-                    creationSuccess: creationSuccess
-                });
+                const creationReq = this.createPet();
+                creationReq.then((result) => {
+                    if (!result) {
+                        alert("An error occurred while creating the pet. Please try again.")
+                    }
+                    
+                    this.setState({
+                        creationSuccess: result
+                    });
+                })
             }
         }
     }
@@ -112,7 +152,7 @@ class UserCreatePetPage extends BaseReactComponent {
         this.setState({
             petType: petType,
             typeSelected: true,
-            imgURL: petType.happyImage,
+//            imgURL: petType.happyImage,
             priceString: " (" + petType.price + "G)"
         })
     }
@@ -143,7 +183,7 @@ class UserCreatePetPage extends BaseReactComponent {
                         </div>
                         
                         <ul className='container'>
-                        { Database.petTypes.map((petType) => {
+                        { this.state.petTypeList.map((petType) => {
                             return(
                                 <PetTypeComponent className='petTypes' key={ uid(petType) }
                                 petType={petType}

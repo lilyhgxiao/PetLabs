@@ -7,7 +7,6 @@ import PetStatus from './PetCareComponents/PetStatus.js';
 import UserSideMenu from './UserSideMenu';
 import GoldDisplay from './GoldDisplay.js';
 
-import mockDB from '../TempClasses/Database';
 import pet_dead from '../Images/pet_dead.png';
 
 //statezero
@@ -23,7 +22,6 @@ const log = console.log
 
 class UserPetCarePage extends BaseReactComponent {
 
-    targetPetId = "5de075c17dc865116d45d30d";
     _mounted = false;
     deleting = false;
     ownerItems = [];
@@ -193,7 +191,7 @@ class UserPetCarePage extends BaseReactComponent {
                 intelligence: currPet.intelligence + targetItem.intelligence * this.state.type.intelligenceRate,
                 strength: currPet.strength + targetItem.strength * this.state.type.strengthRate,
                 speed: currPet.speed + targetItem.speed * this.state.type.speedRate
-            }, currPet.id)
+            }, currPet._id)
             this.fatigue()
         } 
     }
@@ -206,7 +204,7 @@ class UserPetCarePage extends BaseReactComponent {
             this.updateHappiness(-5);
         } 
         if (currPet.fullness === 0 && currPet.happiness === 0) {
-            updatePetState({alive: false}, currPet.id);
+            updatePetState({alive: false}, currPet._id);
             this.setState({
                 petImg: pet_dead
             });
@@ -224,7 +222,7 @@ class UserPetCarePage extends BaseReactComponent {
             incValue = incValue * this.state.type.happinessRate
         }
 
-        updatePetState({happiness: currPet.happiness + incValue}, currPet.id);
+        updatePetState({happiness: currPet.happiness + incValue}, currPet._id);
         this.setPetMood();
     }
 
@@ -239,12 +237,12 @@ class UserPetCarePage extends BaseReactComponent {
             incValue = incValue * this.state.type.fullnessRate
         }
 
-        updatePetState({fullness: currPet.fullness + incValue}, currPet.id)
+        updatePetState({fullness: currPet.fullness + incValue}, currPet._id)
     }
 
     giveGold() {
         const currUser = this.state.currUser;
-        updateUserState({gold: currUser.gold + 20}, currUser.id)
+        updateUserState({gold: currUser.gold + 20}, currUser._id)
     }
 
     selectItem(e) {
@@ -259,7 +257,7 @@ class UserPetCarePage extends BaseReactComponent {
 
         const confirmDelete = window.confirm("Say goodbye to " + currPet.petName + "? (You cannot undo this action!)")
         if (confirmDelete) {
-            const deleteReq = deletePet(currPet.id);
+            const deleteReq = deletePet(currPet._id);
             
             deleteReq.then((result) => {
                 this.setState({
@@ -271,6 +269,7 @@ class UserPetCarePage extends BaseReactComponent {
 
     render() {
         const { currUser, currPet } = this.state;
+        console.log(this.state.currPet);
 
         if (this.state.deleted) {
             return(

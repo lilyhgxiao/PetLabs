@@ -4,17 +4,6 @@ import { getState } from "statezero";
 //temp, delete later
 import Database from '../TempClasses/Database';
 
-//temporary, will be deleted later
-const findUser = () => {
-    const userList = Database.userList;
-    const loginForm = getState("loginForm")
-    for (let i = 0; i < userList.length; i ++) {
-        if (loginForm.username === userList[i].username && loginForm.password === userList[i].password) {
-            return userList[i];
-        }
-    }
-    return null
-}
 
 //temp, delete later
 const changeUser = (user) => {
@@ -81,7 +70,7 @@ export const signup = (newUser) => {
 
     return createReq.then((user) => {
         const currUser = {
-            id: user._id,
+            _id: user._id,
             username: user.username,
             password: user.password,
             isAdmin: user.isAdmin,
@@ -92,7 +81,7 @@ export const signup = (newUser) => {
         setState("currUser", currUser);
 
         //temp, delete later
-        newUser.id = currUser.id;
+        newUser._id = currUser._id;
         Database.userList.push(newUser);
 
         return true;
@@ -136,12 +125,13 @@ export const updateUserState = (state, targetUserId) => {
 
                 //if it succeeds, and targetPetId === currPet call:
                 const currUser = getState("currUser");
-                if (currUser.id === targetUserId) {
+                if (currUser._id === targetUserId) {
                     for (const property in state) {
                         setState(`currUser.${property}`, state[property])
                     }
                     changeUser(getState("currUser")); //delete later
                 }
+                return true;
             }
         }).catch((error) => {
             console.log(error);

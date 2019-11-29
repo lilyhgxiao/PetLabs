@@ -50,7 +50,7 @@ class UserDashboardPage extends BaseReactComponent {
             for (const petId of currUser.petIdList) {
                 petFiltered = pets.filter(pet => pet['_id'] === petId)[0]
                 petToAdd = {
-                    id: petFiltered._id,
+                    _id: petFiltered._id,
                     petName: petFiltered.petName,
                     ownerName: petFiltered.ownerName,
                     happiness: petFiltered.happiness,
@@ -58,7 +58,8 @@ class UserDashboardPage extends BaseReactComponent {
                     strength: petFiltered.strength,
                     intelligence: petFiltered.intelligence,
                     speed: petFiltered.speed,
-                    type: petFiltered.type
+                    type: petFiltered.type,
+                    alive: petFiltered.alive
                 };
                 petList.push(petToAdd);
             }
@@ -78,7 +79,6 @@ class UserDashboardPage extends BaseReactComponent {
     }
 
     goToCreate = () => {
-        console.log("create")
         this.setState({
             toCreate: true
         })

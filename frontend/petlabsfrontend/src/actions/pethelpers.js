@@ -8,7 +8,7 @@ import Database from '../TempClasses/Database';
 //temp, delete later
 const changePetState = (pet) => {
     for (let i = 0; i < Database.petList.length; i++) {
-        if (Database.petList[i].id === pet.id) {
+        if (Database.petList[i].id === pet._id) {
             Database.petList[i] = pet;
             break;
         }
@@ -40,7 +40,7 @@ export const updatePetState = (state, targetPetId) => {
 
                 //if it succeeds, and targetPetId === currPet call:
                 const currPet = getState("currPet");
-                if (currPet.id === targetPetId) {
+                if (currPet._id === targetPetId) {
                     for (const property in state) {
                         setState(`currPet.${property}`, state[property])
                     }
@@ -52,6 +52,31 @@ export const updatePetState = (state, targetPetId) => {
         })
     
     return true
+}
+
+
+export const createNewPet = (newPet) => {
+    const url = "http://localhost:3001/pets"
+
+    const request = new Request(url, {
+        method: "POST",
+        body: JSON.stringify(convertJSON(newPet)),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    return fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                console.log("createNewPet changed DB")
+                return res.json();
+            }
+        }).catch((error) => {
+            console.log(error);
+            return false;
+        });
 }
 
 

@@ -25,6 +25,28 @@ export const getPetType = (petTypeName) => {
         });
 }
 
+export const getAllPetTypes = () => {
+    const url = "http://localhost:3001/pettypes";
+    const request = new Request(url, {
+        method: "get",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    return fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        }).then((pettypes) => {
+            return pettypes;
+        }).catch((error) => {
+            console.log(error);
+        });
+}
+
 
 export const updatePetTypeState = (state) => {
     //DB CALL: UPDATE PET
