@@ -62,7 +62,8 @@ class UserCreatePetPage extends BaseReactComponent {
                     strengthRate: petType.strengthRate,
                     intelligenceRate: petType.intelligenceRate,
                     speedRate: petType.speedRate,
-                    price: petType.price
+                    price: petType.price,
+                    happyImage: petType.happyImage
                 };
                 petTypeList.push(petTypeToAdd);
             }

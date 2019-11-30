@@ -3,6 +3,8 @@ import '../CSS/PetComponentStyle.css';
 
 import { getPetType } from '../actions/pettypehelpers';
 
+import PetImageImporter from './PetImageImporter.js';
+
 import pet_dead from '../Images/pet_dead.png';
 
 function PetComponent(props) {
@@ -13,6 +15,7 @@ function PetComponent(props) {
 
     imgURLReq.then((img) => {
         imgURL = img;
+        console.log(imgURL)
     })
 
     return(
@@ -43,11 +46,11 @@ function retrieveImgURL(pet) {
 
         if (pet.alive) {
             if (pet.happiness >= 80) {
-                return petType.happyImage;
+                return PetImageImporter.get(petType.happyImage);
             } else if (pet.happiness < 80 && pet.happiness >= 30) {
-                return petType.neutralImage;
+                return PetImageImporter.get(petType.neutralImage);
             } else {
-                return petType.sadImage;
+                return PetImageImporter.get(petType.sadImage);
             }
         } else {
             return pet_dead;
