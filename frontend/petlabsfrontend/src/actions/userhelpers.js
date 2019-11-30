@@ -4,6 +4,7 @@ import { getState } from "statezero";
 //temp, delete later
 import Database from '../TempClasses/Database';
 
+const bcrypt = require('bcryptjs')
 
 //temp, delete later
 const changeUser = (user) => {
@@ -30,19 +31,24 @@ export const login = () => {
         }
 
         //authentication. hash password here
-        if (password !== user.password) {
-            success = false;
-        }
+        const checkHashReq = checkHash(password, user.password);
 
-        if (success) {
-            Database.currUser = user
-
-            setState("currUser", user);
-            return {isAdmin: user.isAdmin, loginSuccessful: true}
-        } else {
-            alert('Invalid username/password combination. Please try again.');
-            return {isAdmin: false, loginSuccessful: false}
-        }
+        return checkHashReq.then((result) => {
+            if (!result) {
+                success = false;
+            }
+    
+            if (success) {
+                Database.currUser = user //temp, delete later
+    
+                setState("currUser", user);
+                setState("currUser.passwordLength", password.length)
+                return {isAdmin: user.isAdmin, loginSuccessful: true}
+            } else {
+                alert('Invalid username/password combination. Please try again.');
+                return {isAdmin: false, loginSuccessful: false}
+            }
+        })
     })
 }
 
@@ -57,50 +63,106 @@ export const updateLoginForm = field => {
 
 export const signup = (newUser) => {
     //HASH PASSWORD
-    const hashedPass = newUser.password;
 
-    const newUserBody = {
-        username: newUser.username,
-        password: hashedPass,
-        isAdmin: newUser.isAdmin
-    };
+    return new Promise((resolve, error) => {
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {  
+                if (err) {
+                    return error(err)
+                } 
+                else {
+                    resolve(hash)
+                }
+            });
+        });
+    }).then((hash) => {
+        const newUserBody = {
+            username: newUser.username,
+            password: hash,
+            isAdmin: newUser.isAdmin
+        };
+        //DB CALL: CREATE USER
+        const createReq = createNewUser(newUserBody);
+        return createReq.then((user) => {
+            const currUser = getState("currUser");
 
-    //DB CALL: CREATE USER
-    const createReq = createNewUser(newUserBody);
+            const newCurrUser = {
+                _id: user._id,
+                username: user.username,
+                password: user.password,
+                isAdmin: user.isAdmin,
+                gold: user.gold,
+                petIdList: user.petIdList,
+                itemIdList: user.itemIdList
+            }
 
-    return createReq.then((user) => {
-        const currUser = {
-            _id: user._id,
-            username: user.username,
-            password: user.password,
-            isAdmin: user.isAdmin,
-            gold: user.gold,
-            petIdList: user.petIdList,
-            itemIdList: user.itemIdList
-        }
-        setState("currUser", currUser);
+            if(currUser === null) {
+                setState("currUser", newCurrUser);
+            }
 
-        //temp, delete later
-        newUser._id = currUser._id;
-        Database.userList.push(newUser);
+            //temp, delete later
+            newUser._id = newCurrUser._id;
+            Database.userList.push(newUser);
 
-        return true;
-    }).catch((error) => {
-        console.log(error)
-        return false;
+            return true;
+        }).catch((error) => {
+            console.log(error)
+            return false;
+        });
     })
+
+    
 }
 
 
 
-export const updateUserPassword = (password) => {
-    //HASH: update this
-    const hashedPass = password;
+export const updateUserPassword = (password, targetUserId) => {
+    //HASH
+    return new Promise((resolve, error) => {
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(password, salt, (err, hash) => {  
+                if (err) {
+                    return error(err)
+                } 
+                else {
+                    resolve(hash)
+                }
+            });
+        });
+    }).then((hash) => {
+        const newPassBody = {
+            password: hash
+        };
+        //DB CALL: CREATE USER
+        const updateReq = updateUserState(newPassBody, targetUserId);
+        return updateReq.then((result) => {
+            const currUser = getState("currUser");
+            
+            if (currUser._id === targetUserId) {
+                setState("currUser.passwordLength", password.length)
+            }
+            return true;
+        }).catch((error) => {
+            console.log(error)
+            return false;
+        });
+    })
+}
 
-    //DB CALL: UPDATE USER PASSWORD
-    
-    //if it succeeds call:
-    setState('currUser.password', hashedPass);
+
+export const checkHash = (pass, hashedPass) => {
+    return new Promise((resolve, error) => {
+        bcrypt.compare(pass, hashedPass, (err, res) => {  
+            if (err) {
+                error(err)
+            }
+            resolve(res)
+        });
+    }).then((result) => {
+        return result;
+    }).catch((error) => {
+        console.log(error);
+    })
 }
 
 export const updateUserState = (state, targetUserId) => {

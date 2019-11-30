@@ -66,11 +66,14 @@ class SignUpPage extends React.Component {
                 } else {
                     const signupReq = signup(new User(this.state.username, this.state.password, false));
 
+                    console.log(signupReq)
+
                     signupReq.then((result) => {
                         this.setState({
                             signupSuccessful: result
                         });
                     }).catch((error) => {
+                        console.log(error)
                         alert("Login failed. Please try again.");
                     })
                 }

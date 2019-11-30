@@ -3,7 +3,7 @@ import UserSideMenu from './UserSideMenu';
 
 //statezero
 import BaseReactComponent from "./../BaseReactComponent";
-import { updateUserPassword } from "../actions/userhelpers"
+import { updateUserPassword, checkHash } from "../actions/userhelpers"
 
 //temporary
 import '../CSS/SettingsStyle.css';
@@ -81,19 +81,34 @@ class UserSettingsPage extends BaseReactComponent {
         if (!this.authEmpty()) {
             alert("Please fill in all fields.");
             success = false;
-        } else if (!this.authOldPass()) {
-            alert("The old password does not match your current password. Please try again.");
-            success = false;
         } else if (!this.authNewPass()) {
             alert('Passwords do not match. Please try again.');
             success = false;
-        }
+        } else {
+            const checkHashReq = checkHash(this.state.oldPass, this.state.currUser.password);
 
-        if (success) {
-            this.changePassword(this.state.newPass); //delete later
-
-            updateUserPassword(this.state.newPass);
-            alert('Password changed successfully.')
+            checkHashReq.then((result) => {
+                if (!result) {
+                    alert("The old password does not match your current password. Please try again.");
+                    success = false;
+                } else {
+                    if (success) {
+                        this.changePassword(this.state.newPass); //delete later
+            
+                        const updateReq = updateUserPassword(this.state.newPass, this.state.currUser._id);
+                        updateReq.then((res) => {
+                            if (res) {
+                                alert('Password changed successfully.')
+                            } else {
+                                alert('Password could not be changed. Please try again.')
+                            }
+                        }).catch((error) => {
+                            console.log(error)
+                        })
+                        
+                    }
+                }
+            })   
         }
     }
 
@@ -110,7 +125,7 @@ class UserSettingsPage extends BaseReactComponent {
                     <div className="settingsContainer">
                         <span className='userSettingName'>Username:</span> <span className='userSettingValue'>{ currUser.username }</span>
                         <br/>
-                        <span className='userSettingName'>Password:</span> <span className='userSettingValue'>{ new Array(currUser.password.length + 1).join('*') }</span>
+                        <span className='userSettingName'>Password:</span> <span className='userSettingValue'>{ new Array(currUser.passwordLength + 1).join('*') }</span>
 
                         <div className='changePassword'>
                             <span className="changePasswordTitle">Change Password?</span>
