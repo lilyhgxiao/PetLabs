@@ -84,7 +84,6 @@ class UserPetCarePage extends BaseReactComponent {
             }
             else {
                 for (let j = 0; j < iList.length; j++) {
-                    const itemList = []
                     let iName;
                     for (let k = 0; k < items.length; k++) {
                         if (items[k]._id === iList[j]) {
