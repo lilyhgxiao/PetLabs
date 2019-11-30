@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
 
 import '../CSS/ShopPageStyle.css';
 
@@ -7,22 +6,19 @@ import UserSideMenu from './UserSideMenu';
 import GoldDisplay from './GoldDisplay.js';
 import mockDB from '../TempClasses/Database';
 
-import petHappy from '../Images/pet_happy_placeholder.png';
-import petNeutral from '../Images/pet_neutral_placeholder.png';
-import petSad from '../Images/pet_sad_placeholder.png';
+//statezero
+import BaseReactComponent from "./../BaseReactComponent";
+import { updateUserState } from "../actions/userhelpers"
 
-const log = console.log
+//const log = console.log
 
-class ShopPage extends React.Component {
+class ShopPage extends BaseReactComponent {
 
-    state = {
-        userGold: 0
+    filterState({ currUser }) {
+        return { currUser };
     }
 
     componentDidMount() {
-        this.setState({
-            userGold: mockDB.currUser.gold
-        })
         //this.populatePets();
         this.populateItems();
     }
@@ -77,7 +73,6 @@ class ShopPage extends React.Component {
         let iList = mockDB.itemList;
         for (let i = 0; i < iList.length; i++) {
 
-            let allItems = document.querySelector("#itemEntry");
             //let tbodyComp = allItems.querySelector("tbody");
             let tbodyComp = document.querySelector("#itemEntryContainer");
             let curItem = iList[i];
@@ -132,22 +127,20 @@ class ShopPage extends React.Component {
     purchase = (e) => {
         let parentSearch = e.target.parentElement;
         console.log(e)
-        let curUser = mockDB.currUser;
+        let curUser = this.state.currUser;
 
         if (parentSearch.className === "itemEntry") {
-            let entryId = e.target.value;
-
+            let entryId = parseInt(e.target.value);
             let iList = mockDB.itemList;
             let i = 0;
             while (i < iList.length) {
-                if (iList[i].id == entryId) {
+                if (iList[i].id === entryId) {
                     if (!this.contains(entryId, curUser.itemIdList)){
                         if (curUser.gold >= iList[i].price) {
-                            curUser.gold -= iList[i].price;
-                            curUser.itemIdList.push(entryId);
-                            this.setState({
-                                userGold: mockDB.currUser.gold
-                            })
+                            const itemIdListCopy = curUser.itemIdList.slice()
+                            itemIdListCopy.push(entryId);
+                            updateUserState({itemIdList: itemIdListCopy});
+                            updateUserState({gold: curUser.gold - iList[i].price});
                             alert("Purchased " + iList[i].name + "!");
                         } else {
                             alert("Not enough Gold!");
@@ -166,14 +159,13 @@ class ShopPage extends React.Component {
             let pList = mockDB.petTypes;
             let i = 0;
             while (i < pList.length) {
-                if (pList[i].id == entryId) {
+                if (pList[i].id === entryId) {
                     if (!this.contains(entryId, curUser.itemIdList)){
                         if (curUser.gold >= pList[i].price) {
-                            curUser.gold -= pList[i].price;
-                            curUser.petIdList.push(entryId);
-                            this.setState({
-                                userGold: mockDB.currUser.gold
-                            })
+                            const petIdListCopy = curUser.petIdList.slice()
+                            petIdListCopy.push(entryId);
+                            updateUserState({petIdList: petIdListCopy});
+                            updateUserState({gold: curUser.gold - pList[i].price});
                             alert("Purchased " + pList[i].name + "!");
                         } else {
                             alert("Not enough Gold!");
@@ -198,10 +190,12 @@ class ShopPage extends React.Component {
     }
 
     render() {
+        const { currUser } = this.state;
+
         return (
             <div>
                 <UserSideMenu/>
-                <GoldDisplay gold={ this.state.userGold }/>
+                <GoldDisplay gold={ currUser.gold }/>
                 <div className='main'>
                     
                     <div className='storeTitle'>Welcome to the Store!</div>

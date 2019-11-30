@@ -53,7 +53,14 @@ const Database = {
     ],
 };
 
-Database.userList[0].petIdList.push(1);
+const userId = "5de0755e7dc865116d45d30c";
+const alexId = "5de0b0a23e933e0481cae985";
+
+const dumbbellId = "5de0a4c83e933e0481cae979";
+const bookId = "5de0a4c03e933e0481cae978";
+const treadmillId = "5de0a4cf3e933e0481cae97a";
+
+Database.userList[0].petIdList.push(alexId);
 Database.userList[0].petIdList.push(2);
 Database.userList[0].petIdList.push(3);
 
@@ -70,9 +77,9 @@ Database.userList[3].petIdList.push(3);
 Database.userList[3].petIdList.push(4);
 
 
-Database.userList[0].itemIdList.push(1);
-Database.userList[0].itemIdList.push(2);
-Database.userList[0].itemIdList.push(3);
+Database.userList[0].itemIdList.push(dumbbellId);
+Database.userList[0].itemIdList.push(treadmillId);
+//Database.userList[0].itemIdList.push(3);
 
 Database.userList[1].itemIdList.push(1);
 Database.userList[1].itemIdList.push(2);
@@ -85,5 +92,13 @@ Database.userList[2].itemIdList.push(3);
 Database.userList[3].itemIdList.push(1);
 Database.userList[3].itemIdList.push(2);
 Database.userList[3].itemIdList.push(3);
+
+Database.petList[0].id = alexId;
+
+Database.itemList[0].id = dumbbellId;
+Database.itemList[1].id = bookId;
+Database.itemList[2].id = treadmillId;
+
+Database.userList[0].id = userId;
 
 export default Database;

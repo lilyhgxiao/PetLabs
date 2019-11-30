@@ -4,6 +4,9 @@ import { Redirect } from 'react-router';
 import Database from '../TempClasses/Database';
 import User from '../TempClasses/User';
 
+//statezero
+import { signup, getUserByUsername } from "../actions/userhelpers"
+
 import logo from '../Images/logo_placeholder.png';
 
 class SignUpPage extends React.Component {
@@ -12,13 +15,8 @@ class SignUpPage extends React.Component {
         password: "",
         confirmPassword: "",
         signupSuccessful: false,
-        user: null,
         backToLogin: false
     };
-
-    componentDidMount() {
-        Database.currUser = null;
-    }
 
     handleInputChange = (event) => {
         const target = event.target;
@@ -29,16 +27,6 @@ class SignUpPage extends React.Component {
         this.setState({
           [name]: value  // [name] sets the object property name to the value of the 'name' variable.
         });
-    }
-
-    authUser = () => {
-        const userList = Database.userList;
-        for (let i = 0; i < userList.length; i ++) {
-            if (this.state.username === userList[i].username) {
-                return false;
-            }
-        }
-        return true;
     }
 
     authPass = () => {
@@ -56,37 +44,39 @@ class SignUpPage extends React.Component {
         return true;
     }
 
-    createUser = () => {
-        const newUser = new User(this.state.username, this.state.password, false);
-        Database.userList.push(newUser);
-        return newUser;
-    }
-
     authSignup = () => {
         //authenticate
 
         //temp
         let success = true;
-        let newUser = null;
 
         if (!this.authEmpty()) {
             alert("Please fill in all fields.");
             success = false;
-        } else if (!this.authUser()) {
-            alert('Username already taken. Please try another username.');
-            success = false;
         } else if (!this.authPass()) {
             alert('Passwords do not match. Please try again.')
             success = false;
-        }
+        } else {
+            const checkUsernameReq = getUserByUsername(this.state.username);
 
-        //if signup was successful, create new user entry in database and log in.
-        if (success) {
-            newUser = this.createUser()
-            Database.currUser = newUser;
-            this.setState({
-                user: newUser,
-                signupSuccessful: true
+            checkUsernameReq.then((user) => {
+                if (user !== null) {
+                    alert('Username already taken. Please try another username.');
+                    success = false;
+                } else {
+                    const signupReq = signup(new User(this.state.username, this.state.password, false));
+
+                    console.log(signupReq)
+
+                    signupReq.then((result) => {
+                        this.setState({
+                            signupSuccessful: result
+                        });
+                    }).catch((error) => {
+                        console.log(error)
+                        alert("Login failed. Please try again.");
+                    })
+                }
             })
         }
     }
@@ -102,8 +92,7 @@ class SignUpPage extends React.Component {
         if (this.state.signupSuccessful) {
             return (
                 <Redirect push to={{
-                    pathname: "/UserDashboardPage",
-                    state: { user: this.state.user }
+                    pathname: "/UserDashboardPage"
                 }} />
             );
         }

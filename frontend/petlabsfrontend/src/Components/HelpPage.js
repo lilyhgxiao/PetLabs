@@ -1,13 +1,10 @@
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-
-// import '../CSS/__.css';
 
 import UserSideMenu from './UserSideMenu';
 
 import '../CSS/HelpStyle.css';
 
-const log = console.log
+//const log = console.log
 
 class HelpPage extends React.Component {
 

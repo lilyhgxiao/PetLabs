@@ -1,24 +1,30 @@
 import React from 'react';
-import Database from '../TempClasses/Database';
 import UserSideMenu from './UserSideMenu';
+
+//statezero
+import BaseReactComponent from "./../BaseReactComponent";
+import { updateUserPassword, checkHash } from "../actions/userhelpers"
 
 //temporary
 import '../CSS/SettingsStyle.css';
+import Database from '../TempClasses/Database';
 
-class UserSettingsPage extends React.Component {
+class UserSettingsPage extends BaseReactComponent {
     state = {
         oldPass: "",
         newPass: "",
-        confirmPass: "",
-        user: Database.currUser
+        confirmPass: ""
     };
+
+    filterState({ currUser }) {
+        return { currUser };
+    }
 
     componentDidMount() {
         this.setState({
             oldPass: "",
             newPass: "",
-            confirmPass: "",
-            user: Database.currUser
+            confirmPass: ""
         });
     }
 
@@ -34,7 +40,7 @@ class UserSettingsPage extends React.Component {
     }
 
     authOldPass = () => {
-        if (this.state.oldPass === this.state.user.password) {
+        if (this.state.oldPass === this.state.currUser.password) {
             return true;
         } else {
             return false;
@@ -56,12 +62,15 @@ class UserSettingsPage extends React.Component {
         return true;
     }
 
-    changePassword = () => {
+    //temporary, will be deleted later
+    changePassword = (password) => {
         const userList = Database.userList;
+        const currUser = this.state.currUser;
         
         for (let i = 0; i < userList.length; i ++) {
-            if (this.state.user.username === userList[i].username) {
-                userList[i].password = this.state.newPass;
+            if (currUser.username === userList[i].username) {
+                console.log(userList[i])
+                userList[i].password = password;
             }
         }
     }
@@ -72,25 +81,39 @@ class UserSettingsPage extends React.Component {
         if (!this.authEmpty()) {
             alert("Please fill in all fields.");
             success = false;
-        } else if (!this.authOldPass()) {
-            alert("The old password does not match your current password. Please try again.");
-            success = false;
         } else if (!this.authNewPass()) {
             alert('Passwords do not match. Please try again.');
             success = false;
-        }
+        } else {
+            const checkHashReq = checkHash(this.state.oldPass, this.state.currUser.password);
 
-        if (success) {
-            this.changePassword();
-            Database.currUser.password = this.state.newPass;
-            this.setState({
-                user: Database.currUser
-            })
-            alert('Password changed successfully.')
+            checkHashReq.then((result) => {
+                if (!result) {
+                    alert("The old password does not match your current password. Please try again.");
+                    success = false;
+                } else {
+                    if (success) {
+                        this.changePassword(this.state.newPass); //delete later
+            
+                        const updateReq = updateUserPassword(this.state.newPass, this.state.currUser._id);
+                        updateReq.then((res) => {
+                            if (res) {
+                                alert('Password changed successfully.')
+                            } else {
+                                alert('Password could not be changed. Please try again.')
+                            }
+                        }).catch((error) => {
+                            console.log(error)
+                        })
+                        
+                    }
+                }
+            })   
         }
     }
 
     render() {
+        const { currUser } = this.state;
 
         return(
             <div>
@@ -100,9 +123,9 @@ class UserSettingsPage extends React.Component {
                     <span className="settingsTitle">Settings</span>
                     <br/>
                     <div className="settingsContainer">
-                        <span className='userSettingName'>Username:</span> <span className='userSettingValue'>{ this.state.user.username }</span>
+                        <span className='userSettingName'>Username:</span> <span className='userSettingValue'>{ currUser.username }</span>
                         <br/>
-                        <span className='userSettingName'>Password:</span> <span className='userSettingValue'>{ new Array(this.state.user.password.length + 1).join('*') }</span>
+                        <span className='userSettingName'>Password:</span> <span className='userSettingValue'>{ new Array(currUser.passwordLength + 1).join('*') }</span>
 
                         <div className='changePassword'>
                             <span className="changePasswordTitle">Change Password?</span>
