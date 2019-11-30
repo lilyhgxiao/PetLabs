@@ -49,7 +49,7 @@ app.post('/items', (request, response) => {
                 intelligence: request.body.intelligence,
                 happiness: request.body.happiness,
                 fullness: request.body.fullness,
-                // imgURL: ,
+                imgURL: request.body.imgURL,
                 price: request.body.price
             });
 

@@ -28,10 +28,10 @@ const schema = mongoose.Schema({
         type: Number,
 		required: true,
     },
-    // // imgURL: {
-    // //     type: ,
-    // //     required:
-    // // },
+    imgURL: {
+        type: String,
+        required: true
+    },
     price: {
         type: Number,
 		required: true,

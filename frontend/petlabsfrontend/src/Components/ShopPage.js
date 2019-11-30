@@ -5,6 +5,8 @@ import '../CSS/ShopPageStyle.css';
 import UserSideMenu from './UserSideMenu';
 import GoldDisplay from './GoldDisplay.js';
 
+import ItemImageImporter from './ItemImageImporter.js';
+
 //statezero
 import BaseReactComponent from "./../BaseReactComponent";
 import { updateUserState } from "../actions/userhelpers"
@@ -19,7 +21,6 @@ class ShopPage extends BaseReactComponent {
     }
 
     componentDidMount() {
-        //this.populatePets();
         this.populateItems();
     }
 
@@ -43,11 +44,10 @@ class ShopPage extends BaseReactComponent {
                 price.className = "itemPrice";
                 price.appendChild(priceText);
     
-    
                 // Put item image:
                 let imgElement = document.createElement('img');
                 imgElement.setAttribute("class", "shopImg");
-                imgElement.setAttribute("src", curItem.imgURL);
+                imgElement.setAttribute("src", ItemImageImporter.get(curItem.imgURL));
                 newCell.appendChild(imgElement);
     
                 // Put item type name:

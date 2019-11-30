@@ -7,5 +7,6 @@
     "intelligence": 0,
     "happiness": 4,
     "fullness": -1,
-    "price": 3000
+    "price": 3000,
+    "imgURL": "Treadmill"
 }

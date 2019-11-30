@@ -7,5 +7,6 @@
     "intelligence": 0,
     "happiness": 3,
     "fullness": -3,
-    "price": 1000
+    "price": 1000,
+    "imgURL": "Dumbbell"
 }

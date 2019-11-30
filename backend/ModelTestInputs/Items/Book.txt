@@ -7,5 +7,6 @@
     "intelligence": 5,
     "happiness": 2,
     "fullness": 0,
-    "price": 2000
+    "price": 2000,
+    "imgURL": "Book"
 }
