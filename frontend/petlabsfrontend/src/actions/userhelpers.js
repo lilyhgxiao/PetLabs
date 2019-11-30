@@ -178,8 +178,6 @@ export const updateUserState = (state, targetUserId) => {
         }
     });
 
-    console.log(JSON.stringify(convertJSON(state)))
-
     return fetch(request)
         .then((res) => {
             if (res.status === 200) {
@@ -196,6 +194,7 @@ export const updateUserState = (state, targetUserId) => {
                 return true;
             }
         }).catch((error) => {
+            return false;
             console.log(error);
         });
 }
@@ -222,12 +221,6 @@ export const getUserByUsername = (username) => {
                     return users[i];
                 }
             }
-            //const usersFiltered = users.filter(usr -> usr['username'] === username)
-            //if (usersFiltered.length < 1) {
-            //    return null
-            //} else {
-            //    return usersFiltered[0]
-            //}
             return null;
         }).catch((error) => {
             console.log(error);
