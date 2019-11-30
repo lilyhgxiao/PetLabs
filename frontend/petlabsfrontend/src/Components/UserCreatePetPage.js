@@ -152,7 +152,7 @@ class UserCreatePetPage extends BaseReactComponent {
         this.setState({
             petType: petType,
             typeSelected: true,
-//            imgURL: petType.happyImage,
+            imgURL: petType.happyImage,
             priceString: " (" + petType.price + "G)"
         })
     }

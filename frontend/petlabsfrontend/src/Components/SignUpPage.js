@@ -1,8 +1,6 @@
 import React from 'react';
 import '../CSS/LogInStyles.css';
 import { Redirect } from 'react-router';
-import Database from '../TempClasses/Database';
-import User from '../TempClasses/User';
 
 //statezero
 import { signup, getUserByUsername } from "../actions/userhelpers"
@@ -64,7 +62,11 @@ class SignUpPage extends React.Component {
                     alert('Username already taken. Please try another username.');
                     success = false;
                 } else {
-                    const signupReq = signup(new User(this.state.username, this.state.password, false));
+                    const signupReq = signup({
+                        username: this.state.username,
+                        password: this.state.password,
+                        isAdmin: false
+                    });
 
                     console.log(signupReq)
 

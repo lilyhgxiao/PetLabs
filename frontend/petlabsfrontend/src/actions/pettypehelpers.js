@@ -16,7 +16,6 @@ export const getPetType = (petTypeName) => {
         }).then((pTypes) => {
             for (let i = 0; i < pTypes.length; i++) {
                 if (pTypes[i].name === petTypeName) {
-                    console.log("Successfully retrieved " + pTypes[i].name)
                     return pTypes[i];
                 }
             }
@@ -45,11 +44,4 @@ export const getAllPetTypes = () => {
         }).catch((error) => {
             console.log(error);
         });
-}
-
-
-export const updatePetTypeState = (state) => {
-    //DB CALL: UPDATE PET
-    //if it succeeds call:
-    return true
 }

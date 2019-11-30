@@ -7,7 +7,6 @@ import { updateUserPassword, checkHash } from "../actions/userhelpers"
 
 //temporary
 import '../CSS/SettingsStyle.css';
-import Database from '../TempClasses/Database';
 
 class UserSettingsPage extends BaseReactComponent {
     state = {
@@ -62,19 +61,6 @@ class UserSettingsPage extends BaseReactComponent {
         return true;
     }
 
-    //temporary, will be deleted later
-    changePassword = (password) => {
-        const userList = Database.userList;
-        const currUser = this.state.currUser;
-        
-        for (let i = 0; i < userList.length; i ++) {
-            if (currUser.username === userList[i].username) {
-                console.log(userList[i])
-                userList[i].password = password;
-            }
-        }
-    }
-
     tryChange = () => {
         console.log("tryChange")
         let success = true;
@@ -93,8 +79,6 @@ class UserSettingsPage extends BaseReactComponent {
                     success = false;
                 } else {
                     if (success) {
-                        this.changePassword(this.state.newPass); //delete later
-            
                         const updateReq = updateUserPassword(this.state.newPass, this.state.currUser._id);
                         updateReq.then((res) => {
                             if (res) {

@@ -1,19 +1,6 @@
 import { setState, convertJSON } from "./helpers";
 import { getState } from "statezero";
-import { getUserByUsername, updateUserState, changeUser } from "./userhelpers"
-
-//temp, delete later
-import Database from '../TempClasses/Database';
-
-//temp, delete later
-const changePetState = (pet) => {
-    for (let i = 0; i < Database.petList.length; i++) {
-        if (Database.petList[i].id === pet._id) {
-            Database.petList[i] = pet;
-            break;
-        }
-    }
-}
+import { getUserByUsername, updateUserState } from "./userhelpers"
 
 
 export const setTargetPet = (pet) => {
@@ -36,15 +23,12 @@ export const updatePetState = (state, targetPetId) => {
     fetch(request)
         .then((res) => {
             if (res.status === 200) {
-                console.log("updatePetState changed DB", targetPetId)
-
                 //if it succeeds, and targetPetId === currPet call:
                 const currPet = getState("currPet");
                 if (currPet._id === targetPetId) {
                     for (const property in state) {
                         setState(`currPet.${property}`, state[property])
                     }
-                    changePetState(getState("currPet")); //delete later
                 }
             }
         }).catch((error) => {
@@ -70,7 +54,6 @@ export const createNewPet = (newPet) => {
     return fetch(request)
         .then((res) => {
             if (res.status === 200) {
-                console.log("createNewPet changed DB")
                 return res.json();
             }
         }).catch((error) => {
@@ -118,7 +101,6 @@ export const deletePet = (targetPetId) => {
     return fetch(petRequest)
         .then((res) => {
             if (res.status === 200) {
-                console.log("deletePet changed DB", targetPetId)
                 return res.json();
             }
         }).then((pet) => {
@@ -136,10 +118,6 @@ export const deletePet = (targetPetId) => {
                 setState("currUser.petIdList", user.petIdList);
 
                 const currPet = getState("currPet");
-
-                //delete later
-                const petListIdx = Database.petList.indexOf(currPet);
-                Database.petList.splice(petListIdx, 1); 
 
                 return true;
             }).catch((error) => {

@@ -4,7 +4,6 @@ import '../CSS/ShopPageStyle.css';
 
 import UserSideMenu from './UserSideMenu';
 import GoldDisplay from './GoldDisplay.js';
-import mockDB from '../TempClasses/Database';
 
 //statezero
 import BaseReactComponent from "./../BaseReactComponent";

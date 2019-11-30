@@ -83,7 +83,6 @@ class UserPetCarePage extends BaseReactComponent {
                 console.log("Error: itemhelpers/getAllItems returned null.")
             }
             else {
-                console.log("Retrieved all items")
                 for (let j = 0; j < iList.length; j++) {
                     const itemList = []
                     let iName;
@@ -176,9 +175,7 @@ class UserPetCarePage extends BaseReactComponent {
 
             // Find item:
             let targetItem;
-            console.log(this.ownerItems)
             for (let k = 0; k < this.ownerItems.length; k++) {
-                console.log(this.ownerItems[k]._id, this.state.itemSelected);
                 if (this.ownerItems[k]._id === this.state.itemSelected) {
                     targetItem = this.ownerItems[k];
                 }
@@ -269,7 +266,6 @@ class UserPetCarePage extends BaseReactComponent {
 
     render() {
         const { currUser, currPet } = this.state;
-        console.log(this.state.currPet);
 
         if (this.state.deleted) {
             return(

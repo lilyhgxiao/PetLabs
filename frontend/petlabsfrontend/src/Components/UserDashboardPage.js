@@ -3,8 +3,6 @@ import React from 'react';
 import { uid } from 'react-uid';
 import { Redirect } from 'react-router';
 
-import Database from '../TempClasses/Database'
-
 import '../CSS/UserDashboardStyles.css';
 
 import UserSideMenu from './UserSideMenu';

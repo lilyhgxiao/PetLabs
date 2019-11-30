@@ -1,22 +1,7 @@
 import { setState, setEmptyState, convertJSON } from "./helpers";
 import { getState } from "statezero";
 
-//temp, delete later
-import Database from '../TempClasses/Database';
-
 const bcrypt = require('bcryptjs')
-
-//temp, delete later
-const changeUser = (user) => {
-    const userList = Database.userList;
-
-    for (let i = 0; i < userList.length; i ++) {
-        if (userList[i].id === user.id) {
-            userList[i] = user;
-            break;
-        }
-    }
-}
 
 
 export const login = () => {
@@ -39,8 +24,6 @@ export const login = () => {
             }
     
             if (success) {
-                Database.currUser = user //temp, delete later
-    
                 setState("currUser", user);
                 setState("currUser.passwordLength", password.length)
                 return {isAdmin: user.isAdmin, loginSuccessful: true}
@@ -99,11 +82,6 @@ export const signup = (newUser) => {
             if(currUser === null) {
                 setState("currUser", newCurrUser);
             }
-
-            //temp, delete later
-            newUser._id = newCurrUser._id;
-            Database.userList.push(newUser);
-
             return true;
         }).catch((error) => {
             console.log(error)
@@ -181,21 +159,18 @@ export const updateUserState = (state, targetUserId) => {
     return fetch(request)
         .then((res) => {
             if (res.status === 200) {
-                console.log("updateUserState changed DB", targetUserId)
-
                 //if it succeeds, and targetPetId === currPet call:
                 const currUser = getState("currUser");
                 if (currUser._id === targetUserId) {
                     for (const property in state) {
                         setState(`currUser.${property}`, state[property])
                     }
-                    changeUser(getState("currUser")); //delete later
                 }
                 return true;
             }
         }).catch((error) => {
-            return false;
             console.log(error);
+            return false;
         });
 }
 
@@ -238,8 +213,6 @@ export const createNewUser = (newUser) => {
             'Content-Type': 'application/json'
         }
     });
-
-    console.log(JSON.stringify(convertJSON(newUser)))
 
     return fetch(request)
         .then((res) => {
