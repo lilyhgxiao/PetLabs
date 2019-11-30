@@ -8,15 +8,18 @@ const schema = mongoose.Schema({
 		minlength: 1,
 		trim: true,
     },
-    // neutralImage : {
-
-    // },
-    // happyImage: {
-
-    // },
-    // sadImage: {
-
-    // },
+    neutralImage : {
+        type: String,
+        required: true
+    },
+    happyImage: {
+        type: String,
+        required: true
+    },
+    sadImage: {
+        type: String,
+        required: true
+    },
     strengthRate: {
         type: Number,
 		required: true,

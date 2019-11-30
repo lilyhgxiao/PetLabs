@@ -160,9 +160,9 @@ app.post('/pettypes', (request, response) => {
             // Create a new petType using the mongoose petType model.
             const petType = new PetType({
                 name: request.body.name,
-                // neutralImage: ,
-                // happyImage: ,
-                // sadImage: ,
+                neutralImage: request.body.neutralImage,
+                happyImage: request.body.happyImage,
+                sadImage: request.body.sadImage,
                 strengthRate: request.body.strengthRate,
                 speedRate: request.body.speedRate,
                 intelligenceRate: request.body.intelligenceRate,

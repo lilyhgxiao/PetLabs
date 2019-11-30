@@ -1,8 +1,8 @@
 {
     "name": "Flower",
-    // neutralImage: ,
-    // happyImage: ,
-    // sadImage: ,
+    "neutralImage": "../Images/flower_neutral.png",
+    "happyImage": "../Images/flower_happy.png",
+    "sadImage": "../Images/flower_sad.png",
     "strengthRate": 2,
     "speedRate": 2,
     "intelligenceRate": 2,

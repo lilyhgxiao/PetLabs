@@ -7,7 +7,7 @@ import PetStatus from './PetCareComponents/PetStatus.js';
 import UserSideMenu from './UserSideMenu';
 import GoldDisplay from './GoldDisplay.js';
 
-import pet_dead from '../Images/pet_dead.png';
+import PetImageImporter from './PetImageImporter.js';
 
 //statezero
 import BaseReactComponent from "./../BaseReactComponent";
@@ -65,7 +65,7 @@ class UserPetCarePage extends BaseReactComponent {
 
         typePromise.then((type) => {
             this.setState({
-                //petImg: type.neutralImage, //uncomment when images work
+                petImg: type.neutralImage, 
                 type: type,
             }, this.setPetMood)
         })
@@ -143,8 +143,6 @@ class UserPetCarePage extends BaseReactComponent {
 
     setPetMood = () => {
         const currPet = this.state.currPet
-
-        /* uncomment when imgs work
         if (currPet.alive) {
             if (currPet.happiness >= 30 && currPet.happiness < 80) {
                 this.setState({
@@ -161,10 +159,9 @@ class UserPetCarePage extends BaseReactComponent {
             }
         } else {
             this.setState({
-                petImg: pet_dead
+                petImg: 'pet_dead'
             })
         }
-        */
     }
 
     // Function related to use of item.
@@ -203,7 +200,7 @@ class UserPetCarePage extends BaseReactComponent {
         if (currPet.fullness === 0 && currPet.happiness === 0) {
             updatePetState({alive: false}, currPet._id);
             this.setState({
-                petImg: pet_dead
+                petImg: 'pet_dead'
             });
         }
     }
@@ -295,7 +292,7 @@ class UserPetCarePage extends BaseReactComponent {
                             
                             { /* Shows model of the pet with name */ }  
                             <PetModel
-                                imgSource = {this.state.petImg}
+                                imgSource = {PetImageImporter.get(this.state.petImg)}
                             />
                         </div>
                     </div>
