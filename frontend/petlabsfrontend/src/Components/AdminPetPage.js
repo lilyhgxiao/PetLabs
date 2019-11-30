@@ -5,6 +5,8 @@ import '../CSS/ItemView.css';
 import SpriteComponent from '../Components/SpriteComponent';
 import AddIcon from '../Images/add_new.png';
 
+import PetImageImporter from './PetImageImporter.js';
+
 class AdminPetPage extends React.Component {
     constructor(props) {
         super(props);
@@ -42,9 +44,9 @@ class AdminPetPage extends React.Component {
         }).then((result) => {
             this.setState({
                 name: result.name,
-                // neutralImage: result.neutralImage,
-                // happyImage: this.petType.happyImage,
-                // sadImage: this.petType.sadImage,
+                neutralImage: PetImageImporter.get(result.neutralImage),
+                happyImage: PetImageImporter.get(result.happyImage),
+                sadImage: PetImageImporter.get(result.sadImage),
                 strengthRate: result.strengthRate,
                 speedRate: result.speedRate,
                 intelligenceRate: result.intelligenceRate,

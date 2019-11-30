@@ -4,6 +4,8 @@ import '../CSS/ItemView.css';
 import saveIcon from '../Images/Save_Icon.png';
 import AddIcon from '../Images/add_new.png';
 
+import ItemImageImporter from './ItemImageImporter.js';
+
 class AdminItemPage extends React.Component {
     constructor(props) {
         super(props);
@@ -46,7 +48,8 @@ class AdminItemPage extends React.Component {
                 happiness: result.happiness,
                 fullness: result.fullness,
                 price: result.price,
-                id: result._id
+                id: result._id,
+                imgURL: ItemImageImporter.get(result.imgURL)
             })
         }).catch((error) => {
             alert('Failed to fetch items :(');
