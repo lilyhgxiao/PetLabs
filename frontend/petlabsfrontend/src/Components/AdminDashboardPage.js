@@ -13,7 +13,7 @@ import BaseReactComponent from "./../BaseReactComponent";
 
 class AdminDashboard extends BaseReactComponent {
     filterState({currUser}) {
-        return currUser;
+        return {currUser};
     }
 
     render() {
