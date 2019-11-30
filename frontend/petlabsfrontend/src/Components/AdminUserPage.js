@@ -1,5 +1,4 @@
 import React from 'react';
-import Database from '../TempClasses/Database';
 import AdminSideMenu from '../Components/AdminSideMenu';
 import { Link } from 'react-router-dom';
 import saveIcon from '../Images/Save_Icon.png';
@@ -7,46 +6,84 @@ import saveIcon from '../Images/Save_Icon.png';
 import '../CSS/ItemView.css';
 
 class AdminUserPage extends React.Component {
-    targetUserName = this.props.location.username;
+    // Get user Id from AdminUserList
+    targetUserId = this.props.location.userId;
+    targetUser;
     petChanges = [];
     itemChanges = [];
 
     state = {
-        username: this.targetUserName,
+        targetUserName: "",
         password: "",
         isAdmin: false,
         gold: 0,
-        userInd: 0
+        pList: [],
+        iList: []
     };
 
     componentDidMount() {
         this.findUserInfo();
-        this.populatePets();
-        this.populateItems();
+        this.getPetInfo();
+        this.getItemInfo();
     }
 
     findUserInfo() {
-        let uList = Database.userList;
-        let i = 0;
-        while (i < uList.length) {
-            if (uList[i].username === this.targetUserName) {
-                this.setState({
-                    password: uList[i].password,
-                    isAdmin: uList[i].isAdmin,
-                    gold: uList[i].gold,
-                    userInd: i
-                })
-                this.targetUser = uList[i];
-                i += uList.length;
+        const url = "http://localhost:3001/users/" + this.targetUserId;
+        const request = new Request(url, {
+            method: "get",
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
             }
-            i++;
-        }
+        });
+
+        fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        }).then((user) => {
+            this.targetUser = user;
+            this.setState({
+                targetUserName: user.username,
+                password: user.password,
+                isAdmin: user.isAdmin,
+                gold: user.gold
+            })
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    getPetInfo() {
+        const url = "http://localhost:3001/pets/";
+        const request = new Request(url, {
+            method: "get",
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        }).then((pets) => {
+            this.setState({
+                pList: pets
+            })
+            this.populatePets();
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     populatePets() {
-        let targetUser = Database.userList[this.state.userInd];
         let pEntries = document.querySelector("#petEntries");
-        let pidList = targetUser.petIdList;
+        pEntries.innerHTML = "";
+        let pidList = this.targetUser.petIdList;
         for (let i = 0; i < pidList.length; i++) {
             // Create new div element:
             let nDiv = document.createElement('div');
@@ -71,53 +108,52 @@ class AdminUserPage extends React.Component {
             nTable.setAttribute('class', 'item-view');
             
             // Start populating:
-            let pList = Database.petList;
             let j = 0;
-            while (j < pList.length) {
-                if (pList[j].id == pidList[i]) {
+            while (j < this.state.pList.length) {
+                if (this.state.pList[j]._id === pidList[i]) {
                     let innerArray = [];
-                    innerArray.push(pList[j].id);
+                    innerArray.push(this.state.pList[j]._id);
 
                     // Add Pet Name entry:
-                    let pNameReturn = this.AddTR("Pet Name", pList[j].petName, 
+                    let pNameReturn = this.AddTR("Pet Name", this.state.pList[j].petName, 
                                                 this.handlePetNameChange, pidList[i]);
                     tbodyPart.appendChild(pNameReturn);
-                    innerArray.push(pList[j].petName);
+                    innerArray.push(this.state.pList[j].petName);
                     
                     // Add Pet Hunger entry:
-                    let pHungerReturn = this.AddTR("Pet Hunger", pList[j].fullness, 
+                    let pHungerReturn = this.AddTR("Pet Hunger", this.state.pList[j].fullness, 
                                                 this.handlePetHungerChange, pidList[i]);
                     tbodyPart.appendChild(pHungerReturn);
-                    innerArray.push(pList[j].fullness);
+                    innerArray.push(this.state.pList[j].fullness);
 
                     // Add Pet Happniess entry:
-                    let pHappinessReturn = this.AddTR("Pet Happniess", pList[j].happiness, 
+                    let pHappinessReturn = this.AddTR("Pet Happniess", this.state.pList[j].happiness, 
                                                 this.handlePetHappinessChange, pidList[i]);
                     tbodyPart.appendChild(pHappinessReturn);
-                    innerArray.push(pList[j].happiness);
+                    innerArray.push(this.state.pList[j].happiness);
 
                     // Add Pet Intelligence entry:
-                    let pIntelligenceReturn = this.AddTR("Pet Intelligence", pList[j].intelligence,
+                    let pIntelligenceReturn = this.AddTR("Pet Intelligence", this.state.pList[j].intelligence,
                                                 this.handlePetIntelligenceChange, pidList[i]);
                     tbodyPart.appendChild(pIntelligenceReturn);
-                    innerArray.push(pList[j].intelligence);
+                    innerArray.push(this.state.pList[j].intelligence);
 
                     // Add Pet Strength entry:
-                    let pStrengthReturn = this.AddTR("Pet Strength", pList[j].strength, 
+                    let pStrengthReturn = this.AddTR("Pet Strength", this.state.pList[j].strength, 
                                                 this.handlePetStrengthChange, pidList[i]);
                     tbodyPart.appendChild(pStrengthReturn);
-                    innerArray.push(pList[j].strength);
+                    innerArray.push(this.state.pList[j].strength);
 
                     // Add Pet Speed entry:
-                    let pSpeedReturn = this.AddTR("Pet Speed", pList[j].speed, 
+                    let pSpeedReturn = this.AddTR("Pet Speed", this.state.pList[j].speed, 
                                                 this.handlePetSpeedChange, pidList[i]);
                     tbodyPart.appendChild(pSpeedReturn);
-                    innerArray.push(pList[j].speed);
+                    innerArray.push(this.state.pList[j].speed);
 
                     innerArray.push("keep");
                     
                     this.petChanges.push(innerArray);
-                    j += pList.length;
+                    j += this.state.pList.length;
                 }
                 j++;
             }
@@ -125,14 +161,38 @@ class AdminUserPage extends React.Component {
             nDiv.appendChild(nTable);
             nDiv.appendChild(document.createElement('br'));
             pEntries.appendChild(nDiv);
-
         }
     }
 
+    getItemInfo() {
+        const url = "http://localhost:3001/items/";
+        const request = new Request(url, {
+            method: "get",
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        }).then((items) => {
+            this.setState({
+                iList: items
+            })
+            this.populateItems();
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
     populateItems() {
-        let targetUser = Database.userList[this.state.userInd];
         let iEntries = document.querySelector("#itemEntries");
-        let iidList = targetUser.itemIdList;
+        iEntries.innerHTML = "";
+        let iidList = this.targetUser.itemIdList;
         for (let i = 0; i < iidList.length; i++) {
             // Create new div element:
             let nDiv = document.createElement('div');
@@ -157,52 +217,51 @@ class AdminUserPage extends React.Component {
             nTable.setAttribute('class', 'item-view');
             
             // Start populating:
-            let iList = Database.itemList;
             let j = 0;
-            while (j < iList.length) {
-                if (iList[j].id == iidList[i]) {
+            while (j < this.state.iList.length) {
+                if (this.state.iList[j]._id === iidList[i]) {
                     let innerArray = [];
-                    innerArray.push(iList[j].id);
+                    innerArray.push(this.state.iList[j]._id);
 
                     // Add Name entry:
-                    let pNameReturn = this.AddTR("Item Name", iList[j].name, 
+                    let pNameReturn = this.AddTR("Item Name", this.state.iList[j].name, 
                                             this.handleItemNameChange, iidList[i]);
                     tbodyPart.appendChild(pNameReturn);
                     
                     // Add Hunger entry:
-                    let pHungerReturn = this.AddTR("Item Hunger", iList[j].fullness, 
+                    let pHungerReturn = this.AddTR("Item Hunger", this.state.iList[j].fullness, 
                                                 this.handleItemHungerChange, iidList[i]);
                     tbodyPart.appendChild(pHungerReturn);
 
                     // Add Happniess entry:
-                    let pHappinessReturn = this.AddTR("Item Happniess", iList[j].happiness, 
+                    let pHappinessReturn = this.AddTR("Item Happniess", this.state.iList[j].happiness, 
                                                     this.handleItemHappinessChange, iidList[i]);
                     tbodyPart.appendChild(pHappinessReturn);
 
                     // Add Intelligence entry:
-                    let pIntelligenceReturn = this.AddTR("Item Intelligence", iList[j].intelligence, 
+                    let pIntelligenceReturn = this.AddTR("Item Intelligence", this.state.iList[j].intelligence, 
                                                     this.handleItemIntelligenceChange, iidList[i]);
                     tbodyPart.appendChild(pIntelligenceReturn);
 
                     // Add Strength entry:
-                    let pStrengthReturn = this.AddTR("Item Strength", iList[j].strength, 
+                    let pStrengthReturn = this.AddTR("Item Strength", this.state.iList[j].strength, 
                                                 this.handleItemStrengthChange, iidList[i]);
                     tbodyPart.appendChild(pStrengthReturn);
 
                     // Add Speed entry:
-                    let pSpeedReturn = this.AddTR("Item Speed", iList[j].speed, 
+                    let pSpeedReturn = this.AddTR("Item Speed", this.state.iList[j].speed, 
                                                 this.handleItemSpeedChange, iidList[i]);
                     tbodyPart.appendChild(pSpeedReturn);
 
                     // Add Gold entry:
-                    let pGoldReturn = this.AddTR("Item Cost", iList[j].price, 
+                    let pGoldReturn = this.AddTR("Item Cost", this.state.iList[j].price, 
                                             this.handleItemGoldChange, iidList[i]);
                     tbodyPart.appendChild(pGoldReturn);
                     
                     innerArray.push("keep");
                     
                     this.itemChanges.push(innerArray);
-                    j += iList.length;
+                    j += this.state.iList.length;
                 }
                 j++;
             }
@@ -241,72 +300,127 @@ class AdminUserPage extends React.Component {
     /* Event Handlers */
 
     handleSaveClick = () => {
-        let targetUser = Database.userList[this.state.userInd];
-        let userPetIdList = targetUser.petIdList;
-        let userItemIdList = targetUser.itemIdList;
-        targetUser.password = this.state.password;
-        targetUser.gold = this.state.gold;
+        let userPetIdList = this.targetUser.petIdList;
+        let userItemIdList = this.targetUser.itemIdList;
+        this.targetUser.password = this.state.password;
+        this.targetUser.gold = this.state.gold;
 
         // Changing pet information:
-        let pList = Database.petList;
         let petToBeRemoved = [];
         for (let i = 0; i < this.petChanges.length; i++) {
-            for (let j = 0; j < pList.length; j++) {
-                if (this.petChanges[i][0] == pList[j].id) {
+            for (let j = 0; j < this.state.pList.length; j++) {
+                if (this.petChanges[i][0] === this.state.pList[j]._id) {
                     if (this.petChanges[i][7] === "remove") {
-                        let innerArray = [];
-                        innerArray.push(j)
-                        // Find index of target pet in petIdList:
-                        for (let k = 0; k < userPetIdList.length; k++) {
-                            if (pList[j].id == userPetIdList[k]) {
-                                innerArray.push(k);
-                            }
-                        }
-                        petToBeRemoved.push(innerArray);
+                        petToBeRemoved.push(this.petChanges[i][0]);
+                    } else if (this.petChanges[i][7] === "keep") {
+                        let newPList = this.state.pList;
+                        newPList[j].petName = this.petChanges[i][1];
+                        newPList[j].fullness = this.petChanges[i][2];
+                        newPList[j].happiness = this.petChanges[i][3];
+                        newPList[j].intelligence = this.petChanges[i][4];
+                        newPList[j].strength = this.petChanges[i][5];
+                        newPList[j].speed = this.petChanges[i][6];
+                        this.setState({
+                            pList: newPList
+                        })
+                        this.petUpdate(this.petChanges[i][0], j);
                     }
-                    pList[j].petName = this.petChanges[i][1];
-                    pList[j].fullness = this.petChanges[i][2];
-                    pList[j].happiness = this.petChanges[i][3];
-                    pList[j].intelligence = this.petChanges[i][4];
-                    pList[j].strength = this.petChanges[i][5];
-                    pList[j].speed = this.petChanges[i][6];
                 }
             }
         }
 
         // Actually remove pet:
         for (let i = 0; i < petToBeRemoved.length; i++) {
-            pList.splice(petToBeRemoved[i][0], 1);
-            userPetIdList.splice(petToBeRemoved[i][1], 1);
+            this.petDelete(petToBeRemoved[i]);
+            userPetIdList.splice(petToBeRemoved[i], 1);
         }
 
         // Changing item information:
-        let iList = Database.itemList;
         let itemToBeRemoved = [];
         for (let i = 0; i < this.itemChanges.length; i++) {
-            for (let j = 0; j < iList.length; j++) {
-                if (this.itemChanges[i][0] == iList[j].id) {
-                    if (this.itemChanges[i][1] === "remove") {
-                        let innerArray = [];
-                        innerArray.push(j)
-                        // Find index of target pet in petIdList:
-                        for (let k = 0; k < userItemIdList.length; k++) {
-                            if (iList[j].id == userItemIdList[k]) {
-                                innerArray.push(k);
-                            }
-                        }
-                        itemToBeRemoved.push(innerArray);
-                    }
+            // Find index of target item in itemIdList:
+            for (let k = 0; k < userItemIdList.length; k++) {
+                if (this.itemChanges[i][0] === userItemIdList[k] 
+                        && this.itemChanges[i][1] === "remove") {
+                    itemToBeRemoved.push(k);
                 }
             }
         }
 
         // Actually remove item:
         for (let i = 0; i < itemToBeRemoved.length; i++) {
-            iList.splice(itemToBeRemoved[i][0], 1);
-            userItemIdList.splice(itemToBeRemoved[i][1], 1);
+            // this.iList.splice(itemToBeRemoved[i][0], 1);
+            userItemIdList.splice(itemToBeRemoved[i], 1);
         }
+        this.userUpdate();
+        this.populateItems();
+        this.populatePets();
+    }
 
+    petUpdate(pid, ind) {
+        // Change to specific user URL after deciding on how to pass info.
+        // Currently getting user named "user" as placeholder
+        const url = "http://localhost:3001/pets/" + pid;
+        const request = new Request(url, {
+            method: "PATCH",
+            body: JSON.stringify(this.state.pList[ind]),
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                console.log("Changes made to server db")
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    petDelete(pid) {
+        // Change to specific user URL after deciding on how to pass info.
+        // Currently getting user named "user" as placeholder
+        const url = "http://localhost:3001/pets/" + pid;
+        const request = new Request(url, {
+            method: "DELETE",
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                console.log("Changes made to server db")
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
+    userUpdate() {
+        const url = "http://localhost:3001/users/" + this.targetUserId;
+        const request = new Request(url, {
+            method: "PATCH",
+            body: JSON.stringify(this.targetUser),
+            headers: { 
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                console.log("Changes made to server db")
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     handlePWChange = (e) => {
@@ -326,7 +440,7 @@ class AdminUserPage extends React.Component {
     handlePetNameChange = (e) => {
         let petId = e.target.attributes.getNamedItem('itemId').value;
         for (let i = 0; i < this.petChanges.length; i++) {
-            if (this.petChanges[i][0] == petId) {
+            if (this.petChanges[i][0] === petId) {
                 this.petChanges[i][1] = e.target.value;
             }
         }
@@ -335,7 +449,7 @@ class AdminUserPage extends React.Component {
     handlePetHungerChange = (e) => {
         let petId = e.target.attributes.getNamedItem('itemId').value;
         for (let i = 0; i < this.petChanges.length; i++) {
-            if (this.petChanges[i][0] == petId) {
+            if (this.petChanges[i][0] === petId) {
                 this.petChanges[i][2] = e.target.value;
             }
         }
@@ -344,7 +458,7 @@ class AdminUserPage extends React.Component {
     handlePetHappinessChange = (e) => {
         let petId = e.target.attributes.getNamedItem('itemId').value;
         for (let i = 0; i < this.petChanges.length; i++) {
-            if (this.petChanges[i][0] == petId) {
+            if (this.petChanges[i][0] === petId) {
                 this.petChanges[i][3] = e.target.value;
             }
         }
@@ -353,7 +467,7 @@ class AdminUserPage extends React.Component {
     handlePetIntelligenceChange = (e) => {
         let petId = e.target.attributes.getNamedItem('itemId').value;
         for (let i = 0; i < this.petChanges.length; i++) {
-            if (this.petChanges[i][0] == petId) {
+            if (this.petChanges[i][0] === petId) {
                 this.petChanges[i][4] = e.target.value;
             }
         }
@@ -362,7 +476,7 @@ class AdminUserPage extends React.Component {
     handlePetStrengthChange = (e) => {
         let petId = e.target.attributes.getNamedItem('itemId').value;
         for (let i = 0; i < this.petChanges.length; i++) {
-            if (this.petChanges[i][0] == petId) {
+            if (this.petChanges[i][0] === petId) {
                 this.petChanges[i][5] = e.target.value;
             }
         }
@@ -371,7 +485,7 @@ class AdminUserPage extends React.Component {
     handlePetSpeedChange = (e) => {
         let petId = e.target.attributes.getNamedItem('itemId').value;
         for (let i = 0; i < this.petChanges.length; i++) {
-            if (this.petChanges[i][0] == petId) {
+            if (this.petChanges[i][0] === petId) {
                 this.petChanges[i][6] = e.target.value;
             }
         }
@@ -380,7 +494,7 @@ class AdminUserPage extends React.Component {
     markForRemovalP = (e) => {
         let petId = e.target.value;
         for (let i = 0; i < this.petChanges.length; i++) {
-            if (this.petChanges[i][0] == petId) {
+            if (this.petChanges[i][0] === petId) {
                 let pEntries = document.querySelector("#petEntries");
                 let ind = e.target.getAttribute('ind')
                 let target = pEntries.children[ind]
@@ -399,7 +513,7 @@ class AdminUserPage extends React.Component {
     markForRemovalI = (e) => {
         let itemId = e.target.value;
         for (let i = 0; i < this.itemChanges.length; i++) {
-            if (this.itemChanges[i][0] == itemId) {
+            if (this.itemChanges[i][0] === itemId) {
                 let iEntries = document.querySelector("#itemEntries");
                 let ind = e.target.getAttribute('ind')
                 let target = iEntries.children[ind]
@@ -434,7 +548,7 @@ class AdminUserPage extends React.Component {
     render() {
         return(
             <div>
-                <Link to={'./AdminDashboardPage'}>
+                <Link to={'./AdminUserPage'}>
                     <img 
                         className={'saveIcon'} 
                         src={saveIcon} 
@@ -447,7 +561,7 @@ class AdminUserPage extends React.Component {
 
                 <div className='main'>
                     <div className='mainForm'>
-                        <div className='itemTitle'>Id: {this.state.username}</div>
+                        <div className='itemTitle'>Username: {this.state.targetUserName}</div>
                         <div className='itemForm'>
                             <p className={'addItemLink'}>
                                 Password: 
