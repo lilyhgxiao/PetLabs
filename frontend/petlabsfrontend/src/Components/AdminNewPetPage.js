@@ -12,9 +12,9 @@ class AdminNewPetPage extends React.Component {
         super(props);
         this.state = {
             name: '',
-            neutralImage: AddIcon,
-            happyImage: AddIcon,
-            sadImage: AddIcon,
+            neutralImage: "",
+            happyImage: "",
+            sadImage: "",
             strengthRate: 0,
             speedRate: 0,
             intelligenceRate: 0,
@@ -30,6 +30,11 @@ class AdminNewPetPage extends React.Component {
     addPetType() {
         if (this.state.name.length === 0) {
             alert('Item name cannot be blank :(');
+            return;
+        }
+
+        if (this.state.neutralImage.length === 0) {
+            alert('Random image selection incomplete :(');
             return;
         }
 

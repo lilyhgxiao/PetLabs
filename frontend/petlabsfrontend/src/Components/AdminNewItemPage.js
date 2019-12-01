@@ -16,7 +16,7 @@ class AdminNewItemPage extends React.Component {
             intelligence: 0,
             happiness: 0,
             fullness: 0,
-            imgURL: AddIcon,
+            imgURL: "",
             price: 0,
             imgIcon: AddIcon,
         };
@@ -25,6 +25,11 @@ class AdminNewItemPage extends React.Component {
     addItem() {
         if (this.state.name.length === 0) {
             alert('Item name cannot be blank :(');
+            return;
+        }
+
+        if (this.state.imgURL.length === 0) {
+            alert('Random image selection incomplete :(');
             return;
         }
 
