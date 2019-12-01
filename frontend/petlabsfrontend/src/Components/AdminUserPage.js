@@ -355,6 +355,8 @@ class AdminUserPage extends React.Component {
         this.userUpdate();
         this.populateItems();
         this.populatePets();
+
+        alert("Changes Saved!");
     }
 
     petUpdate(pid, ind) {

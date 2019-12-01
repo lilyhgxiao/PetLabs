@@ -4,6 +4,8 @@ import '../CSS/ItemView.css';
 import saveIcon from '../Images/Save_Icon.png';
 import AddIcon from '../Images/add_new.png';
 
+import ItemImageImporter from './ItemImageImporter.js';
+
 class AdminNewItemPage extends React.Component {
     constructor(props) {
         super(props);
@@ -16,6 +18,7 @@ class AdminNewItemPage extends React.Component {
             fullness: 0,
             imgURL: AddIcon,
             price: 0,
+            imgIcon: AddIcon,
         };
     }
 
@@ -41,7 +44,7 @@ class AdminNewItemPage extends React.Component {
                 intelligence: this.state.intelligence,
                 happiness: this.state.happiness,
                 fullness: this.state.fullness,
-                // imgURL
+                imgURL: this.state.imgURL,
                 price: this.state.price
             }),
             headers: {
@@ -158,7 +161,13 @@ class AdminNewItemPage extends React.Component {
     }
 
     placeHolderHandle = () => {
-        alert("Prompt for image to upload");
+        const iList = Array.from(ItemImageImporter.keys());
+        const nameSelected = iList[Math.floor(Math.random() * iList.length)];
+        this.setState({
+            imgURL: nameSelected,
+            imgIcon: ItemImageImporter.get(nameSelected)
+        })
+        alert("Item image '" + nameSelected + "' was selected");
     }
     
     render() {
@@ -172,7 +181,7 @@ class AdminNewItemPage extends React.Component {
                         <div className={'centerView'}>
                             <p className={'addItemLink'}>Name: <input className={'addItemLink'} type='Text' value={this.state.name} onChange={this.handleNameChange}/> </p> 
                             <p className={'centerLeft'}>Sprite:</p>
-                            <input className={'imgAddItemLink'} type={'image'} src={AddIcon} alt={'Add new Image'} onClick={this.placeHolderHandle} />
+                            <input className={'imgAddItemLink'} type={'image'} src={this.state.imgIcon} alt={'Randomly assign image'} onClick={this.placeHolderHandle} />
                         </div>
                         <br /><br /><br /><br /><br /><br /><br />
                         <table className={'item-view'}>

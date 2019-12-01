@@ -5,6 +5,8 @@ import saveIcon from '../Images/Save_Icon.png';
 import AddIcon from '../Images/add_new.png';
 import SpriteComponent from '../Components/SpriteComponent';
 
+import PetImageImporter from './PetImageImporter.js';
+
 class AdminNewPetPage extends React.Component {
     constructor(props) {
         super(props);
@@ -19,6 +21,9 @@ class AdminNewPetPage extends React.Component {
             happinessRate: 0,
             fullnessRate: 0,
             price: 0,
+            importedImageN: AddIcon,
+            importedImageH: AddIcon,
+            importedImageS: AddIcon,
         };
     }
 
@@ -39,15 +44,15 @@ class AdminNewPetPage extends React.Component {
             method: 'post',
             body: JSON.stringify({
                 name: this.formatName(),
-                // neutralImage:
-                // happyImage: 
-                // sadImage: 
+                neutralImage: this.state.neutralImage,
+                happyImage: this.state.happyImage,
+                sadImage: this.state.sadImage,
                 strengthRate: this.state.strengthRate,
                 speedRate: this.state.speedRate,
                 intelligenceRate: this.state.intelligenceRate,
                 happinessRate: this.state.happinessRate,
                 fullnessRate: this.state.fullnessRate,
-                // imgURL
+                // imgURL: this.state.imgURL,
                 price: this.state.price
             }),
             headers: {
@@ -164,7 +169,20 @@ class AdminNewPetPage extends React.Component {
     }
 
     placeHolderHandle = () => {
-        alert("Prompt for image to upload");
+        let pList = Array.from(PetImageImporter.keys());
+        pList.splice(pList.indexOf("pet_dead"));
+        const nameSelected = pList[Math.floor(Math.random() * pList.length)];
+        const coreName = nameSelected.split("_")[0];
+        this.setState({
+            imgURL: nameSelected,
+            neutralImage: coreName + "_neutral",
+            happyImage: coreName + "_happy",
+            sadImage: coreName + "_sad",
+            importedImageN: PetImageImporter.get(coreName + "_neutral"),
+            importedImageH: PetImageImporter.get(coreName + "_happy"),
+            importedImageS: PetImageImporter.get(coreName + "_sad"),
+        })
+        alert("Pet image set '" + coreName + "' was selected");
     }
     
     render() {
@@ -180,13 +198,13 @@ class AdminNewPetPage extends React.Component {
                             <p className={'centerLeft'}>Sprites:</p>
                             <ul className={'container'}>
                                 <li>
-                                    <SpriteComponent imgURL={AddIcon} altText={'Neutral Image'} subtitle={'Neutral Image'} callback={this.placeHolderHandle}/>
+                                    <SpriteComponent imgURL={this.state.importedImageN} altText={'Neutral Image'} subtitle={'Neutral Image'} callback={this.placeHolderHandle}/>
                                 </li>
                                 <li>
-                                    <SpriteComponent imgURL={AddIcon} altText={'Happy Image'} subtitle={'Happy Image'} callback={this.placeHolderHandle}/>
+                                    <SpriteComponent imgURL={this.state.importedImageH} altText={'Happy Image'} subtitle={'Happy Image'} callback={this.placeHolderHandle}/>
                                 </li>
                                 <li>
-                                    <SpriteComponent imgURL={AddIcon} altText={'Sad Image'} subtitle={'Sad Image'} callback={this.placeHolderHandle}/>
+                                    <SpriteComponent imgURL={this.state.importedImageS} altText={'Sad Image'} subtitle={'Sad Image'} callback={this.placeHolderHandle}/>
                                 </li>
                             </ul>
                         </div>
