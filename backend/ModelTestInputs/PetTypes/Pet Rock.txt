@@ -1,8 +1,8 @@
 {
     "name": "Pet Rock",
-    "neutralImage": "../Images/petrock_neutral.png",
-    "happyImage": "../Images/petrock_neutral.png",
-    "sadImage": "../Images/petrock_neutral.png",
+    "neutralImage": "petrock_neutral",
+    "happyImage": "petrock_neutral",
+    "sadImage": "petrock_neutral",
     "strengthRate": 0,
     "speedRate": 0,
     "intelligenceRate": 0,

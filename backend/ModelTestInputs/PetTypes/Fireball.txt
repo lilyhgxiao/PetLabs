@@ -1,8 +1,8 @@
 {
     "name": "Fireball",
-    "neutralImage": "../Images/fireball_neutral.png",
-    "happyImage": "../Images/fireball_happy.png",
-    "sadImage": "../Images/fireball_sad.png",
+    "neutralImage": "fireball_neutral",
+    "happyImage": "fireball_happy",
+    "sadImage": "fireball_sad",
     "strengthRate": 3,
     "speedRate": 3,
     "intelligenceRate": 3,

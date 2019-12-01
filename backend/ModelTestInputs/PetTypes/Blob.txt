@@ -1,8 +1,8 @@
 {
     "name": "Blob",
-    "neutralImage": "../Images/blob_neutral.png",
-    "happyImage": "../Images/blob_happy.png",
-    "sadImage": "../Images/blob_sad.png",
+    "neutralImage": "blob_neutral",
+    "happyImage": "blob_happy",
+    "sadImage": "blob_sad",
     "strengthRate": 1,
     "speedRate": 1,
     "intelligenceRate": 1,
