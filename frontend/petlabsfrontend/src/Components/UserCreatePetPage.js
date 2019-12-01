@@ -10,6 +10,8 @@ import UserSideMenu from './UserSideMenu';
 import GoldDisplay from './GoldDisplay.js';
 import PetTypeComponent from './PetTypeComponent';
 
+import PetImageImporter from './PetImageImporter.js';
+
 //statezero
 import BaseReactComponent from "./../BaseReactComponent";
 import { updateUserState } from "../actions/userhelpers"
@@ -153,7 +155,7 @@ class UserCreatePetPage extends BaseReactComponent {
         this.setState({
             petType: petType,
             typeSelected: true,
-            imgURL: petType.happyImage,
+            imgURL: PetImageImporter.get(petType.happyImage),
             priceString: " (" + petType.price + "G)"
         })
     }
