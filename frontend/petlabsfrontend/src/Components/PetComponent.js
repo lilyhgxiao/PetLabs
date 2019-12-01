@@ -5,55 +5,63 @@ import { getPetType } from '../actions/pettypehelpers';
 
 import PetImageImporter from './PetImageImporter.js';
 
-import pet_dead from '../Images/pet_dead.png';
-
-function PetComponent(props) {
-    const { pet, goToPetPage } = props;
+class PetComponent extends React.Component {
     
-    const imgURLReq = retrieveImgURL(pet);
-    let imgURL = '';
+    state = {
+        imgURL: ''
+    };
 
-    imgURLReq.then((img) => {
-        imgURL = img;
-        console.log(imgURL)
-    })
+    componentDidMount() {
+        const { pet } = this.props;
+        const imgURLReq = retrieveImgURL(pet);
 
-    return(
-        <div className='petComponent' onClick={ goToPetPage.bind(this, pet) }>
-            <img className='petImg' src={imgURL} alt={pet.petName}/>
-            <div className='info'>
-                <span id='name'>
-                    {pet.petName}
-                </span>
-                <span id='happiness'>
-                    <span className='statusName'>Happiness: </span><span className='statusValue'>{ pet.happiness }%</span>
-                </span>
-                <br/>
-                <span id='fullness'>
-                    <span className='statusName'>Fullness: </span><span className='statusValue'>{pet.fullness}%</span>
-                </span>
-                <br/>
+        imgURLReq.then((img) => {
+            this.setState({
+                imgURL: img
+            })
+        })
+    }
+    
+    render() {
+        const { pet, goToPetPage } = this.props;
+
+        return(
+            <div className='petComponent' onClick={ goToPetPage.bind(this, pet) }>
+                <img className='petImg' src={PetImageImporter.get(this.state.imgURL)} alt={pet.petName}/>
+                <div className='info'>
+                    <span id='name'>
+                        {pet.petName}
+                    </span>
+                    <span id='happiness'>
+                        <span className='statusName'>Happiness: </span><span className='statusValue'>{ pet.happiness }%</span>
+                    </span>
+                    <br/>
+                    <span id='fullness'>
+                        <span className='statusName'>Fullness: </span><span className='statusValue'>{pet.fullness}%</span>
+                    </span>
+                    <br/>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 function retrieveImgURL(pet) {
 
     const typePromise = getPetType(pet.type);
+    
 
     return typePromise.then((petType) => {
-
         if (pet.alive) {
             if (pet.happiness >= 80) {
-                return PetImageImporter.get(petType.happyImage);
+                return petType.happyImage;
             } else if (pet.happiness < 80 && pet.happiness >= 30) {
-                return PetImageImporter.get(petType.neutralImage);
+                return petType.neutralImage;
             } else {
-                return PetImageImporter.get(petType.sadImage);
+                return petType.sadImage;
             }
         } else {
-            return pet_dead;
+            return "pet_dead";
         }
     })
 
