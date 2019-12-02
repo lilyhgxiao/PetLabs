@@ -145,7 +145,8 @@ export const checkHash = (pass, hashedPass) => {
 
 export const updateUserState = (state, targetUserId) => {
     //DB CALL: UPDATE USER
-    const url = "http://localhost:3001/users/" + targetUserId;
+    // const url = "http://localhost:3001/users/" + targetUserId;
+    const url = "/users/" + targetUserId;
 
     const request = new Request(url, {
         method: "PATCH",
@@ -176,7 +177,8 @@ export const updateUserState = (state, targetUserId) => {
 
 
 export const getUserByUsername = (username) => {
-    const url = "http://localhost:3001/users/";
+    // const url = "http://localhost:3001/users/";
+    const url = "/users/";
     const request = new Request(url, {
         method: "get",
         headers: {
@@ -203,7 +205,8 @@ export const getUserByUsername = (username) => {
 }
 
 export const createNewUser = (newUser) => {
-    const url = "http://localhost:3001/users"
+    // const url = "http://localhost:3001/users"
+    const url = "/users"
 
     const request = new Request(url, {
         method: "POST",
