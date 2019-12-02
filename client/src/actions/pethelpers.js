@@ -117,8 +117,6 @@ export const deletePet = (targetPetId) => {
                 updateUserState({ petIdList: user.petIdList }, user._id);
                 setState("currUser.petIdList", user.petIdList);
 
-                const currPet = getState("currPet");
-
                 return true;
             }).catch((error) => {
                 console.log(error);

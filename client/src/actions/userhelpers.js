@@ -12,7 +12,8 @@ export const login = () => {
 
     return userReq.then((user) => {
         if (user === null) {
-            success = false;
+            alert('Invalid username/password combination. Please try again.');
+            return {isAdmin: false, loginSuccessful: false}
         }
 
         //authentication. hash password here

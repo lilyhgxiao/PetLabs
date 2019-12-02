@@ -45,22 +45,16 @@ class SignUpPage extends React.Component {
     authSignup = () => {
         //authenticate
 
-        //temp
-        let success = true;
-
         if (!this.authEmpty()) {
             alert("Please fill in all fields.");
-            success = false;
         } else if (!this.authPass()) {
             alert('Passwords do not match. Please try again.')
-            success = false;
         } else {
             const checkUsernameReq = getUserByUsername(this.state.username);
 
             checkUsernameReq.then((user) => {
                 if (user !== null) {
                     alert('Username already taken. Please try another username.');
-                    success = false;
                 } else {
                     const signupReq = signup({
                         username: this.state.username,

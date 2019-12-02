@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { startLogging } from "statezero";
+//import { startLogging } from "statezero";
 import { setEmptyState } from "./actions/helpers";
 
 setEmptyState();
