@@ -17,7 +17,8 @@ class AdminUserListPage extends React.Component {
     }
 
     componentDidMount() {
-        const url = 'http://localhost:3001/users';
+        // const url = 'http://localhost:3001/users';
+        const url = '/users';
 
         const request = new Request(url, {
             method: 'GET',

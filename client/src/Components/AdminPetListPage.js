@@ -19,7 +19,8 @@ class AdminPetListPage extends React.Component {
     }
 
     componentDidMount() {
-        const url = 'http://localhost:3001/pettypes';
+        // const url = 'http://localhost:3001/pettypes';
+        const url = '/pettypes';
 
         const request = new Request(url, {
             method: 'GET',

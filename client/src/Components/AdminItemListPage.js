@@ -19,7 +19,8 @@ class AdminItemListPage extends React.Component {
     }
 
     componentDidMount() {
-        const url = 'http://localhost:3001/items/';
+        // const url = 'http://localhost:3001/items/';
+        const url = '/items/';
         const request = new Request(url, {
             method: 'get',
             headers: { 

@@ -26,7 +26,8 @@ class AdminPetPage extends React.Component {
     }
 
     componentDidMount() {
-        const url = 'http://localhost:3001/pettypes/' + this.props.location.petTypeId;
+        // const url = 'http://localhost:3001/pettypes/' + this.props.location.petTypeId;
+        const url = '/pettypes/' + this.props.location.petTypeId;
 
         const request = new Request(url, {
             method: 'GET',
@@ -149,7 +150,8 @@ class AdminPetPage extends React.Component {
             return;
         }
 
-        const url = 'http://localhost:3001/pettypes/' + this.props.location.petTypeId;
+        // const url = 'http://localhost:3001/pettypes/' + this.props.location.petTypeId;
+        const url = '/pettypes/' + this.props.location.petTypeId;
 
         const request = new Request(url, {
             method: 'PATCH',

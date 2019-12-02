@@ -43,7 +43,8 @@ class AdminNewPetPage extends React.Component {
             return;
         }
 
-        const url = "http://localhost:3001/pettypes/";
+        // const url = "http://localhost:3001/pettypes/";
+        const url = "/pettypes/";
 
         const request = new Request(url, {
             method: 'post',
