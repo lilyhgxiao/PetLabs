@@ -1,5 +1,6 @@
 export const getPetType = (petTypeName) => {
-    const url = "http://localhost:3001/pettypes/";
+    // const url = "http://localhost:3001/pettypes/";
+    const url = "/pettypes/";
     const request = new Request(url, {
         method: "get",
         headers: {
@@ -25,7 +26,8 @@ export const getPetType = (petTypeName) => {
 }
 
 export const getAllPetTypes = () => {
-    const url = "http://localhost:3001/pettypes";
+    // const url = "http://localhost:3001/pettypes";
+    const url = "/pettypes";
     const request = new Request(url, {
         method: "get",
         headers: {

@@ -1,5 +1,6 @@
 export const getAllItems = () => {
-    const url = "http://localhost:3001/items/";
+    // const url = "http://localhost:3001/items/";
+    const url = "/items/";
     const request = new Request(url, {
         method: "get",
         headers: {
@@ -22,7 +23,8 @@ export const getAllItems = () => {
 
 export const getItemById = (targetItemId) => {
     //DB CALL: UPDATE USER
-    const url = "http://localhost:3001/items/" + targetItemId;
+    // const url = "http://localhost:3001/items/" + targetItemId;
+    const url = "/items/" + targetItemId;
 
     const request = new Request(url, {
         method: "GET",
