@@ -4,7 +4,7 @@ import TreadmillImage from '../Images/Treadmill.png';
 
 const ItemImageImporter = new Map();
 
-ItemImageImporter.set("Dumbell", DumbellImage);
+ItemImageImporter.set("Dumbbell", DumbellImage);
 ItemImageImporter.set("Book", BookImage);
 ItemImageImporter.set("Treadmill", TreadmillImage);
 
