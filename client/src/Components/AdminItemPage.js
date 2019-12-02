@@ -150,8 +150,9 @@ class AdminItemPage extends React.Component {
             return;
         }
 
-        const url = 'http://localhost:3001/items/' + this.props.location.itemId;
-
+        //const url = 'http://localhost:3001/items/' + this.props.location.itemId;
+        const url = '/items/' + this.props.location.itemId;
+        
         const request = new Request(url, {
             method: 'PATCH',
             body: JSON.stringify({
