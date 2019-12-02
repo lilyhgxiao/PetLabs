@@ -86,7 +86,7 @@ app.post('/items', (request, response) => {
 
 // GET route to get all items
 app.get('/items', (request, response) => {
-    if (!request.session.user || !request.session.isAdmin) {
+    if (!request.session.user) {
         response.status(401).send();
         return;
     }
@@ -221,7 +221,7 @@ app.post('/pettypes', (request, response) => {
 
 // GET route to get all petTypes
 app.get('/pettypes', (request, response) => {
-    if (!request.session.user || !request.session.isAdmin) {
+    if (!request.session.user) {
         response.status(401).send();
         return;
     }
