@@ -177,8 +177,8 @@ class UserPetCarePage extends BaseReactComponent {
                 }
             }
 
-            this.updateHappiness(targetItem.fullness)
-            this.updateFullness(targetItem.happiness)
+            this.updateHappiness(targetItem.happiness)
+            this.updateFullness(targetItem.fullness)
 
             updatePetState({
                 intelligence: currPet.intelligence + targetItem.intelligence * this.state.type.intelligenceRate,
