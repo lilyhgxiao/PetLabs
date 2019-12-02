@@ -28,8 +28,8 @@ class AdminUserPage extends React.Component {
     }
 
     findUserInfo() {
-        // const url = "http://localhost:3001/users/" + this.targetUserId;
-        const url = "/users/" + this.targetUserId;
+        const url = "http://localhost:3001/users/" + this.targetUserId;
+        // const url = "/users/" + this.targetUserId;
         const request = new Request(url, {
             method: "get",
             headers: { 
@@ -57,8 +57,8 @@ class AdminUserPage extends React.Component {
     }
 
     getPetInfo() {
-        // const url = "http://localhost:3001/pets/";
-        const url = "/pets/";
+        const url = "http://localhost:3001/pets/";
+        // const url = "/pets/";
         const request = new Request(url, {
             method: "get",
             headers: { 
@@ -167,8 +167,8 @@ class AdminUserPage extends React.Component {
     }
 
     getItemInfo() {
-        // const url = "http://localhost:3001/items/";
-        const url = "/items/";
+        const url = "http://localhost:3001/items/";
+        // const url = "/items/";
         const request = new Request(url, {
             method: "get",
             headers: { 
@@ -365,8 +365,8 @@ class AdminUserPage extends React.Component {
     petUpdate(pid, ind) {
         // Change to specific user URL after deciding on how to pass info.
         // Currently getting user named "user" as placeholder
-        // const url = "http://localhost:3001/pets/" + pid;
-        const url = "/pets/" + pid;
+        const url = "http://localhost:3001/pets/" + pid;
+        // const url = "/pets/" + pid;
         const request = new Request(url, {
             method: "PATCH",
             body: JSON.stringify(this.state.pList[ind]),
@@ -389,8 +389,8 @@ class AdminUserPage extends React.Component {
     petDelete(pid) {
         // Change to specific user URL after deciding on how to pass info.
         // Currently getting user named "user" as placeholder
-        // const url = "http://localhost:3001/pets/" + pid;
-        const url = "/pets/" + pid;
+        const url = "http://localhost:3001/pets/" + pid;
+        // const url = "/pets/" + pid;
         const request = new Request(url, {
             method: "DELETE",
             headers: { 
@@ -410,8 +410,8 @@ class AdminUserPage extends React.Component {
     }
 
     userUpdate() {
-        // const url = "http://localhost:3001/users/" + this.targetUserId;
-        const url = "/users/" + this.targetUserId;
+        const url = "http://localhost:3001/users/" + this.targetUserId;
+        // const url = "/users/" + this.targetUserId;
         const request = new Request(url, {
             method: "PATCH",
             body: JSON.stringify(this.targetUser),

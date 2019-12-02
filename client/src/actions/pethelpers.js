@@ -9,8 +9,8 @@ export const setTargetPet = (pet) => {
 
 export const updatePetState = (state, targetPetId) => {
     //DB CALL: UPDATE PET
-    // const url = "http://localhost:3001/pets/" + targetPetId;
-    const url = "/pets/" + targetPetId;
+    const url = "http://localhost:3001/pets/" + targetPetId;
+    // const url = "/pets/" + targetPetId;
 
     const request = new Request(url, {
         method: "PATCH",
@@ -41,8 +41,8 @@ export const updatePetState = (state, targetPetId) => {
 
 
 export const createNewPet = (newPet) => {
-    // const url = "http://localhost:3001/pets"
-    const url = "/pets"
+    const url = "http://localhost:3001/pets"
+    // const url = "/pets"
 
     const request = new Request(url, {
         method: "POST",
@@ -66,8 +66,8 @@ export const createNewPet = (newPet) => {
 
 
 export const getAllPets = () => {
-    // const url = "http://localhost:3001/pets";
-    const url = "/pets";
+    const url = "http://localhost:3001/pets";
+    // const url = "/pets";
     const request = new Request(url, {
         method: "get",
         headers: {
@@ -91,8 +91,8 @@ export const getAllPets = () => {
 
 export const deletePet = (targetPetId) => {
     //DB CALL: DELETE PET
-    // const url = "http://localhost:3001/pets/" + targetPetId;
-    const url = "/pets/" + targetPetId;
+    const url = "http://localhost:3001/pets/" + targetPetId;
+    // const url = "/pets/" + targetPetId;
 
     const petRequest = new Request(url, {
         method: "DELETE",
