@@ -180,7 +180,7 @@ class AdminPetPage extends React.Component {
     }
 
     placeHolderHandle = () => {
-        alert("Prompt for image to upload");
+        // alert("Prompt for image to upload");
     }
 
     validateState = () => {
