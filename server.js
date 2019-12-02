@@ -563,6 +563,16 @@ function getUserPropertiesToUpdate(request) {
     return update;
 }
 
+const path = require('path');
+
+const publicPath = path.join(__dirname, '..', 'team11\\client\\build')
+
+app.use(express.static(publicPath));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(publicPath, 'index.html'));
+})
+
 // Create a port for the express server
 const port = process.env.PORT || 3001;
 
