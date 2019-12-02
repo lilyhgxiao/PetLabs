@@ -234,6 +234,10 @@ app.get('/pettypes', (request, response) => {
 
 // GET route to get a specific petType 
 app.get('/pettypes/:id', (request, response) => {
+    if (!request.session.user) {
+        response.status(401).send();
+        return;
+    }
     // Extract the id from the URL wildcard
     const id = request.params.id;
 
@@ -349,6 +353,10 @@ app.post('/pets', (request, response) => {
 
 // GET route to get all pets
 app.get('/pets', (request, response) => {
+    if (!request.session.user) {
+        response.status(401).send();
+        return;
+    }
     if (!request.session.user || !request.session.isAdmin) {
         response.status(401).send();
         return;
@@ -388,6 +396,10 @@ app.get('/pets/:id', (request, response) => {
 
 // PATCH route to update an petType
 app.patch('/pets/:id', (request, response) => {
+    if (!request.session.user) {
+        response.status(401).send();
+        return;
+    }
     // Get the petType id from the URL
     const id = request.params.id;
 
