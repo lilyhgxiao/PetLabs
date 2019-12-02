@@ -565,7 +565,7 @@ function getUserPropertiesToUpdate(request) {
 
 const path = require('path');
 
-const publicPath = path.join(__dirname, '..', 'team11\\client\\build')
+const publicPath = path.join(__dirname, '..', 'client\\build')
 
 app.use(express.static(publicPath));
 
