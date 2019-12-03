@@ -17,7 +17,7 @@ https://evening-beyond-09613.herokuapp.com/<br />
 
 The login page should now be visible.<br />
 
-# How To Use The App.
+# How To Use The App
 
 ## Admin Views
 - To login as an administrator type in ‘admin’ for username and ‘admin’ for password and click the ‘Log in’ button.
@@ -111,3 +111,41 @@ The login page should now be visible.<br />
 - You can change your password on this view. Enter the old password and new password, and confirm it in order to change. An alert will show if you have successfully changed your password.
 
 # Overview of the Routes
+
+All of the routes are defined in server.js
+
+## Item Routes
+The following routes allow the app to modify item information in the database.
+
+### POST Request to /items
+This route is used to add an item to the database. <br />
+The required fields are "name" (string), "strength" (number), "speed" (number), "intelligence" (number), "happiness" (number), "fullness" (number), "imgURL" (string), and "price" (number).<br />
+Note that "imgURL" must be either of "Dumbbell", "Book", or "Treadmill". <br />
+
+An example of valid JSON could be the following. <br />
+{<br />
+    "name": "Book",<br />
+    "strength": 0,<br />
+    "speed": 0,<br />
+    "intelligence": 5,<br />
+    "happiness": 2,<br />
+    "fullness": 0,<br />
+    "price": 2000,<br />
+    "imgURL": "Book"<br />
+}<br />
+
+There are more JSON samples in folder ModelTestInputs/Items/.<br />
+
+The following are response codes you could recieved from POST. <br />
+- 200: OK
+- 400: Bad request.
+- 409: Conflict. Item already exists.
+
+
+### GET Request to /items
+This route is used to get all of the items from the database. <br />
+
+The following are response codes you could recieved from GET. <br />
+- 200: OK
+- 500: Internal server error.
+
