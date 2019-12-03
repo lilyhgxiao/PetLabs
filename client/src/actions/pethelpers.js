@@ -78,6 +78,7 @@ export const getAllPets = () => {
 
     return fetch(request)
         .then((res) => {
+            console.log(res.status)
             if (res.status === 200) {
                 return res.json();
             }

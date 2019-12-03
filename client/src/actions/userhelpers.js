@@ -7,37 +7,74 @@ const bcrypt = require('bcryptjs')
 export const login = () => {
     //DB CALL: FIND USER
     const { username, password } = getState("loginForm");
-    const userReq = getUserByUsername(username);
+    //const userReq = getUserByUsername(username);
     let success = true;
 
-    return userReq.then((user) => {
-        if (user === null) {
-            alert('Invalid username/password combination. Please try again.');
-            return {isAdmin: false, loginSuccessful: false}
+    const url = "/users/login/" + username;
+    const request = new Request(url, {
+        method: "get",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
         }
+    });
 
-        //authentication. hash password here
-        const checkHashReq = checkHash(password, user.password);
-
-        return checkHashReq.then((result) => {
-            if (!result) {
-                success = false;
+    return fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.json();
+            } else if (res.status === 404) {
+                return null
             }
-    
-            if (success) {
-                setState("currUser", user);
-                setState("currUser.passwordLength", password.length)
-                return {isAdmin: user.isAdmin, loginSuccessful: true}
-            } else {
-                alert('Invalid username/password combination. Please try again.');
+        }).then((users) => {
+            if (users === null) {
                 return {isAdmin: false, loginSuccessful: false}
+            } else {
+                const checkHashReq = checkHash(password, users.password);
+                return checkHashReq.then((result) => {
+                    if (!result) {
+                        success = false;
+                    }
+                    if (success) {
+                        setState("currUser", users);
+                        setState("currUser.passwordLength", password.length)
+                        return {isAdmin: users.isAdmin, loginSuccessful: true}
+                    } else {
+                        
+                        return {isAdmin: false, loginSuccessful: false}
+                    }
+                })
             }
-        })
-    })
+        }).catch((error) => {
+            console.log(error);
+            return {isAdmin: null, loginSuccessful: null}
+        });
 }
 
 export const logout = () => {
-    setEmptyState();
+    const url = "/users/logout/";
+    const request = new Request(url, {
+        method: "post",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    return fetch(request)
+        .then((res) => {
+            if (res.status === 200) {
+                if (getState("currUser") !== null) {
+                    alert("Logged out successfully.");
+                }
+                setEmptyState();
+                return true;
+            }
+        }).catch((error) => {
+            console.log(error);
+            return false;
+        })
+    
 }
 
 export const updateLoginForm = field => {
@@ -70,20 +107,41 @@ export const signup = (newUser) => {
         return createReq.then((user) => {
             const currUser = getState("currUser");
 
-            const newCurrUser = {
-                _id: user._id,
-                username: user.username,
-                password: user.password,
-                isAdmin: user.isAdmin,
-                gold: user.gold,
-                petIdList: user.petIdList,
-                itemIdList: user.itemIdList
-            }
-
             if(currUser === null) {
-                setState("currUser", newCurrUser);
+                const url = "/users/login/" + user.username;
+                const request = new Request(url, {
+                    method: "get",
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                return fetch(request)
+                    .then((res) => {
+                        if (res.status === 200) {
+                            return res.json();
+                        } 
+                    }).then((userToLogin) => {
+                        const newCurrUser = {
+                            _id: userToLogin._id,
+                            username: userToLogin.username,
+                            password: userToLogin.password,
+                            isAdmin: userToLogin.isAdmin,
+                            gold: userToLogin.gold,
+                            petIdList: userToLogin.petIdList,
+                            itemIdList: userToLogin.itemIdList,
+                            passwordLength: newUser.password.length
+                        }
+                        setState("currUser", newCurrUser);
+                        return true;
+                    }).catch((error) => {
+                        console.log(error)
+                        return false;
+                    })
+            } else {
+                return true;
             }
-            return true;
         }).catch((error) => {
             console.log(error)
             return false;
@@ -204,6 +262,7 @@ export const getUserByUsername = (username) => {
             console.log(error);
         });
 }
+
 
 export const createNewUser = (newUser) => {
     // const url = "http://localhost:3001/users"

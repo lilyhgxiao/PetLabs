@@ -52,6 +52,11 @@ class LogInPage extends React.Component {
 
         loginReq.then((result) => {
             const { isAdmin, loginSuccessful } = result;
+            if (loginSuccessful === false) {
+                alert('Invalid username/password combination. Please try again.');
+            } else if (loginSuccessful === null) {
+                alert('Could not login in. Please check your connection.');
+            }
             this.setState({
                 isAdmin: isAdmin,
                 loginSuccessful: loginSuccessful

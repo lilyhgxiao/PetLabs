@@ -36,7 +36,7 @@ class SignUpPage extends React.Component {
     }
 
     authEmpty = () => {
-        if (this.state.username.length === 0 || this.state.password === 0 || this.state.confirmPassword === 0) {
+        if (this.state.username.length === 0 || this.state.password.length === 0 || this.state.confirmPassword.length === 0) {
             return false;
         }
         return true;

@@ -42,6 +42,8 @@ class UserDashboardPage extends BaseReactComponent {
         const petListReq = getAllPets();
 
         petListReq.then((pets) => {
+            console.log(pets)
+            console.log(currUser.petIdList)
             const petList = [];
             let petFiltered;
             let petToAdd;

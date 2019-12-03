@@ -357,10 +357,7 @@ app.get('/pets', (request, response) => {
         response.status(401).send();
         return;
     }
-    if (!request.session.user || !request.session.isAdmin) {
-        response.status(401).send();
-        return;
-    }
+
     Pet.find().then((result) => {
         response.status(200).send(result);
     }, (error) => {
@@ -475,10 +472,6 @@ app.post('/users', (request, response) => {
 
 // GET route to get all regular users.
 app.get('/users', (request, response) => {
-    if (!request.session.user || !request.session.isAdmin) {
-        response.status(401).send();
-        return;
-    }
     User.find().then((result) => {
         response.status(200).send(result);
     }, (error) => {
