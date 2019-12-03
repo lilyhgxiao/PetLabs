@@ -4,6 +4,156 @@ import { getState } from "statezero";
 const bcrypt = require('bcryptjs')
 
 
+export const readCookie = () => {
+    const url = "/cookie/check-session";
+
+    return fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            if (json && json.user) {
+                const url = "/users/" + json.user;
+
+                const request = new Request(url, {
+                    method: "get",
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                fetch(request)
+                    .then((res) => {
+                        if (res.status === 200) {
+                            console.log("Got user successfully on cookie")
+                            return res.json();
+                        } else {
+                            console.log("Status code is wrong")
+                            return null
+                        }
+                    }).then((user) => {
+                        if (user === null) {
+                            setEmptyState();
+                        } else {
+                            const currUser = {
+                                _id: user._id,
+                                username: user.username,
+                                password: user.password,
+                                isAdmin: user.isAdmin,
+                                gold: user.gold,
+                                petIdList: user.petIdList,
+                                itemIdList: user.itemIdList,
+                                passwordLength: 5
+                            }
+                            setState("currUser", currUser);
+                        }
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+                    return true, json
+            } else {
+                return false, json
+            }
+        }).then((result, json) => {
+            if (!result) {
+                return false, json
+            }
+            if (json && json.pet) {
+                const url = "/pets/" + json.pet;
+
+                const request = new Request(url, {
+                    method: "get",
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                fetch(request)
+                    .then((res) => {
+                        if (res.status === 200) {
+                            console.log("Got pet successfully on cookie")
+                            return res.json();
+                        } else {
+                            console.log("Status code is wrong")
+                            return null
+                        }
+                    }).then((pet) => {
+                        if (pet === null) {
+                            const currPet = null;
+                        } else {
+                            const currPet = {
+                                _id: pet._id,
+                                ownerName: pet.ownerName,
+                                petName: pet.petName,
+                                happiness: pet.happiness,
+                                fullness: pet.fullness,
+                                alive: pet.alive,
+                                strength: pet.strength,
+                                speed: pet.speed,
+                                intelligence: pet.intelligence,
+                                type: pet.type
+                            }
+                            setState("currPet", currPet);
+                        }
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+                    return true, json
+            } else {
+                return false, json
+            }
+        }).then((result, json) => {
+            if (json && json.lastVisitedPage) {
+                setState("lastVisitedPage", json.lastVistedPage);
+                return true
+            }
+            return true
+        }).then((result) => {
+            return result
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+
+export const setLastPage = (page) => {
+    const url = "/cookie/lastVisitedPage/" + page;
+
+    fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                return true
+            }
+        }).then((res) => {
+            setState("lastVisitedPage", page);
+        })
+        .catch((error) => {
+            console.log(error);
+            return false;
+        })
+}
+
+
+export const setLastPet = (pet) => {
+    const url = "/cookie/lastVisitedPet/" + pet;
+
+    fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                return true
+            }
+        }).catch((error) => {
+            console.log(error);
+            return false;
+        })
+}
+
+
 export const login = () => {
     //DB CALL: FIND USER
     const { username, password } = getState("loginForm");

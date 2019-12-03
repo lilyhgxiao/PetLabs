@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 import AdminSideMenu from '../Components/AdminSideMenu';
 import saveIcon from '../Images/Save_Icon.png';
 import '../CSS/ItemView.css';
@@ -7,7 +8,11 @@ import AddIcon from '../Images/add_new.png';
 
 import PetImageImporter from './PetImageImporter.js';
 
-class AdminPetPage extends React.Component {
+//statezero
+import BaseReactComponent from "./../BaseReactComponent";
+import {setLastPage} from "../actions/userhelpers"
+
+class AdminPetPage extends BaseReactComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,6 +28,10 @@ class AdminPetPage extends React.Component {
             price: 0,
             id: 0
         };
+    }
+
+    filterState({currUser}) {
+        return {currUser};
     }
 
     componentDidMount() {
@@ -60,6 +69,7 @@ class AdminPetPage extends React.Component {
             console.log(error);
             alert('Unable to fetch pet type :(', error);
         })
+        setLastPage("/AdminPetPage");
     }
 
     getTableRows() {
@@ -199,6 +209,14 @@ class AdminPetPage extends React.Component {
     }
 
     render() {
+
+        if (this.state.currUser === null) {
+            return(
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
         return(
             <div onKeyDown={this.handleEnter}>
                 <input type={'image'} className={'saveIcon'} src={saveIcon} alt={'Save Icon'} onClick={this.handleSaveClick}></input>

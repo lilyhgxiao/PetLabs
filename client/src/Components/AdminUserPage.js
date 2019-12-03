@@ -2,10 +2,15 @@ import React from 'react';
 import AdminSideMenu from '../Components/AdminSideMenu';
 import { Link } from 'react-router-dom';
 import saveIcon from '../Images/Save_Icon.png';
+import { Redirect } from 'react-router';
 
 import '../CSS/ItemView.css';
 
-class AdminUserPage extends React.Component {
+//statezero
+import BaseReactComponent from "./../BaseReactComponent";
+import {setLastPage} from "../actions/userhelpers"
+
+class AdminUserPage extends BaseReactComponent {
     // Get user Id from AdminUserList
     targetUserId = this.props.location.userId;
     targetUser;
@@ -21,10 +26,15 @@ class AdminUserPage extends React.Component {
         iList: []
     };
 
+    filterState({currUser}) {
+        return {currUser};
+    }
+
     componentDidMount() {
         this.findUserInfo();
         this.getPetInfo();
         this.getItemInfo();
+        setLastPage("/AdminUserPage");
     }
 
     findUserInfo() {
@@ -554,6 +564,14 @@ class AdminUserPage extends React.Component {
 
 
     render() {
+
+        if (this.state.currUser === null) {
+            return(
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
         return(
             <div>
                 <Link to={'./AdminUserPage'}>

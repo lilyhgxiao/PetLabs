@@ -3,7 +3,11 @@ import '../CSS/ListView.css';
 import AdminSideMenu from './AdminSideMenu';
 import { Redirect } from 'react-router-dom';
 
-class AdminUserListPage extends React.Component {
+//statezero
+import BaseReactComponent from "./../BaseReactComponent";
+import {setLastPage} from "../actions/userhelpers"
+
+class AdminUserListPage extends BaseReactComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,6 +18,10 @@ class AdminUserListPage extends React.Component {
         this.handleTextboxChange = this.handleTextboxChange.bind(this);
         this.handleRowClick = this.handleRowClick.bind(this);
         this.handleEnter = this.handleEnter.bind(this);
+    }
+
+    filterState({currUser}) {
+        return {currUser};
     }
 
     componentDidMount() {
@@ -38,6 +46,7 @@ class AdminUserListPage extends React.Component {
         }).catch((error) => {
             alert('Failed to fetch pet types :(');
         });
+        setLastPage("/AdminUserListPage");
     }
 
     handleEnter(event) {
@@ -98,6 +107,14 @@ class AdminUserListPage extends React.Component {
     }
 
     render() {
+
+        if (this.state.currUser === null) {
+            return(
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
         if (this.state.validUser) {
             return <Redirect to={{
                 pathname: './AdminUserPage',

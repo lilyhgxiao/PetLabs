@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 import AdminSideMenu from '../Components/AdminSideMenu';
 import '../CSS/ItemView.css';
 import saveIcon from '../Images/Save_Icon.png';
@@ -6,7 +7,11 @@ import AddIcon from '../Images/add_new.png';
 
 import ItemImageImporter from './ItemImageImporter.js';
 
-class AdminItemPage extends React.Component {
+//statezero
+import BaseReactComponent from "./../BaseReactComponent";
+import {setLastPage} from "../actions/userhelpers"
+
+class AdminItemPage extends BaseReactComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,6 +25,10 @@ class AdminItemPage extends React.Component {
             id: 0,
             imgURL: AddIcon
         };
+    }
+
+    filterState({currUser}) {
+        return {currUser};
     }
 
     componentDidMount() {
@@ -54,6 +63,7 @@ class AdminItemPage extends React.Component {
         }).catch((error) => {
             alert('Failed to fetch items :(');
         });
+        setLastPage("/AdminItemPage");
     }
 
     getTableRows() {
@@ -195,6 +205,15 @@ class AdminItemPage extends React.Component {
     }
 
     render() {
+
+        if (this.state.currUser === null) {
+            return(
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
+
         return (
         <div onKeyDown={this.handleEnter}>
                 <input type={'image'} src={saveIcon} className={'saveIcon'} alt={'Save Icon'} onClick={this.handleSaveClick}></input>

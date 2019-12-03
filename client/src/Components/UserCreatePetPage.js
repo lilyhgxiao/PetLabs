@@ -17,6 +17,7 @@ import BaseReactComponent from "./../BaseReactComponent";
 import { updateUserState } from "../actions/userhelpers"
 import { getAllPetTypes } from "../actions/pettypehelpers"
 import { createNewPet } from "../actions/pethelpers"
+import { setLastPage } from '../actions/userhelpers';
 
 class UserCreatePetPage extends BaseReactComponent {
 
@@ -36,6 +37,7 @@ class UserCreatePetPage extends BaseReactComponent {
 
     componentDidMount() { // When the component enters the DOM
         this.fetchTypes();
+        setLastPage("/UserCreatePetPage")
     }
 
     handleInputChange = (event) => {
@@ -161,6 +163,15 @@ class UserCreatePetPage extends BaseReactComponent {
     }
 
     render() {
+
+        if (this.state.currUser === null) {
+            return(
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
+
         if (this.state.creationSuccess) {
             return(
                 <Redirect push to={{

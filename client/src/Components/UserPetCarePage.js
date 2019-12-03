@@ -11,10 +11,11 @@ import PetImageImporter from './PetImageImporter.js';
 
 //statezero
 import BaseReactComponent from "./../BaseReactComponent";
-import { updateUserState } from "../actions/userhelpers"
+import { updateUserState, setLastPet } from "../actions/userhelpers"
 import { updatePetState, deletePet } from '../actions/pethelpers';
 import { getPetType } from '../actions/pettypehelpers';
 import { getAllItems } from '../actions/itemhelpers';
+import { setLastPage } from '../actions/userhelpers';
 
 import { Redirect } from 'react-router';
 
@@ -42,14 +43,18 @@ class UserPetCarePage extends BaseReactComponent {
     componentDidMount() {
         this._mounted = true;
         this.deleting = false;
-        this.findPet()
-        this.populateItem()
-        this.selectItem = this.selectItem.bind(this)
 
         this.dTimer = setInterval(
             () => this.starve(),
         1000
       );
+      setLastPage("/UserPetCarePage")
+      if (this.state.currPet) {
+        setLastPet(this.state.currPet._id)
+        this.findPet()
+        this.populateItem()
+        this.selectItem = this.selectItem.bind(this)
+      }
     }
   
     componentWillUnmount() {
@@ -262,6 +267,14 @@ class UserPetCarePage extends BaseReactComponent {
 
     render() {
         const { currUser, currPet } = this.state;
+
+        if (this.state.currUser === null) {
+            return(
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
 
         if (this.state.deleted) {
             return(

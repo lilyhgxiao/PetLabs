@@ -3,6 +3,7 @@ import '../CSS/LogInStyles.css';
 import { Redirect } from 'react-router';
 
 import { login, logout, updateLoginForm } from "../actions/userhelpers"
+import { getState } from "statezero";
 
 import logo from '../Images/logo_placeholder.png';
 
@@ -17,7 +18,10 @@ class LogInPage extends React.Component {
     };
 
     componentDidMount() {
-        logout()
+        const currUser = getState("currUser");
+        if (currUser !== null) {
+            logout();
+        }
         this.setState({
             username: "",
             password: "",
@@ -65,6 +69,18 @@ class LogInPage extends React.Component {
     }
 
     render() {
+        const currUser = getState("currUser");
+        const lastVisitedPage = getState("lastVisitedPage");
+        /*
+        
+        if (currUser !== null && !this.state.loginSuccessful) {
+            return(
+                <Redirect push to={{
+                    pathname: lastVisitedPage
+                }} />
+            );
+        }
+        */
 
         if (this.state.loginSuccessful) {
             if (this.state.isAdmin) {

@@ -4,7 +4,11 @@ import AdminSideMenu from './AdminSideMenu';
 import { Redirect, Link } from 'react-router-dom';
 import AddIcon from '../Images/add_new.png';
 
-class AdminItemListPage extends React.Component {
+//statezero
+import BaseReactComponent from "./../BaseReactComponent";
+import {setLastPage} from "../actions/userhelpers"
+
+class AdminItemListPage extends BaseReactComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,6 +20,10 @@ class AdminItemListPage extends React.Component {
         this.handleTextboxChange = this.handleTextboxChange.bind(this);
         this.handleRowClick = this.handleRowClick.bind(this);
         this.handleEnter = this.handleEnter.bind(this);
+    }
+
+    filterState({currUser}) {
+        return {currUser};
     }
 
     componentDidMount() {
@@ -39,6 +47,7 @@ class AdminItemListPage extends React.Component {
         }).catch((error) => {
             alert('Failed to fetch items :(');
         })
+        setLastPage("/AdminItemListPage");
     }
 
     handleEnter(event) {
@@ -98,6 +107,15 @@ class AdminItemListPage extends React.Component {
     }
 
     render() {
+
+        if (this.state.currUser === null) {
+            return(
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
+
         if (this.state.validItem) {
             return <Redirect to={{
                 pathname: './AdminItemPage',

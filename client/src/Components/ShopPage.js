@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 
 import '../CSS/ShopPageStyle.css';
 
@@ -11,6 +12,7 @@ import ItemImageImporter from './ItemImageImporter.js';
 import BaseReactComponent from "./../BaseReactComponent";
 import { updateUserState } from "../actions/userhelpers"
 import { getAllItems, getItemById } from "../actions/itemhelpers"
+import { setLastPage } from '../actions/userhelpers';
 
 //const log = console.log
 
@@ -22,6 +24,7 @@ class ShopPage extends BaseReactComponent {
 
     componentDidMount() {
         this.populateItems();
+        setLastPage("/ShopPage")
     }
 
     populateItems() {
@@ -137,6 +140,14 @@ class ShopPage extends BaseReactComponent {
 
     render() {
         const { currUser } = this.state;
+
+        if (this.state.currUser === null) {
+            return(
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
 
         return (
             <div>

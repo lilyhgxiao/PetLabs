@@ -78,7 +78,6 @@ export const getAllPets = () => {
 
     return fetch(request)
         .then((res) => {
-            console.log(res.status)
             if (res.status === 200) {
                 return res.json();
             }
@@ -115,9 +114,6 @@ export const deletePet = (targetPetId) => {
             const userResult = userReq.then((user) => {
                 const userPetListIdx = user.petIdList.indexOf(targetPetId);
                 user.petIdList.splice(userPetListIdx, 1);
-
-                console.log(targetPetId, userPetListIdx)
-                console.log(user.petIdList)
 
                 updateUserState({ petIdList: user.petIdList }, user._id);
                 setState("currUser.petIdList", user.petIdList);

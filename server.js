@@ -367,10 +367,6 @@ app.get('/pets', (request, response) => {
 
 // GET route to get a pet with a specific id
 app.get('/pets/:id', (request, response) => {
-    if (!request.session.user) {
-        response.status(401).send();
-        return;
-    }
     // Extract the id from the URL wildcard
     const id = request.params.id;
 
@@ -444,6 +440,46 @@ app.delete('/pets/:id', (request, response) => {
 
 // USER ROUTES
 
+// A route to check if a use is logged in on the session cookie
+app.get("/cookie/check-session", (req, res) => {
+    if (req.session.user) {
+        res.send({ 
+            user: req.session.user,
+            pet: req.session.pet,
+            lastVisitedPage: req.session.lastVisitedPage
+        });
+    } else {
+        res.status(401).send();
+    }
+});
+
+
+// POST to change last visited page
+app.get('/cookie/lastVisitedPage/:page', (request, response) => {
+    const page = request.params.page;
+
+    if (req.session.user) {
+        request.session.lastVisitedPage = page;
+        response.status(200).send();
+    } else {
+        res.status(401).send();
+    }
+});
+
+
+// POST to change currPet
+app.get('/cookie/currPet/:pet', (request, response) => {
+    const pet = request.params.pet;
+
+    if (req.session.user) {
+        request.session.pet = pet;
+        response.status(200).send();
+    } else {
+        res.status(401).send();
+    }
+});
+
+
 // POST route to create a new user.
 app.post('/users', (request, response) => {
     User.findOne({username: request.body.username}, (error, user) => {
@@ -481,10 +517,6 @@ app.get('/users', (request, response) => {
 
 // GET route to get an individual user
 app.get('/users/:id', (request, response) => {
-    if (!request.session.user || !request.session.isAdmin) {
-        response.status(401).send();
-        return;
-    }
     // Extract the id from the URL wildcard
     const id = request.params.id;
 

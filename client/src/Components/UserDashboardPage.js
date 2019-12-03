@@ -14,6 +14,7 @@ import BaseReactComponent from "./../BaseReactComponent";
 import { setTargetPet, getAllPets } from "../actions/pethelpers";
 
 import addNew from '../Images/add_new.png';
+import { setLastPage } from '../actions/userhelpers';
 
 class UserDashboardPage extends BaseReactComponent {
     
@@ -35,6 +36,7 @@ class UserDashboardPage extends BaseReactComponent {
             toCreate: false,
             currPet: null
         }, this.fetchPets)
+        setLastPage("/UserDashboardPage");
     }
 
     fetchPets = () => { //Fetching data for the pets from the username
@@ -42,8 +44,6 @@ class UserDashboardPage extends BaseReactComponent {
         const petListReq = getAllPets();
 
         petListReq.then((pets) => {
-            console.log(pets)
-            console.log(currUser.petIdList)
             const petList = [];
             let petFiltered;
             let petToAdd;
@@ -86,6 +86,14 @@ class UserDashboardPage extends BaseReactComponent {
 
     render() {
         const { currUser } = this.state;
+
+        if (this.state.currUser === null) {
+            return(
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
 
         if (this.state.toPetPage) {
             return(
