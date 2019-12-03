@@ -552,10 +552,17 @@ class AdminUserPage extends React.Component {
 
     handleItemGoldChange = (e) => {}
 
+    handleEnter = (event) => {
+        if (event.key === 'Enter' && this.state.targetUserName.length > 0) {
+            this.handleSaveClick();
+        } else if (event.key === 'Enter') {
+            alert('Pet Type name cannot be blank :(');
+        }
+    }
 
     render() {
         return(
-            <div>
+            <div onKeyDown={this.handleEnter}>
                 <Link to={'./AdminUserPage'}>
                     <img 
                         className={'saveIcon'} 
