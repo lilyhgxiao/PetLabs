@@ -15,11 +15,11 @@ Our web app was deployed online through Heroku.<br />
 Use the following link to access the app.<br />
 https://evening-beyond-09613.herokuapp.com/<br />
 
-The login page shoulld now be visible.<br />
+The login page should now be visible.<br />
 
 # Admin Views
 - To login as an administrator type in ‘admin’ for username and ‘admin’ for password and click the ‘Log in’ button.
-- You should now enter the admin dashboard page. Here the admin can edit user data, edit different pet types, add new pet types, edit exiting pet items, and add new pet items.
+- You should now enter the admin dashboard page. Here the admin can edit user data (including the pets they own such as editing their attributes or deleting them entirely. More about this is in the Editing an Existing User section), edit different pet types, add new pet types, edit exiting pet items, and add new pet items.
 
 # Adding A New Item
 - To add a new item, click on the ‘items’ picture.
