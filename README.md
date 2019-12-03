@@ -27,7 +27,7 @@ The login page shoulld now be visible.<br />
 - Type in the name of the new item and edit the item’s attribute in the table below.
 - Then click on 'plus' icon to randomly select sprite for the new item.
 - Note: if the name of the item or if the sprite is not specified, an item cannot be create.
-- When you are happy with your new item click the ‘save’ icon at the top right corner of the page. This will take you back to the admin dashboard page.
+- When you are happy with your new item click the ‘save’ icon at the top right corner of the page.
 
 # Editing an Existing Item
 - To edit an existing item click on the ‘items’ picture. This will take you to the item list page.
@@ -36,7 +36,7 @@ The login page shoulld now be visible.<br />
 - Note: the search bar is case insensitive, but if an incorrect name is typed in, no redirection will occur. Instead an alert message will appear informing you that no such item exists.
 - Another way to select an item to edit is clicking on specific item on the item list. This will redirect you to the item edit page.
 - In the item edit page you can change the name, price, and item properties by typing in different values in the textboxes. 
-- Once you are happy with your changes you can click the ‘save’ icon at the top right-hand corner of the page. This will redirect you back to the admin dashboard page.
+- Once you are happy with your changes you can click the ‘save’ icon at the top right-hand corner of the page. 
 - You can always return to the item list page and select the edited item to review the changes you made above. 
 
 # Creating a New Pet Type
@@ -45,26 +45,27 @@ The login page shoulld now be visible.<br />
 - In the create new pet page, enter the name of the new pet type, as well as the growth rate of each attribute and the price of the pet.
 - Then click on 'plus' icon to randomly select sprite for the new pet type.
 - Note: if the name of the item or if the sprite is not specified, an item cannot be create.
-- Once you are happy with your choices click the ‘save’ icon located at the top right-hand corner of the screen. This will save your changes and take you back to the admin dashboard page.
+- Once you are happy with your choices click the ‘save’ icon located at the top right-hand corner of the screen. 
 
 # Editing an Existing Pet Type
 - In the admin dashboard page go to the pet type list page by clicking on the ‘Pets’ picture. 
 - In the search bar, type in the name of the pet type that you wish to edit. You can even choose the newly created pet type from above.
 - Once the correct name is typed in, press enter key. This will redirect you to the pet type edit page.
 - Note: the search bar is case insensitive, but if an incorrect name is typed in, no redirection will occur. Instead an alert message will appear informing you that no such pet type exists.
-- Another way to select a pet type to edit is clicking on specific pet type on the pet type list. This will redirect you to the pet type edit page.
+- Another way to select a pet type to edit is clicking on specific pet type on the pet type list. 
 - In the edit pet type view you can rename the pet type, change its associated attributes and the cost of the pet in the store. 
 - Once you are happy with your changes you can click the save icon located on top right corner.
 
 # Editing an Existing User
 - In the admin dashboard page, go to the user list page by clicking on the ‘Users’ picture.
-- In the user list page, type in the name of the user that you wish to edit and click "go". This will redirect you from the admin view to the edit user view.
-- Note that the search is case insensitive but typing in a name of a non-existing user and clicking "go" will provide the admin with an alert message informing them of the incorrect input.
+- In the user list page, type in the name of the user that you wish to edit and press enter key. This will redirect you from the admin view to the edit user view.
+- Note: the search bar is case insensitive, but if an incorrect name is typed in, no redirection will occur. Instead an alert message will appear informing you that no such user exists.
+- Another way to select an user to edit is clicking on specific user on the user list. This will redirect you to the user edit page.
 - In the edit user view, you are provided with selected user's password and gold balance. Values for these fields could be modified.
 - You are also provided with the list of pets owned by the selected user along with each individual pet's stats. Stats of user owned pets could be modified.
-- You could remove a pet from the user. To do so, click on remove button beside pet's id. Then click on the "save" icon located at top right-hand corner of the screen.
+- You could remove a pet from the user. To do so, click on remove button beside pet's id. This will mark the pet for removal. Then click on the "save" icon located at top right-hand corner of the screen.
 - You are also provided with the list of items owned by the selected user, along with bonuses each item gives to user's pets. These bonus values can't be modified in this view. They could only be changed at item list page.
-- However, you could remove an item from the user. To do so, click on remove button beside item's id. Then click on the "save" icon located at top right-hand corner of the screen.
+- However, you could remove an item from the user. To do so, click on remove button beside item's id. This will mark the item for removal. Then click on the "save" icon located at top right-hand corner of the screen.
 - To save the changes made to selected user's password, gold, and user's individual pets, click on the "save" icon located at top right-hand corner of the screen.
 
 # Admin Side Menu
