@@ -11,11 +11,11 @@ We added a few simple classes that help us temporarily keep track of changes in 
 -	Item: an item is something that can be applied to a pet to train, feed, or play with the pet. For example, a book can train the pet’s intelligence.
 
 # Running the App
-Our web app was deployed online through Heroku.
-Use the following link to access the app.
-https://evening-beyond-09613.herokuapp.com/
+Our web app was deployed online through Heroku.<br />
+Use the following link to access the app.<br />
+https://evening-beyond-09613.herokuapp.com/<br />
 
-The login page shoulld now be visible.
+The login page shoulld now be visible.<br />
 
 # Admin Views
 - To login as an administrator type in ‘admin’ for username and ‘admin’ for password and click the ‘Log in’ button.
