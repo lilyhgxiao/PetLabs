@@ -118,11 +118,9 @@ All of the routes are defined in server.js
 The following routes allow the app to modify item information in the database.
 
 ### POST Request to /items
-This route is used to add an item to the database. <br />
-The required fields are "name" (string), "strength" (number), "speed" (number), "intelligence" (number), "happiness" (number), "fullness" (number), "imgURL" (string), and "price" (number).<br />
-Note that "imgURL" must be either of "Dumbbell", "Book", or "Treadmill". <br />
+This route is used to add an item to the database.
 
-An example of valid JSON could be the following. <br />
+An example of valid JSON could be the following (there are more JSON samples in folder ModelTestInputs/Items/).
 {<br />
     "name": "Book",<br />
     "strength": 0,<br />
@@ -134,12 +132,19 @@ An example of valid JSON could be the following. <br />
     "imgURL": "Book"<br />
 }<br />
 
-There are more JSON samples in folder ModelTestInputs/Items/.<br />
+Note that "imgURL" must be either of "Dumbbell", "Book", or "Treadmill".
 
-The following are response codes you could recieved from POST. <br />
+POST request to /items is mainly used in our app when an admin is creating a new item (AdminNewItemPage.js).
+
+
+### GET Request to /items
+This route is used to get all of the items from the database. <br />
+
+The following are response codes you could recieved from GET. <br />
 - 200: OK
-- 400: Bad request.
-- 409: Conflict. Item already exists.
+- 500: Internal server error.
+
+GET request to /items is mainly used in our app when listing items for admin item list view or when populating user owned items in pet care page.
 
 
 ### GET Request to /items
