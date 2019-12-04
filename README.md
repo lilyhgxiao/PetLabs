@@ -149,7 +149,7 @@ This route is used to get a specifc item with :id as its id from the database.
 
 GET request to /items/:id is used in our app when getting specific item information. For example, on admin item edit view, this GET request for the selected item will be called to load its current item stats. 
 
-This route also adds the id of the most recent item that was queried to the session cookie to keep track of.
+This route also adds the id of the most recent item that was retrieved to the session cookie to keep track of.
 
 
 ### PATCH Route to /items/:id
@@ -200,7 +200,9 @@ GET request to /pettypes is mainly used in our app when full pet type data is re
 ### GET Route to /pettypes/:id
 This route is used to get a specifc pet type with :id as its id from the database.
 
-GET request to /pettypes/:id is used in our app when getting specific pet type information. For example, on admin pet type edit view, this GET request for the selected pet type will be called to load the starting properties of pets with aforementioned pet type. 
+GET request to /pettypes/:id is used in our app when getting specific pet type information. For example, on admin pet type edit view, this GET request for the selected pet type will be called to load the starting properties of pets with aforementioned pet type.
+
+This route also adds the id of the most recent pet type that was retrieved to the session cookie to keep track of.
 
 
 ### PATCH Route to /pettypes/:id
