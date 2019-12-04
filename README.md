@@ -271,7 +271,7 @@ The following routes allow the app to modify user information in the database.
 ### POST Route to /users
 This route is used to add a users to the database.
 
-An example of valid JSON could be the following (there are more JSON samples in folder ModelTestInputs/Pet/).
+An example of valid JSON could be the following (there are more JSON samples in folder ModelTestInputs/Users/).
 
 { <br />
     "username": "user", <br />
