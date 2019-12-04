@@ -292,3 +292,21 @@ PATCH request to /users/:id is used when the app needs to update the information
 This route is used to delete a specifc user with :id as its id from the database.
 
 DELETE request to /users/:id is used when the app needs to completely remove a specific user. However, because neither the admin nor the user has an ability to delete an user, DELETE on specific user is actually never used in our app.
+
+
+## Cookie Routes
+
+### GET Route for /cookie/itemId
+This route is used to retrieve a cookie referencing the id of the last item that was retrieved.
+
+This route is quiried in the AdminItemPage to ensure that upon refreshing the page the item does not disappear.
+
+### GET Route for /cookie/petTypeId
+This route is used to retrieve a cookie referencing the id of the last pet type that was retrieved.
+
+This route is quiried in the AdminPetPage to ensure that upon refreshing the page the pet type does not disappear.
+
+### GET Route for /cookie/userId
+This route is used to retrieve a cookie referencing the id of the last user that was retrieved.
+
+This route is quiried in the AdminPetPage to ensure that upon refreshing the page the user does not disappear.
