@@ -672,11 +672,8 @@ function getUserPropertiesToUpdate(request) {
 
 app.get("/cookie/itemId", (req, res) => {
     if (req.session.itemId) {
-        console.log(req.session.itemId)
         res.status(200).send({itemId: req.session.itemId});
     } else {
-        console.log(req.session.itemId)
-        console.log(req.session);
         res.status(500).send();
     }
 });
@@ -686,19 +683,14 @@ app.get("/cookie/petTypeId", (req, res) => {
         console.log(req.session.petTypeId)
         res.status(200).send({petTypeId: req.session.petTypeId});
     } else {
-        console.log(req.session.petTypeId)
-        console.log(req.session);
         res.status(500).send();
     }
 });
 
 app.get("/cookie/userId", (req, res) => {
     if (req.session.userId) {
-        console.log(req.session.userId)
         res.status(200).send({userId: req.session.userId});
     } else {
-        console.log(req.session.userId)
-        console.log(req.session);
         res.status(500).send();
     }
 });
