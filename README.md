@@ -149,6 +149,8 @@ This route is used to get a specifc item with :id as its id from the database.
 
 GET request to /items/:id is used in our app when getting specific item information. For example, on admin item edit view, this GET request for the selected item will be called to load its current item stats. 
 
+This route also adds the id of the most recent item that was queried to the session cookie to keep track of.
+
 
 ### PATCH Route to /items/:id
 This route is used to update fields of a specifc item with :id as its id from the database.
