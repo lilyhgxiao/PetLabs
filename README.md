@@ -161,6 +161,8 @@ This route is used to delete a specifc item with :id as its id from the database
 
 DELETE request to /items/:id is used when the app needs to completely remove a specific item. However, because neither the admin nor the user has an ability to delete an item, DELETE on specific item is actually never used in our app.
 
+## Pet Type Routes
+The following routes allow the app to modify pet type information in the database.
 
 ### POST Routes to /pettypes
 This route is used to add a pet type to the database.
@@ -210,6 +212,8 @@ This route is used to delete a specifc pet type with :id as its id from the data
 
 DELETE request to /pettypes/:id is used when the app needs to completely remove a specific pet type. However, because neither the admin nor the user has an ability to delete a pet type, DELETE on specific pet type is actually never used in our app.
 
+## Pet Routes
+The following routes allow the app to modify pet information in the database.
 
 ### POST Routes to /pets
 This route is used to add a pets to the database.
