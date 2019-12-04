@@ -25,6 +25,23 @@ const bodyParser = require('body-parser');
 // Use the body parse middleware between requests.
 app.use(bodyParser.json()); 
 
+// express-session for managing user sessions
+const session = require("express-session");
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Create a session cookie
+app.use(
+    session({
+        secret: "oursecret",
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            expires: 60000000,
+            httpOnly: true
+        }
+    })
+);
+
 // ROUTES FOLLOW
 
 // ITEM ROUTES
@@ -32,6 +49,10 @@ app.use(bodyParser.json());
 // POST route to create an item.
 app.post('/items', (request, response) => {
     Item.findOne({name: request.body.name}, (error, item) => {
+        if (!request.session.user || !request.session.isAdmin) {
+            response.status(401).send();
+            return;
+        }
         if (error) {
             response.send(error);
         } else if (item) {
@@ -65,6 +86,10 @@ app.post('/items', (request, response) => {
 
 // GET route to get all items
 app.get('/items', (request, response) => {
+    if (!request.session.user) {
+        response.status(401).send();
+        return;
+    }
     Item.find().then((result) => {
         response.status(200).send(result);
     }, (error) => {
@@ -74,6 +99,10 @@ app.get('/items', (request, response) => {
 
 // GET route to get a specific item 
 app.get('/items/:id', (request, response) => {
+    if (!request.session.user) {
+        response.status(401).send();
+        return;
+    }
     // Extract the id from the URL wildcard
     const id = request.params.id;
 
@@ -88,6 +117,7 @@ app.get('/items/:id', (request, response) => {
         if (!result) {
             response.status(404).send();
         } else {
+            request.session.itemId = result._id;
             response.status(200).send(result)
         }
     },).catch((error) => {
@@ -97,6 +127,11 @@ app.get('/items/:id', (request, response) => {
 
 // PATCH route to update an item
 app.patch('/items/:id', (request, response) => {
+    if (!request.session.user || !request.session.isAdmin) {
+        response.status(401).send();
+        return;
+    }
+
     // Get the item id from the URL
     const id = request.params.id;
 
@@ -148,6 +183,10 @@ app.delete('/items/:id', (request, response) => {
 // POST route to create a new petType.
 app.post('/pettypes', (request, response) => {
     PetType.findOne({name: request.body.name}, (error, petType) => {
+        if (!request.session.user || !request.session.isAdmin) {
+            response.status(401).send();
+            return;
+        }
         if (error) {
             response.send(error);
         } else if (petType) {
@@ -183,6 +222,10 @@ app.post('/pettypes', (request, response) => {
 
 // GET route to get all petTypes
 app.get('/pettypes', (request, response) => {
+    if (!request.session.user) {
+        response.status(401).send();
+        return;
+    }
     PetType.find().then((result) => {
         response.status(200).send(result);
     }, (error) => {
@@ -192,6 +235,10 @@ app.get('/pettypes', (request, response) => {
 
 // GET route to get a specific petType 
 app.get('/pettypes/:id', (request, response) => {
+    if (!request.session.user) {
+        response.status(401).send();
+        return;
+    }
     // Extract the id from the URL wildcard
     const id = request.params.id;
 
@@ -206,6 +253,7 @@ app.get('/pettypes/:id', (request, response) => {
         if (!result) {
             response.status(404).send();
         } else {
+            request.session.petTypeId = result._id;
             response.status(200).send(result)
         }
     },).catch((error) => {
@@ -215,6 +263,10 @@ app.get('/pettypes/:id', (request, response) => {
 
 // PATCH route to update an petType
 app.patch('/pettypes/:id', (request, response) => {
+    if (!request.session.user || !request.session.isAdmin) {
+        response.status(401).send();
+        return;
+    }
     // Get the petType id from the URL
     const id = request.params.id;
 
@@ -262,9 +314,13 @@ app.delete('/pettypes/:id', (request, response) => {
 
 // PET ROUTES
 
-// POST route to create a new petType.
+// POST route to create a new pet.
 app.post('/pets', (request, response) => {
     PetType.findOne({name: request.body.petName}, (error, pet) => {
+        if (!request.session.user) {
+            response.status(401).send();
+            return;
+        }
         if (error) {
             response.send(error);
         } else if (pet) {
@@ -299,6 +355,11 @@ app.post('/pets', (request, response) => {
 
 // GET route to get all pets
 app.get('/pets', (request, response) => {
+    if (!request.session.user) {
+        response.status(401).send();
+        return;
+    }
+
     Pet.find().then((result) => {
         response.status(200).send(result);
     }, (error) => {
@@ -330,6 +391,10 @@ app.get('/pets/:id', (request, response) => {
 
 // PATCH route to update an petType
 app.patch('/pets/:id', (request, response) => {
+    if (!request.session.user) {
+        response.status(401).send();
+        return;
+    }
     // Get the petType id from the URL
     const id = request.params.id;
 
@@ -376,6 +441,7 @@ app.delete('/pets/:id', (request, response) => {
 })
 
 // USER ROUTES
+
 
 // POST route to create a new user.
 app.post('/users', (request, response) => {
@@ -427,6 +493,7 @@ app.get('/users/:id', (request, response) => {
         if (!result) {
             response.status(404).send();
         } else {
+            request.session.userId = result._id;
             response.status(200).send(result)
         }
     },).catch((error) => {
@@ -434,8 +501,41 @@ app.get('/users/:id', (request, response) => {
     });
 });
 
+// GET route to authinticate a user
+app.get('/users/login/:username', (request, response) => {
+    const username = request.params.username;
+
+    User.findOne({username: username}).then((result) => {
+        if (!result) {
+            response.status(404).send();
+        } else {
+            request.session.user = result._id;
+            request.session.isAdmin = result.isAdmin;
+            response.status(200).send(result)
+        }
+    },).catch((error) => {
+        response.status(500).send(error);
+    });
+});
+
+// POST route to log user out.
+app.post('/users/logout/', (request, response) => {
+    // Remove the session
+    request.session.destroy(error => {
+        if (error) {
+            response.status(500).send(error);
+        } else {
+            response.status(200).send();
+        }
+    });
+});
+
 // PATCH route to update individual users
 app.patch('/users/:id', (request, response) => {
+    if (!request.session.user) {
+        response.status(401).send();
+        return;
+    }
     // Get the petType id from the URL
     const id = request.params.id;
 
@@ -562,6 +662,82 @@ function getUserPropertiesToUpdate(request) {
 
     return update;
 }
+
+app.get("/cookie/itemId", (req, res) => {
+    if (req.session.itemId) {
+        res.status(200).send({itemId: req.session.itemId});
+    } else {
+        res.status(500).send();
+    }
+});
+
+app.get("/cookie/petTypeId", (req, res) => {
+    if (req.session.petTypeId) {
+        console.log(req.session.petTypeId)
+        res.status(200).send({petTypeId: req.session.petTypeId});
+    } else {
+        res.status(500).send();
+    }
+});
+
+app.get("/cookie/userId", (req, res) => {
+    if (req.session.userId) {
+        res.status(200).send({userId: req.session.userId});
+    } else {
+        res.status(500).send();
+    }
+});
+
+// A route to check if a use is logged in on the session cookie
+app.get("/cookie/check-session", (req, res) => {
+    if (req.session.user) {
+        res.send({ 
+            user: req.session.user,
+            petId: req.session.petId,
+            lastVisitedPage: req.session.lastVisitedPage
+        });
+    } else {
+        res.status(401).send();
+    }
+});
+
+
+// POST to change last visited page
+app.get('/cookie/lastVisitedPage/:page', (request, response) => {
+    const page = request.params.page;
+
+    if (request.session.user) {
+        request.session.lastVisitedPage = page;
+        response.status(200).send();
+    } else {
+        res.status(401).send();
+    }
+});
+
+
+// POST to change currPet
+app.get('/cookie/currPet/:petId', (request, response) => {
+    const petId = request.params.petId;
+
+    if (request.session.user) {
+        request.session.petId = petId;
+        response.status(200).send();
+    } else {
+        res.status(401).send();
+    }
+});
+
+
+// POST to get currPet
+app.get('/cookie/currPet', (request, response) => {
+
+    if (request.session.user) {
+        response.status(200).send({petId: request.session.petId});
+    } else {
+        response.status(401).send();
+    }
+});
+
 
 const path = require('path');
 

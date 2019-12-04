@@ -1,9 +1,11 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 import UserSideMenu from './UserSideMenu';
 
 //statezero
 import BaseReactComponent from "./../BaseReactComponent";
 import { updateUserPassword, checkHash } from "../actions/userhelpers"
+import { setLastPage } from '../actions/userhelpers';
 
 //temporary
 import '../CSS/SettingsStyle.css';
@@ -25,6 +27,7 @@ class UserSettingsPage extends BaseReactComponent {
             newPass: "",
             confirmPass: ""
         });
+        setLastPage("/UserSettingsPage");
     }
 
     handleInputChange = (event) => {
@@ -98,6 +101,14 @@ class UserSettingsPage extends BaseReactComponent {
 
     render() {
         const { currUser } = this.state;
+
+        if (currUser === null) {
+            return(
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
 
         return(
             <div>

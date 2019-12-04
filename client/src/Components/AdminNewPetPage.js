@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 import AdminSideMenu from '../Components/AdminSideMenu';
 import '../CSS/ItemView.css';
 import saveIcon from '../Images/Save_Icon.png';
@@ -7,7 +8,11 @@ import SpriteComponent from '../Components/SpriteComponent';
 
 import PetImageImporter from './PetImageImporter.js';
 
-class AdminNewPetPage extends React.Component {
+//statezero
+import BaseReactComponent from "./../BaseReactComponent";
+import {setLastPage} from "../actions/userhelpers"
+
+class AdminNewPetPage extends BaseReactComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,6 +30,14 @@ class AdminNewPetPage extends React.Component {
             importedImageH: AddIcon,
             importedImageS: AddIcon,
         };
+    }
+
+    filterState({currUser}) {
+        return {currUser};
+    }
+
+    componentDidMount() {
+        setLastPage("/AdminNewPetPage");
     }
 
     addPetType() {
@@ -192,6 +205,14 @@ class AdminNewPetPage extends React.Component {
     }
     
     render() {
+
+        if (this.state.currUser === null) {
+            return(
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
         return(
             <div onKeyDown={this.handleEnter}>
                 <input type={'image'} className={'saveIcon'} src={saveIcon} alt={'Save Icon'} onClick={this.handleSaveClick}></input>

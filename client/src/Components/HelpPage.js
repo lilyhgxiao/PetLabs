@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 
 import UserSideMenu from './UserSideMenu';
 
@@ -6,9 +7,28 @@ import '../CSS/HelpStyle.css';
 
 //const log = console.log
 
-class HelpPage extends React.Component {
+//statezero
+import BaseReactComponent from "./../BaseReactComponent";
+import {setLastPage} from "../actions/userhelpers"
+
+class HelpPage extends BaseReactComponent {
+
+    filterState({currUser}) {
+        return {currUser};
+    }
+
+    componentDidMount() {
+        setLastPage("/HelpPage")
+    }
 
 	render() {
+        if (this.state.currUser === null) {
+            return(
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
         return (
             <div>
                 <UserSideMenu/>

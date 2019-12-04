@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 import '../CSS/AdminDashboardStyles.css';
 import ImageComponent from './ImageComponent';
 import AdminSideMenu from './AdminSideMenu';
@@ -10,14 +11,27 @@ import items from '../Images/items.png';
 
 //statezero
 import BaseReactComponent from "./../BaseReactComponent";
+import {setLastPage} from "../actions/userhelpers"
 
 class AdminDashboard extends BaseReactComponent {
     filterState({currUser}) {
         return {currUser};
     }
 
+    componentDidMount() {
+        setLastPage("/AdminDashboardPage");
+    }
+
     render() {
         const currUser = this.state.currUser;
+
+        if (this.state.currUser === null) {
+            return(
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
 
         return(
             <div>

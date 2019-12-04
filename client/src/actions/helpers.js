@@ -13,6 +13,7 @@ export const setEmptyState = () => {
     setState("currUser", null);
     setState("loginForm", {username: "", password: ""});
     setState("currPet", null);
+    setState("lastVisitedPage", "/");
 };
 
 // Helper method to set a state path.

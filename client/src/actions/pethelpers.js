@@ -5,6 +5,18 @@ import { getUserByUsername, updateUserState } from "./userhelpers"
 
 export const setTargetPet = (pet) => {
     setState("currPet", pet);
+    const url = "/cookie/currPet/" + pet._id;
+
+    console.log(pet._id)
+
+    fetch(url)
+        .then((res) => {
+            if (res.status === 200) {
+                console.log("Set target pet in cookie successfully")
+            }
+        }).catch((error) => {
+            console.log(error);
+        })
 }
 
 export const updatePetState = (state, targetPetId) => {
@@ -114,9 +126,6 @@ export const deletePet = (targetPetId) => {
             const userResult = userReq.then((user) => {
                 const userPetListIdx = user.petIdList.indexOf(targetPetId);
                 user.petIdList.splice(userPetListIdx, 1);
-
-                console.log(targetPetId, userPetListIdx)
-                console.log(user.petIdList)
 
                 updateUserState({ petIdList: user.petIdList }, user._id);
                 setState("currUser.petIdList", user.petIdList);

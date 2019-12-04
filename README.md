@@ -29,7 +29,7 @@ The login page should now be visible.<br />
 - Type in the name of the new item and edit the item’s attribute in the table below.
 - Then click on 'plus' icon to randomly select sprite for the new item.
 - Note: if the name of the item or if the sprite is not specified, an item cannot be create.
-- When you are happy with your new item click the ‘save’ icon at the top right corner of the page.
+- When you are happy with your new item click the ‘save’ icon at the top right corner of the page. This will take you back to the admin dashboard page.
 
 ## Editing an Existing Item
 - To edit an existing item click on the ‘items’ picture. This will take you to the item list page.
@@ -47,14 +47,14 @@ The login page should now be visible.<br />
 - In the create new pet page, enter the name of the new pet type, as well as the growth rate of each attribute and the price of the pet.
 - Then click on 'plus' icon to randomly select sprite for the new pet type.
 - Note: if the name of the item or if the sprite is not specified, an item cannot be create.
-- Once you are happy with your choices click the ‘save’ icon located at the top right-hand corner of the screen. 
+- Once you are happy with your choices click the ‘save’ icon located at the top right-hand corner of the screen. This will save your changes and take you back to the admin dashboard page.
 
-## Editing an Existing Pet Type
+# Editing an Existing Pet Type
 - In the admin dashboard page go to the pet type list page by clicking on the ‘Pets’ picture. 
 - In the search bar, type in the name of the pet type that you wish to edit. You can even choose the newly created pet type from above.
 - Once the correct name is typed in, press enter key. This will redirect you to the pet type edit page.
 - Note: the search bar is case insensitive, but if an incorrect name is typed in, no redirection will occur. Instead an alert message will appear informing you that no such pet type exists.
-- Another way to select a pet type to edit is clicking on specific pet type on the pet type list. 
+- Another way to select a pet type to edit is clicking on specific pet type on the pet type list. This will redirect you to the pet type edit page.
 - In the edit pet type view you can rename the pet type, change its associated attributes and the cost of the pet in the store. 
 - Once you are happy with your changes you can click the save icon located on top right corner.
 

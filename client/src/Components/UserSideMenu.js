@@ -17,7 +17,7 @@ function UserSideMenu(props) {
             <Link to={'./ShopPage'}>Store</Link>
             <Link to={'./UserSettingsPage'}>Settings</Link>
             <Link to={'./HelpPage'}>Help</Link>
-            <Link to={'./'}>Log out</Link>
+            <Link to={'./login'}>Log out</Link>
         </div>
     );
 }

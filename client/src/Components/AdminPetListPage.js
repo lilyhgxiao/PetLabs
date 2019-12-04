@@ -4,7 +4,11 @@ import AdminSideMenu from './AdminSideMenu';
 import { Redirect, Link } from 'react-router-dom';
 import AddIcon from '../Images/add_new.png';
 
-class AdminPetListPage extends React.Component {
+//statezero
+import BaseReactComponent from "./../BaseReactComponent";
+import {setLastPage} from "../actions/userhelpers"
+
+class AdminPetListPage extends BaseReactComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,6 +20,10 @@ class AdminPetListPage extends React.Component {
         this.handleTextboxChange = this.handleTextboxChange.bind(this);
         this.handleRowClick = this.handleRowClick.bind(this);
         this.handleEnter = this.handleEnter.bind(this);
+    }
+
+    filterState({currUser}) {
+        return {currUser};
     }
 
     componentDidMount() {
@@ -40,6 +48,7 @@ class AdminPetListPage extends React.Component {
         }).catch((error) => {
             alert('Failed to fetch pet types :(');
         });
+        setLastPage("/AdminPetListPage");
     }
 
     handleEnter(event) {
@@ -98,6 +107,14 @@ class AdminPetListPage extends React.Component {
     }
 
     render() {
+
+        if (this.state.currUser === null) {
+            return(
+                <Redirect push to={{
+                    pathname: "/"
+                }} />
+            );
+        }
         if (this.state.validPet) {
             return <Redirect to={{
                 pathname: './AdminPetPage',
