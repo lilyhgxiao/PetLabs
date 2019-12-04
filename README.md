@@ -121,6 +121,7 @@ The following routes allow the app to modify item information in the database.
 This route is used to add an item to the database.
 
 An example of valid JSON could be the following (there are more JSON samples in folder ModelTestInputs/Items/).
+
 {<br />
     "name": "Book",<br />
     "strength": 0,<br />
@@ -165,6 +166,7 @@ DELETE request to /items/:id is used when the app needs to completely remove a s
 This route is used to add a pet type to the database.
 
 An example of valid JSON could be the following (there are more JSON samples in folder ModelTestInputs/PetTypes/).
+
 { <br />
     "name": "Blob", <br />
     "neutralImage": "blob_neutral", <br />
@@ -213,6 +215,7 @@ DELETE request to /pettypes/:id is used when the app needs to completely remove 
 This route is used to add a pets to the database.
 
 An example of valid JSON could be the following (there are more JSON samples in folder ModelTestInputs/Pet/).
+
 { <br />
     "ownerName": "user", <br />
     "petName": "Alex", <br />
