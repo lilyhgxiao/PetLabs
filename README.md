@@ -117,7 +117,7 @@ All of the routes are defined in server.js
 ## Item Routes
 The following routes allow the app to modify item information in the database.
 
-### POST Request to /items
+### POST Routes to /items
 This route is used to add an item to the database.
 
 An example of valid JSON could be the following (there are more JSON samples in folder ModelTestInputs/Items/).
@@ -134,23 +134,81 @@ An example of valid JSON could be the following (there are more JSON samples in 
 
 Note that "imgURL" must be either of "Dumbbell", "Book", or "Treadmill".
 
-POST request to /items is mainly used in our app when an admin is creating a new item (AdminNewItemPage.js).
+POST request to /items is mainly used in our app when an admin is creating a new item. For example, during a new item creation process, POST request is sent when admin clicks on the save button. In this case, admin's input on the app determines the data being saved on the database.
 
 
-### GET Request to /items
-This route is used to get all of the items from the database. <br />
+### GET Routes to /items
+This route is used to get all of the items from the database. 
 
-The following are response codes you could recieved from GET. <br />
-- 200: OK
-- 500: Internal server error.
-
-GET request to /items is mainly used in our app when listing items for admin item list view or when populating user owned items in pet care page.
+GET request to /items is mainly used in our app when full item data is required. For example, app makes GET request when listing all items for the admin so the admin could choose an item to edit. It is also being called for users when populating user owned items in pet care page.
 
 
-### GET Request to /items
-This route is used to get all of the items from the database. <br />
+### GET Routes to /items/:id
+This route is used to get a specifc item with :id as its id from the database.
 
-The following are response codes you could recieved from GET. <br />
-- 200: OK
-- 500: Internal server error.
+GET request to /items/:id is used in our app when getting specific item information. For example, on admin item edit view, this GET request for the selected item will be called to load its current item stats. 
+
+
+### PATCH Routes to /items/:id
+This route is used to update fields of a specifc item with :id as its id from the database.
+
+PATCH request to /items/:id is used when the app needs to update the information of a specific item. For example, on admin item edit view, this PATCH request for the selected item will be called when user wishes to save changes made to item's properties.
+
+
+### DELETE Routes to /items/:id
+This route is used to delete a specifc item with :id as its id from the database.
+
+DELETE request to /items/:id is used when the app needs to completely remove a specific item. However, because neither the admin nor the user has an ability to delete an item, DELETE on specific item is actually never used in our app.
+
+
+### POST Routes to /pettypes
+This route is used to add a pet type to the database.
+
+An example of valid JSON could be the following (there are more JSON samples in folder ModelTestInputs/PetTypes/).
+{ <br />
+    "name": "Blob", <br />
+    "neutralImage": "blob_neutral", <br />
+    "happyImage": "blob_happy", <br />
+    "sadImage": "blob_sad", <br />
+    "strengthRate": 1, <br />
+    "speedRate": 1, <br />
+    "intelligenceRate": 1, <br />
+    "happinessRate": 1, <br />
+    "fullnessRate": 1, <br />
+    "price": 100 <br />
+} <br />
+
+Note that "neutralImage" must be either of "blob_neutral", "fireball_neutral", "flower_neutral", or "petrock_neutral".
+Note that "happyImage" must be either of "blob_happy", "flower_happy", "flower_happy", or "petrock_happy".
+Note that "sadImage" must be either of "blob_sad", "fireball_sad", "flower_sad", or "petrock_sad".
+
+POST request to /pettypes is mainly used in our app when an admin is creating a new pet type. For example, during a new pet type creation process, POST request is sent when admin clicks on the save button. In this case, admin's input on the app determines the data being saved on the database.
+
+
+### GET Routes to /pettypes
+This route is used to get all of the pet types from the database. 
+
+GET request to /pettypes is mainly used in our app when full pet type data is required. For example, app makes GET request when listing all pet types for the admin so admin could choose a pet type to edit.
+
+
+### GET Routes to /pettypes/:id
+This route is used to get a specifc pet type with :id as its id from the database.
+
+GET request to /pettypes/:id is used in our app when getting specific pet type information. For example, on admin pet type edit view, this GET request for the selected pet type will be called to load the starting properties of pets with aforementioned pet type. 
+
+
+### PATCH Routes to /pettypes/:id
+This route is used to update fields of a specifc pet types with :id as its id from the database.
+
+PATCH request to /pettypes/:id is used when the app needs to update the information of a specific pet type. For example, on admin pet type edit view, this PATCH request for the selected pet type will be called when user wishes to save changes made to the starting properties of pets with aforementioned pet type.
+
+
+### DELETE Routes to /pettypes/:id
+This route is used to delete a specifc pet types with :id as its id from the database.
+
+DELETE request to /pettypes/:id is used when the app needs to completely remove a specific pet type. However, because neither the admin nor the user has an ability to delete a pet type, DELETE on specific pet type is actually never used in our app.
+
+
+
+
 
