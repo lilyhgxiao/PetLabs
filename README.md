@@ -10,7 +10,7 @@ We added a few simple classes that help us temporarily keep track of changes in 
 -	Pet: a pet is an instance of a pet type that is owned by a user. For example, a user owns a pet of type ‘Fireball’ named Lily.
 -	Item: an item is something that can be applied to a pet to train, feed, or play with the pet. For example, a book can train the pet’s intelligence.
 
-# Running the App
+# Logging into the app
 Our web app was deployed online through Heroku.<br />
 Use the following link to access the app.<br />
 https://evening-beyond-09613.herokuapp.com/login<br />
