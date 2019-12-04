@@ -198,17 +198,31 @@ GET request to /pettypes/:id is used in our app when getting specific pet type i
 
 
 ### PATCH Routes to /pettypes/:id
-This route is used to update fields of a specifc pet types with :id as its id from the database.
+This route is used to update fields of a specifc pet type with :id as its id from the database.
 
 PATCH request to /pettypes/:id is used when the app needs to update the information of a specific pet type. For example, on admin pet type edit view, this PATCH request for the selected pet type will be called when user wishes to save changes made to the starting properties of pets with aforementioned pet type.
 
 
 ### DELETE Routes to /pettypes/:id
-This route is used to delete a specifc pet types with :id as its id from the database.
+This route is used to delete a specifc pet type with :id as its id from the database.
 
 DELETE request to /pettypes/:id is used when the app needs to completely remove a specific pet type. However, because neither the admin nor the user has an ability to delete a pet type, DELETE on specific pet type is actually never used in our app.
 
 
+### POST Routes to /pets
+This route is used to add a pets to the database.
+
+An example of valid JSON could be the following (there are more JSON samples in folder ModelTestInputs/Pet/).
+{ <br />
+    "ownerName": "user", <br />
+    "petName": "Alex", <br />
+    "type": "Blob" <br />
+} <br />
+
+POST request to /pets is mainly used in our app when an user is creating a new pet. For example, during a new pet creation process, POST request is sent when user clicks on the "Bring Home!" button. In this case, user's input on the app determines the data being saved on the database. Note that data that's being stored has more information than "ownerName", "petName", and "type". Rest of the fields in pet data is determined by the value of "type". 
 
 
+### GET Routes to /pets
+This route is used to get all of the pets from the database. 
 
+GET request to /pets is mainly used in our app when full pet list is required. 
