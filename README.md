@@ -19,10 +19,10 @@ The login page should now be visible.<br />
 
 # Running the app locally
 - Clone the master branch
-- Inside team11/ run `npm i`
-- Inside team11/client run `npm i`
-- Inside team11/client run `npm run build`
-- Inside team11 run `node server.js`
+- Inside `team11/` run `npm i`
+- Inside `team11/client` run `npm i`
+- Inside `team11/client run` `npm run build`
+- Inside `team11 run` `node server.js`
 - In your web browser go to `http://localhost:3001/` and test out the app.
 
 # How To Use The App
