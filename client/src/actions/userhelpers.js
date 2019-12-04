@@ -139,21 +139,6 @@ export const setLastPage = (page) => {
 }
 
 
-export const setLastPet = (pet) => {
-    const url = "/cookie/lastVisitedPet/" + pet;
-
-    fetch(url)
-        .then(res => {
-            if (res.status === 200) {
-                return true
-            }
-        }).catch((error) => {
-            console.log(error);
-            return false;
-        })
-}
-
-
 export const login = () => {
     //DB CALL: FIND USER
     const { username, password } = getState("loginForm");

@@ -117,6 +117,7 @@ app.get('/items/:id', (request, response) => {
         if (!result) {
             response.status(404).send();
         } else {
+            request.session.itemId = result._id;
             response.status(200).send(result)
         }
     },).catch((error) => {
@@ -252,6 +253,7 @@ app.get('/pettypes/:id', (request, response) => {
         if (!result) {
             response.status(404).send();
         } else {
+            request.session.petTypeId = result._id;
             response.status(200).send(result)
         }
     },).catch((error) => {
@@ -440,45 +442,6 @@ app.delete('/pets/:id', (request, response) => {
 
 // USER ROUTES
 
-// A route to check if a use is logged in on the session cookie
-app.get("/cookie/check-session", (req, res) => {
-    if (req.session.user) {
-        res.send({ 
-            user: req.session.user,
-            pet: req.session.pet,
-            lastVisitedPage: req.session.lastVisitedPage
-        });
-    } else {
-        res.status(401).send();
-    }
-});
-
-
-// POST to change last visited page
-app.get('/cookie/lastVisitedPage/:page', (request, response) => {
-    const page = request.params.page;
-
-    if (req.session.user) {
-        request.session.lastVisitedPage = page;
-        response.status(200).send();
-    } else {
-        res.status(401).send();
-    }
-});
-
-
-// POST to change currPet
-app.get('/cookie/currPet/:pet', (request, response) => {
-    const pet = request.params.pet;
-
-    if (req.session.user) {
-        request.session.pet = pet;
-        response.status(200).send();
-    } else {
-        res.status(401).send();
-    }
-});
-
 
 // POST route to create a new user.
 app.post('/users', (request, response) => {
@@ -530,6 +493,7 @@ app.get('/users/:id', (request, response) => {
         if (!result) {
             response.status(404).send();
         } else {
+            request.session.user_d = result._id;
             response.status(200).send(result)
         }
     },).catch((error) => {
@@ -698,6 +662,82 @@ function getUserPropertiesToUpdate(request) {
 
     return update;
 }
+
+app.get("/cookie/itemId", (req, res) => {
+    if (req.session.itemId) {
+        res.status(200).send({itemId: req.session.itemId});
+    } else {
+        res.status(500).send();
+    }
+});
+
+app.get("/cookie/petTypeId", (req, res) => {
+    if (req.session.petTypeId) {
+        console.log(req.session.petTypeId)
+        res.status(200).send({petTypeId: req.session.petTypeId});
+    } else {
+        res.status(500).send();
+    }
+});
+
+app.get("/cookie/userId", (req, res) => {
+    if (req.session.userId) {
+        res.status(200).send({userId: req.session.userId});
+    } else {
+        res.status(500).send();
+    }
+});
+
+// A route to check if a use is logged in on the session cookie
+app.get("/cookie/check-session", (req, res) => {
+    if (req.session.user) {
+        res.send({ 
+            user: req.session.user,
+            petId: req.session.petId,
+            lastVisitedPage: req.session.lastVisitedPage
+        });
+    } else {
+        res.status(401).send();
+    }
+});
+
+
+// POST to change last visited page
+app.get('/cookie/lastVisitedPage/:page', (request, response) => {
+    const page = request.params.page;
+
+    if (request.session.user) {
+        request.session.lastVisitedPage = page;
+        response.status(200).send();
+    } else {
+        res.status(401).send();
+    }
+});
+
+
+// POST to change currPet
+app.get('/cookie/currPet/:petId', (request, response) => {
+    const petId = request.params.petId;
+
+    if (request.session.user) {
+        request.session.petId = petId;
+        response.status(200).send();
+    } else {
+        res.status(401).send();
+    }
+});
+
+
+// POST to get currPet
+app.get('/cookie/currPet', (request, response) => {
+
+    if (request.session.user) {
+        response.status(200).send({petId: request.session.petId});
+    } else {
+        response.status(401).send();
+    }
+});
+
 
 const path = require('path');
 

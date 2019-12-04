@@ -16,6 +16,7 @@ import { updatePetState, deletePet } from '../actions/pethelpers';
 import { getPetType } from '../actions/pettypehelpers';
 import { getAllItems } from '../actions/itemhelpers';
 import { setLastPage } from '../actions/userhelpers';
+import { setState} from "../actions/helpers";
 
 import { Redirect } from 'react-router';
 
@@ -44,17 +45,80 @@ class UserPetCarePage extends BaseReactComponent {
         this._mounted = true;
         this.deleting = false;
 
-        this.dTimer = setInterval(
-            () => this.starve(),
-        1000
-      );
-      setLastPage("/UserPetCarePage")
-      if (this.state.currPet) {
-        setLastPet(this.state.currPet._id)
-        this.findPet()
-        this.populateItem()
-        this.selectItem = this.selectItem.bind(this)
-      }
+        if(!this.state.currPet) {
+            fetch("/cookie/currPet")
+                .then(res => {
+                    if (res.status === 200) {
+                        return res.json();
+                    }
+                })
+                .then(json => {
+                    if (json && json.petId) {
+                        const url = "/pets/" + json.petId;
+
+                        const request = new Request(url, {
+                            method: "get",
+                            headers: {
+                                'Accept': 'application/json, text/plain, */*',
+                                'Content-Type': 'application/json'
+                            }
+                        });
+
+                        fetch(request)
+                        .then((res) => {
+                            if (res.status === 200) {
+                                console.log("Got pet successfully on cookie")
+                                return res.json();
+                            } else {
+                                console.log("Status code is wrong")
+                                return null
+                            }
+                        }).then((pet) => {
+                            if (pet === null) {
+                                const currPet = null;
+                                setState("currPet", currPet);
+                            } else {
+                                const currPet = {
+                                    _id: pet._id,
+                                    ownerName: pet.ownerName,
+                                    petName: pet.petName,
+                                    happiness: pet.happiness,
+                                    fullness: pet.fullness,
+                                    alive: pet.alive,
+                                    strength: pet.strength,
+                                    speed: pet.speed,
+                                    intelligence: pet.intelligence,
+                                    type: pet.type
+                                }
+                                setState("currPet", currPet);
+                            }
+                        }).then((res) => {
+                            this.dTimer = setInterval(
+                                () => this.starve(),
+                            1000
+                            );
+                            setLastPage("/UserPetCarePage")
+                            this.findPet()
+                            this.populateItem()
+                            this.selectItem = this.selectItem.bind(this)
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+                    }
+                }).catch((error) => {
+                    console.log("can't fetch currPet")
+                    console.log(error);
+                });
+        } else {
+            this.dTimer = setInterval(
+                () => this.starve(),
+            1000
+            );
+            setLastPage("/UserPetCarePage")
+            this.findPet()
+            this.populateItem()
+            this.selectItem = this.selectItem.bind(this)
+        }
     }
   
     componentWillUnmount() {

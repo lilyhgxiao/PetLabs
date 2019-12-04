@@ -34,10 +34,7 @@ class AdminPetPage extends BaseReactComponent {
         return {currUser};
     }
 
-    componentDidMount() {
-        // const url = 'http://localhost:3001/pettypes/' + this.props.location.petTypeId;
-        const url = '/pettypes/' + this.props.location.petTypeId;
-
+    fetchPetType(url) {
         const request = new Request(url, {
             method: 'GET',
             headers: { 
@@ -69,6 +66,30 @@ class AdminPetPage extends BaseReactComponent {
             console.log(error);
             alert('Unable to fetch pet type :(', error);
         })
+    }
+
+    componentDidMount() {
+        // const url = 'http://localhost:3001/pettypes/' + this.props.location.petTypeId;
+        // const url = '/pettypes/' + this.props.location.petTypeId;
+
+        if (!this.props.location.petTypeId) {
+            fetch('/cookie/petTypeId')
+                .then(res => {
+                    if (res.status === 200) {
+                    return res.json();
+                }
+            })
+            .then(json => {
+                if (json && json.petTypeId) {
+                    this.fetchPetType('/pettypes/' + json.petTypeId);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        } else {
+            this.fetchPetType('/pettypes/' + this.props.location.petTypeId);
+        }
         setLastPage("/AdminPetPage");
     }
 
