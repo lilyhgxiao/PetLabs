@@ -20,8 +20,8 @@ The login page should now be visible.<br />
 - Clone the master branch
 - Inside `team11/` run `npm i`
 - Inside `team11/client` run `npm i`
-- Inside `team11/client run` `npm run build`
-- Inside `team11 run` `node server.js`
+- Inside `team11/client` run `npm run build`
+- Inside `team11` run `node server.js`
 - In your web browser go to `http://localhost:3001/` and test out the app.
 
 # How To Use The App
@@ -56,7 +56,7 @@ The login page should now be visible.<br />
 - Note: if the name of the item or if the sprite is not specified, an item cannot be create.
 - Once you are happy with your choices click the ‘save’ icon located at the top right-hand corner of the screen. This will save your changes and take you back to the admin dashboard page.
 
-# Editing an Existing Pet Type
+## Editing an Existing Pet Type
 - In the admin dashboard page go to the pet type list page by clicking on the ‘Pets’ picture. 
 - In the search bar, type in the name of the pet type that you wish to edit. You can even choose the newly created pet type from above.
 - Once the correct name is typed in, press enter key. This will redirect you to the pet type edit page.
