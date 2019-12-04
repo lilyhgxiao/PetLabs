@@ -285,6 +285,8 @@ This route is used to get a specifc user with :id as its id from the database.
 
 GET request to /users/:id is used in our app when getting specific user information. For example, on admin user edit view, this GET request for the selected user will be called to load user's current information.
 
+This route also adds the id of the most recent user that was retrieved to the session cookie to keep track of.
+
 
 ### PATCH Route to /users/:id
 This route is used to update fields of a specifc user with :id as its id from the database.
