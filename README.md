@@ -3,6 +3,7 @@
 # App Description
 Our web app is an online pet care game in similar fashion to the old tamagotchi toys. Users can play with their pets, purchase new pets, and purchase items for their pets. Administrators can add and edit pets and items, as well as edit regular user information.
 
+We added a few simple classes that help us temporarily keep track of changes in the app while it is running, allowing us to emulate some sort of backend server. However, no backend server code exists in this iteration of the app.
 
 # Some game terminology:
 -	Pet Type: a pet type represents a particular type of pet that the user can own. For example, a blob. Each pet type has a name and a set of attributes that dictate how fast their attributes (such as strength or speed) will grow when a particular item is applied to them.
@@ -21,7 +22,7 @@ The login page should now be visible.<br />
 - Inside `team11/` run `npm i`
 - Inside `team11/client` run `npm i`
 - Inside `team11/client` run `npm run build`
-- Inside `team11` run `node server.js`
+- Inside `team11/` run `node server.js`
 - In your web browser go to `http://localhost:3001/` and test out the app.
 
 # How To Use The App
