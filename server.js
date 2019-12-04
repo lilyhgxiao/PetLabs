@@ -493,7 +493,7 @@ app.get('/users/:id', (request, response) => {
         if (!result) {
             response.status(404).send();
         } else {
-            request.session.user_d = result._id;
+            request.session.userId = result._id;
             response.status(200).send(result)
         }
     },).catch((error) => {

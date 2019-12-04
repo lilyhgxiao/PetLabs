@@ -31,15 +31,35 @@ class AdminUserPage extends BaseReactComponent {
     }
 
     componentDidMount() {
-        this.findUserInfo();
-        this.getPetInfo();
-        this.getItemInfo();
         setLastPage("/AdminUserPage");
+        if (!this.targetUserId) {
+            fetch('/cookie/userId')
+                .then(res => {
+                    if (res.status === 200) {
+                    return res.json();
+                }
+            })
+            .then(json => {
+                if (json && json.userId) {
+                    console.log(json.userId);
+                    this.findUserInfo('/users/' + json.userId);
+                    this.getPetInfo("/pets/");
+                    this.getItemInfo("/items/");
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        } else {
+            this.findUserInfo('/users/' + this.targetUserId);
+            this.getPetInfo("/pets/");
+            this.getItemInfo("/items/");
+        }
     }
 
-    findUserInfo() {
+    findUserInfo(url) {
         // const url = "http://localhost:3001/users/" + this.targetUserId;
-        const url = "/users/" + this.targetUserId;
+        // const url = "/users/" + this.targetUserId;
         const request = new Request(url, {
             method: "get",
             headers: { 
@@ -66,9 +86,9 @@ class AdminUserPage extends BaseReactComponent {
         })
     }
 
-    getPetInfo() {
+    getPetInfo(url) {
         // const url = "http://localhost:3001/pets/";
-        const url = "/pets/";
+        // const url = "/pets/";
         const request = new Request(url, {
             method: "get",
             headers: { 
@@ -176,9 +196,9 @@ class AdminUserPage extends BaseReactComponent {
         }
     }
 
-    getItemInfo() {
+    getItemInfo(url) {
         // const url = "http://localhost:3001/items/";
-        const url = "/items/";
+        // const url = "/items/";
         const request = new Request(url, {
             method: "get",
             headers: { 
