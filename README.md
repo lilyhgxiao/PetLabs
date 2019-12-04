@@ -232,4 +232,23 @@ POST request to /pets is mainly used in our app when an user is creating a new p
 ### GET Route to /pets
 This route is used to get all of the pets from the database. 
 
-GET request to /pets is mainly used in our app when full pet list is required. 
+GET request to /pets is mainly used in our app when full pet list is required. For example, when loading user owned pets on the user dashboard, app calls GET request to /pets in order to get all of the pets. Then it sorts out the pets according to user's petIdList.
+
+
+### GET Route to /pets/:id
+This route is used to get a specifc pet with :id as its id from the database.
+
+GET request to /pets/:id is used in our app when getting specific pet's information. For example, it is being used when getting information of specific pet information on refresh in user pet care page.
+
+
+### PATCH Route to /pets/:id
+This route is used to update fields of a specifc pet with :id as its id from the database.
+
+PATCH request to /pets/:id is used when the app needs to update the information of a specific pet. For example, when users are interacting with the a specific pet (e.g., playing or giving items), the app sends PATCH request to update aforementioned pet's information.
+
+
+### DELETE Route to /pets/:id
+This route is used to delete a specifc pet with :id as its id from the database.
+
+DELETE request to /pets/:id is used when the app needs to completely remove a specific pet. For example, when user lets go of his/her pet, the app sends DELETE request to remove the selected pet from the data.
+
