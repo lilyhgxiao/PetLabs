@@ -22,10 +22,7 @@ class AdminItemPage extends React.Component {
         };
     }
 
-    componentDidMount() {
-        // const url = 'http://localhost:3001/items/' + this.props.location.itemId;
-        const url = '/items/' + this.props.location.itemId;
-
+    fetchItem(url) {
         const request = new Request(url, {
             method: 'GET',
             headers: { 
@@ -54,6 +51,30 @@ class AdminItemPage extends React.Component {
         }).catch((error) => {
             alert('Failed to fetch items :(');
         });
+    }
+
+    componentDidMount() {
+        // const url = 'http://localhost:3001/items/' + this.props.location.itemId;
+        // let url = '/items/' + this.props.location.itemId;
+
+        if (!this.props.location.itemId) {
+            fetch("/cookie/itemId")
+            .then(res => {
+                if (res.status === 200) {
+                    return res.json();
+                }
+            })
+            .then(json => {
+                if (json && json.itemId) {
+                    this.fetchItem('/items/' + json.itemId);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        } else {
+            this.fetchItem('/items/' + this.props.location.itemId);
+        }        
     }
 
     getTableRows() {
@@ -151,7 +172,7 @@ class AdminItemPage extends React.Component {
         }
 
         //const url = 'http://localhost:3001/items/' + this.props.location.itemId;
-        const url = '/items/' + this.props.location.itemId;
+        const url = '/items/' + '5de469271d9e0a1d10d40506'//this.props.location.itemId;
         
         const request = new Request(url, {
             method: 'PATCH',

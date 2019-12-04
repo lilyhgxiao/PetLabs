@@ -117,6 +117,7 @@ app.get('/items/:id', (request, response) => {
         if (!result) {
             response.status(404).send();
         } else {
+            request.session.itemId = result._id;
             response.status(200).send(result)
         }
     },).catch((error) => {
@@ -252,6 +253,7 @@ app.get('/pettypes/:id', (request, response) => {
         if (!result) {
             response.status(404).send();
         } else {
+            request.session.petTypeId = result._id;
             response.status(200).send(result)
         }
     },).catch((error) => {
@@ -498,6 +500,7 @@ app.get('/users/:id', (request, response) => {
         if (!result) {
             response.status(404).send();
         } else {
+            request.session.user_d = result._id;
             response.status(200).send(result)
         }
     },).catch((error) => {
@@ -666,6 +669,39 @@ function getUserPropertiesToUpdate(request) {
 
     return update;
 }
+
+app.get("/cookie/itemId", (req, res) => {
+    if (req.session.itemId) {
+        console.log(req.session.itemId)
+        res.status(200).send({itemId: req.session.itemId});
+    } else {
+        console.log(req.session.itemId)
+        console.log(req.session);
+        res.status(500).send();
+    }
+});
+
+app.get("/cookie/petTypeId", (req, res) => {
+    if (req.session.petTypeId) {
+        console.log(req.session.petTypeId)
+        res.status(200).send({petTypeId: req.session.petTypeId});
+    } else {
+        console.log(req.session.petTypeId)
+        console.log(req.session);
+        res.status(500).send();
+    }
+});
+
+app.get("/cookie/userId", (req, res) => {
+    if (req.session.userId) {
+        console.log(req.session.userId)
+        res.status(200).send({userId: req.session.userId});
+    } else {
+        console.log(req.session.userId)
+        console.log(req.session);
+        res.status(500).send();
+    }
+});
 
 const path = require('path');
 
