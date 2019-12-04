@@ -11,15 +11,11 @@ We added a few simple classes that help us temporarily keep track of changes in 
 -	Item: an item is something that can be applied to a pet to train, feed, or play with the pet. For example, a book can train the pet’s intelligence.
 
 # Running the App
-Our web app is a relies on the React Framework to run.
-We used the yarn package manager to build and run the web app: https://yarnpkg.com/lang/en/
-To run the app:
--	Open a command line in team11\frontend\petlabsfrontend
--	run yarn
--	run yarn start
--	in Google Chrome in the URL bar type in http://localhost:3000/
+Our web app was deployed online through Heroku.<br />
+Use the following link to access the app.<br />
+https://evening-beyond-09613.herokuapp.com/<br />
 
-The login page should now be visible.
+The login page shoulld now be visible.<br />
 
 # Admin Views
 - To login as an administrator type in ‘admin’ for username and ‘admin’ for password and click the ‘Log in’ button.
@@ -29,15 +25,16 @@ The login page should now be visible.
 - To add a new item, click on the ‘items’ picture.
 - Then in the items list page add click on the ‘plus’ icon at the top right corner of the page.
 - Type in the name of the new item and edit the item’s attribute in the table below.
-- We currently do not support the ability to upload new item images, that is a task we left for the backend phase of the project.
+- Then click on 'plus' icon to randomly select sprite for the new item.
+- Note: if the name of the item or if the sprite is not specified, an item cannot be create.
 - When you are happy with your new item click the ‘save’ icon at the top right corner of the page. This will take you back to the admin dashboard page.
 
 # Editing an Existing Item
 - To edit an existing item click on the ‘items’ picture. This will take you to the item list page.
-- In the search bar type in the name of the item that you wish to edit. You can even choose the newly created item from above.
-- Once the correct name is typed in, click the ‘Go!’ button. This will redirect you to the item edit page.
-- Note: if an incorrect name is typed in no redirection will occur. Instead an alert message will appear informing you that no such item exists. 
-- Note: the search bar is case insensitive.
+- In the search bar, type in the name of the item that you wish to edit. You can even choose the newly created item from above.
+- Once the correct name is typed in, press enter key. This will redirect you to the item edit page.
+- Note: the search bar is case insensitive, but if an incorrect name is typed in, no redirection will occur. Instead an alert message will appear informing you that no such item exists.
+- Another way to select an item to edit is clicking on specific item on the item list. This will redirect you to the item edit page.
 - In the item edit page you can change the name, price, and item properties by typing in different values in the textboxes. 
 - Once you are happy with your changes you can click the ‘save’ icon at the top right-hand corner of the page. This will redirect you back to the admin dashboard page.
 - You can always return to the item list page and select the edited item to review the changes you made above. 
@@ -46,14 +43,18 @@ The login page should now be visible.
 - To create a new pet in the user admin dashboard page, click on the ‘Pets’ image. This will take you to the pet list page.
 - In the pet list page click on the ‘plus’ icon located at the top of the right-hand corner of the screen. This will take you to the create new pet page.
 - In the create new pet page, enter the name of the new pet type, as well as the growth rate of each attribute and the price of the pet.
-Once you are happy with your choices click the ‘save’ icon located at the top right-hand corner of the screen. This will save your changes and take you back to the admin dashboard page.
+- Then click on 'plus' icon to randomly select sprite for the new pet type.
+- Note: if the name of the item or if the sprite is not specified, an item cannot be create.
+- Once you are happy with your choices click the ‘save’ icon located at the top right-hand corner of the screen. This will save your changes and take you back to the admin dashboard page.
 
-# Editing an Existing Pet
+# Editing an Existing Pet Type
 - In the admin dashboard page go to the pet type list page by clicking on the ‘Pets’ picture. 
-- In the pet types list page type in the name of the pet that you wish to edit and click go. This will redirect you from the admin view to the edit pet type view.
-- Note that the search is case insensitive but typing in a name of a pet that does not exit and clicking go will not redirect, and instead provide the admin with an alert message informing them of the incorrect input.
+- In the search bar, type in the name of the pet type that you wish to edit. You can even choose the newly created pet type from above.
+- Once the correct name is typed in, press enter key. This will redirect you to the pet type edit page.
+- Note: the search bar is case insensitive, but if an incorrect name is typed in, no redirection will occur. Instead an alert message will appear informing you that no such pet type exists.
+- Another way to select a pet type to edit is clicking on specific pet type on the pet type list. This will redirect you to the pet type edit page.
 - In the edit pet type view you can rename the pet type, change its associated attributes and the cost of the pet in the store. 
-Once you are happy with your changes you can click the save icon located on top right corner.
+- Once you are happy with your changes you can click the save icon located on top right corner.
 
 # Editing an Existing User
 - In the admin dashboard page, go to the user list page by clicking on the ‘Users’ picture.
