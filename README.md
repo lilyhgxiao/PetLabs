@@ -153,7 +153,7 @@ GET request to /items/:id is used in our app when getting specific item informat
 ### PATCH Route to /items/:id
 This route is used to update fields of a specifc item with :id as its id from the database.
 
-PATCH request to /items/:id is used when the app needs to update the information of a specific item. For example, on admin item edit view, this PATCH request for the selected item will be called when user wishes to save changes made to item's properties.
+PATCH request to /items/:id is used when the app needs to update the information of a specific item. For example, on admin item edit view, this PATCH request for the selected item will be called when admin wishes to save changes made to item's properties.
 
 
 ### DELETE Route to /items/:id
@@ -252,3 +252,43 @@ This route is used to delete a specifc pet with :id as its id from the database.
 
 DELETE request to /pets/:id is used when the app needs to completely remove a specific pet. For example, when user lets go of his/her pet, the app sends DELETE request to remove the selected pet from the data.
 
+
+## User Route
+The following routes allow the app to modify user information in the database.
+
+### POST Route to /users
+This route is used to add a users to the database.
+
+An example of valid JSON could be the following (there are more JSON samples in folder ModelTestInputs/Pet/).
+
+{ <br />
+    "username": "user", <br />
+    "password": "user", <br />
+    "isAdmin": "false" <br />
+} <br />
+
+POST request to /users is mainly used in our app when an user is creating a new users. For example, during a sign up process, app sends POST request to add new user to the database with the information user submitted on sign up page.
+
+
+### GET Route to /users
+This route is used to get all of the users from the database. 
+
+GET request to /users is mainly used in our app when full user data is required. For example, app makes GET request when listing all users for the admin so admin could choose an user to edit.
+
+
+### GET Route to /users/:id
+This route is used to get a specifc user with :id as its id from the database.
+
+GET request to /users/:id is used in our app when getting specific user information. For example, on admin user edit view, this GET request for the selected user will be called to load user's current information.
+
+
+### PATCH Route to /users/:id
+This route is used to update fields of a specifc user with :id as its id from the database.
+
+PATCH request to /users/:id is used when the app needs to update the information of a specific user. For example, on admin user edit view, this PATCH request for the selected user will be called when admin wishes to save changes made to user information.
+
+
+### DELETE Route to /users/:id
+This route is used to delete a specifc user with :id as its id from the database.
+
+DELETE request to /users/:id is used when the app needs to completely remove a specific user. However, because neither the admin nor the user has an ability to delete an user, DELETE on specific user is actually never used in our app.
