@@ -149,6 +149,8 @@ This route is used to get a specifc item with :id as its id from the database.
 
 GET request to /items/:id is used in our app when getting specific item information. For example, on admin item edit view, this GET request for the selected item will be called to load its current item stats. 
 
+This route also adds the id of the most recent item that was queried to the session cookie to keep track of.
+
 
 ### PATCH Route to /items/:id
 This route is used to update fields of a specifc item with :id as its id from the database.
@@ -293,6 +295,18 @@ This route is used to delete a specifc user with :id as its id from the database
 
 DELETE request to /users/:id is used when the app needs to completely remove a specific user. However, because neither the admin nor the user has an ability to delete an user, DELETE on specific user is actually never used in our app.
 
+
+## Login and Logout Routes
+
+### GET Route for /users/login/:username
+This route is used to login the user and keep track of the information of wether the user is an admin or not.
+
+We query this route in the login page.
+
+### POST Route for /users/logout/
+This route is used to log the user out and destroy the session cookie.
+
+We query this route when the logout button is pressed by the user.
 
 ## Cookie Routes
 
