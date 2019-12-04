@@ -13,7 +13,7 @@ We added a few simple classes that help us temporarily keep track of changes in 
 # Running the App
 Our web app was deployed online through Heroku.<br />
 Use the following link to access the app.<br />
-https://evening-beyond-09613.herokuapp.com/<br />
+https://evening-beyond-09613.herokuapp.com/login<br />
 
 The login page should now be visible.<br />
 
@@ -310,3 +310,23 @@ This route is quiried in the AdminPetPage to ensure that upon refreshing the pag
 This route is used to retrieve a cookie referencing the id of the last user that was retrieved.
 
 This route is quiried in the AdminPetPage to ensure that upon refreshing the page the user does not disappear.
+
+### GET Route for /cookie/currPet/:petId
+This route is used to set a cookie referencing the id of the last pet that was viewed.
+
+This route is quiried in the UserDashboardPage to ensure that upon refreshing the pet care page, the correct pet is retreieved.
+
+### GET Route for /cookie/currPet
+This route is used to retrieve a cookie referencing the id of the last pet that was viewed.
+
+This route is quiried in the UserPetCarePage to ensure that upon refreshing the pet care page, the correct pet is retreieved.
+
+### GET Route for /cookie/userId
+This route is used to retrieve a cookie referencing the url of the last view that was retrieved.
+
+This route is quiried in all views to ensure that upon refresh, the user is redirected to the last page they were on.
+
+### GET Route for /cookie/checkSession
+This route is used to retrieve a lot of cookie information.
+
+This route is quiried in all views to ensure that upon refresh, the correct states are set.

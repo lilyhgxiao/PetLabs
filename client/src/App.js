@@ -40,6 +40,7 @@ class App extends BaseReactComponent {
 
   constructor(props) {
       super(props);
+      readCookie();
   }
 
   render() {
